@@ -54,7 +54,7 @@ window.open(new Trianglify({
     cellsize: 90}).generate(700, 400).dataUri)
 ```
 
-![](examples/example1.svg)
+![](examples/example1.jpg)
 
 
 ## Differing x and y gradients 
@@ -68,7 +68,7 @@ window.open(new Trianglify({
     cellsize: 100}).generate(700, 400).dataUri);
 ```
 
-![](examples/example2.svg)
+![](examples/example2.jpg)
 
 
 ## Cellpadding Close to cellsize/2
@@ -79,7 +79,7 @@ window.open(new Trianglify({
     cellsize: 200}).generate(700, 400).dataUri)
 ```
 
-![](examples/example3.svg)
+![](examples/example3.jpg)
 
 
 # Options
@@ -95,7 +95,7 @@ The following configuration options are available:
 option | usage | valid | default
 --- | --- | --- | ---
 cellsize | set how large the generated cells should be | integers > 0 | 150
-bleed | set how far outside the visible area of the SVG points should be rendered | integers > 0 | cellsize*1.5
+bleed | set how far outside the visible area of the SVG points should be rendered | integers > 0 | cellsize
 cellpadding | set the minimum distance between each point | integers > 0 and < cellsize/2 | cellsize*0.1
 noiseIntensity | set the opacity of the noise filter. This has a significant impact on SVG rendering time - set to 0 to disable. | 0 to 1 | 0.3
 x_gradient | an array of colors to use to construct a gradient for the x-axis | array of colors in hexadecimal string format (i.e. `["#961E00", "#EEEEEE"]`) | random selection from colorbrewer palettes

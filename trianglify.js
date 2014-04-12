@@ -4,7 +4,7 @@ function Trianglify(options) {
     // defaults
     this.options = {
         cellsize: defaults(options.cellsize, 150), // zero not valid here
-        bleed: defaults(1.5*options.cellsize || 300),
+        bleed: defaults(options.cellsize, 150),
         cellpadding: defaults(options.cellpadding, 0.1*options.cellsize || 15),
         noiseIntensity: defaults(options.noiseIntensity, 0.3),
         x_gradient: defaults(options.x_gradient, Trianglify.randomColor()),
