@@ -14,30 +14,40 @@
     <meta property="og:image" content="http://qrohlf.com/trianglify/examples/example1.jpg" />
 
     <title>Trianglify by @qrohlf</title>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,400,600,700,800' type='text/css'>
 
     <style type="text/css">
-        html, body {
+        html {
             margin: 0;
             padding: 0;
             width: 100%;
             min-height: 100%;
+            position: relative;
         }
 
         body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
             background-color: #34495e;
             background-repeat: no-repeat;
             background-position: center;
             background-size: 100% 100%;
             position: relative;
+            font-family: 'Open Sans', sans-serif;
         }
 
         .container {
             text-align: center;
             margin: 0 auto;
-            padding-top: 250px;
-            color: white;
-            font-family: 'Helvetica', 'Arial', sans-serif;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+            max-width: 600px;
+            color: #2d3a3f;
+            padding-top: 60px;
+        }
+
+        a, a:visited, a:hover {
+            color: inherit;
+            text-decoration: underline;
         }
 
         @media screen and (max-width: 600px) {
@@ -46,35 +56,44 @@
             }
         }
 
-        a, a:visited, a:hover {
-            color: white;
-            text-decoration: underline;
-        }
-
-        #button {
-            font-size: 60px;
+        .box {
             display: block;
-        }
-
-        #saveas {
-            font-size: 30px;
-            margin-top: 30px;
-            display: block;
-        }
-
-        #noise-control {
-            margin-top: 120px;
-            font-size: 20px;
-        }
-
-        #noise-control a, #noise-control a:hover, #noise-control a:visited {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.3);
-            padding: 5px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
             border-radius: 3px;
-            width: 20px;
-            margin: 0px 5px;
+            margin: 10px 5px;
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn.box {
+            padding: 10px 20px;
+            display: inline-block;
+            /*color: #eee;
+            background-color: #3d566e;*/
+            background-color: #fefefe;
             text-decoration: none;
+        }
+
+        .btn.box.small {
+            padding: 5px 10px;
+        }
+
+        #controls ul {
+            list-style-type: none;
+            margin: 0 auto;
+            padding: 0;
+            text-align: right;
+            display: table;
+        }
+        #controls li {
+            display: table-row;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+
+        .hidden {
+            display: none !important;
         }
 
     </style>
@@ -82,16 +101,29 @@
 
     <body>
         <div class="container">
-            <a href="#" id="button">Click for a new pattern</a>
-            <a href="#" id="saveas" target="_blank">Download current background</a>
-            <p>(use right click > save as svg)</p>
-            <div id="noise-control">
-                Noise: <a href="#" id="subtractnoise">-</a><span id="noise">0</span><a href="#" id="addnoise">+</a>
-                <p>Note: noise effect will cause rendering to take longer</p>
-            </div>
-            <div id="links">
+            <div class="box">
+                <p>Trianglify is a javascript library for generating colorful triangle meshes that can be used as images and css backgrounds.</p>
                 <p>Trianglify is open source and MIT-licensed. Check it out on <a href="https://github.com/qrohlf/trianglify">Github</a>!</p>
-                <p>Made by <a href="http://qrohlf.com/">@qrohlf</a></p>
+                <p>Made by <a href="http://qrohlf.com/">Quinn Rohlf</a></p>
+                <p>
+                    <a href="#" id="button" class="btn box">Click for a new pattern</a>
+                    <a href="#" id="saveas" target="_blank" class="btn box" title="right click > save as svg">Download current background</a>
+                </p>
+                <div id="controls" class="hidden">
+                    <ul>
+                        <li>Noise: <a href="#" id="subtractnoise" class="btn box small">-</a><span id="noise">0</span><a href="#" id="addnoise" class="btn box small">+</a></li>
+                        <li>Cellsize: <a href="#" id="subtractcellsize" class="btn box small">-</a><span id="cellsize">0</span><a href="#" id="addcellsize" class="btn box small">+</a></li>
+                        <li>Cellpadding: <a href="#" id="subtractcellpadding" class="btn box small">-</a><span id="cellpadding">0</span><a href="#" id="addcellpadding" class="btn box small">+</a></li>
+                    </ul>
+                    <p>Note: noise effect will cause rendering to take longer</p>
+                </div>
+                <p>
+                    <a href="#" id="togglecontrols" class="btn box small">show controls</a>
+                </p>
+                <footer>
+                    <iframe src="http://ghbtns.com/github-btn.html?user=qrohlf&amp;repo=trianglify&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="150" height="30"></iframe>
+                    <a href="https://twitter.com/qrohlf" class="twitter-follow-button" data-show-count="false" data-size="large">Follow @qrohlf</a>
+                </footer>
             </div>
         </div>
         <script src="http://d3js.org/d3.v3.min.js"></script>
@@ -102,7 +134,16 @@
             saveas = document.getElementById('saveas'),
             subtractnoise = document.getElementById('subtractnoise'),
             addnoise = document.getElementById('addnoise'),
-            noise_display = document.getElementById('noise');
+            noise_display = document.getElementById('noise'),
+            subtractcellsize = document.getElementById('subtractcellsize'),
+            addcellsize = document.getElementById('addcellsize'),
+            cellsize_display = document.getElementById('cellsize'),
+            subtractcellpadding = document.getElementById('subtractcellpadding'),
+            addcellpadding = document.getElementById('addcellpadding'),
+            cellpadding_display = document.getElementById('cellpadding'),
+            toggle_controls = document.getElementById('togglecontrols'),
+            controls = document.getElementById('controls'),
+            prevheight = height();
 
         button.onclick = function() {
             recolor();
@@ -117,16 +158,50 @@
             noise(-0.2);
             return false;
         };
+        addcellsize.onclick = function() {
+            cellsize(10);
+            return false;
+        };
+        subtractcellsize.onclick = function() {
+            cellsize(-5);
+            return false;
+        };
+        addcellpadding.onclick = function() {
+            cellpadding(5);
+            return false;
+        };
+        subtractcellpadding.onclick = function() {
+            cellpadding(-10);
+            return false;
+        };
+        toggle_controls.onclick = function() {
+            toggle_controls.innerHTML = toggleClass(controls, "hidden") ? "show controls":"hide controls";
+            window.setTimeout(heightChange, 0); //see if the height changed after render and redraw if it did
+            return false;
+        };
+
         window.onresize = function() {
             redraw();
         };
 
+        function heightChange() {
+            if (height() != prevheight) {
+                console.log("height changed from "+prevheight+" to "+height());
+                prevheight = height();
+                redraw();
+            };
+        }
+
         redraw();
 
         function redraw() {
+            console.log("drawing "+document.body.clientWidth+"x"+height())
             var pattern = t.generate(document.body.clientWidth, height());
             document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
             saveas.setAttribute('href', pattern.dataUri);
+            noise_display.innerHTML = t.options.noiseIntensity.toFixed(1);
+            cellsize_display.innerHTML = t.options.cellsize.toFixed(0);
+            cellpadding_display.innerHTML = t.options.cellpadding.toFixed(0);
         };
 
         function recolor() {
@@ -138,7 +213,22 @@
             i += t.options.noiseIntensity;
             if (i >= 0 && i <= 1) {
                 t.options.noiseIntensity = i;
-                noise_display.innerHTML = t.options.noiseIntensity.toFixed(1);
+                redraw();
+            }
+        }
+
+        function cellsize(i) {
+            i += t.options.cellsize;
+            if (i >= 0) {
+                t.options.cellsize = i;
+                redraw();
+            }
+        }
+
+        function cellpadding(i) {
+            i += t.options.cellpadding;
+            if (i >= 0) {
+                t.options.cellpadding = i;
                 redraw();
             }
         }
@@ -150,6 +240,23 @@
                 document.body.clientHeight, document.documentElement.clientHeight
             );
         }
+
+        function toggleClass(el, className) {
+            if (el.classList) {
+              return el.classList.toggle(className);
+            } else {
+              var classes = el.className.split(' ');
+              var existingIndex = classes.indexOf(className);
+
+              if (existingIndex >= 0)
+                classes.splice(existingIndex, 1);
+              else
+                classes.push(className);
+
+              el.className = classes.join(' ');
+              return existingIndex >= 0;
+            }
+        }
         // analytics
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -158,5 +265,6 @@
         ga('create', 'UA-40241848-1', 'qrohlf.com');
         ga('send', 'pageview');
         </script>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     </body>
 </html>
