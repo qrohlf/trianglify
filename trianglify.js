@@ -13,10 +13,26 @@ function Trianglify(options) {
     }
     this.options = defs;
 
-    this.generate = function(width, height) {
-        var pattern = new Trianglify.Pattern(this.options, width, height);
-        pattern.generate();
+    this.append = function(width, height) {
+        var svg = this.svg(width, height);
+        document.body.appendChild(svg);
     }
+    this.svg = function(width, height) {
+        var pattern = new Trianglify.Pattern(this.options, width, height);
+        return pattern.generate();
+    }
+    this.svgString = function(width, height) {
+        return this.svg(width, height).outerHTML;
+    }
+    this.base64 = function(width, height) {
+        return btoa(this.svgString(width, height));
+    }
+    this.dataUri = function (width, height) {
+        return 'data:image/svg+xml;base64,' + this.base64(width, height);
+    };
+    this.dataUrl = function () {
+        return 'url('+this.dataUri(600, 600)+')';
+    };
 } //end of Trianglify object
 
 Trianglify.Pattern = function(options, width, height) {
@@ -39,10 +55,15 @@ Trianglify.Pattern = function(options, width, height) {
         return [x, y]; // Populate the actual background with points
         });
 
-        var svg = d3.select("body").append("svg")
-        .attr("width", this.width)
-        .attr("height", this.height);
-        var path = svg.append("g").selectAll("path");
+        var elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        // elem.setAttribute("width", this.width+"px");
+        // elem.setAttribute("height", this.height+"px");
+        var svg = d3.select(elem);
+        // var svg = d3.select("body").append("svg")
+        svg.attr("width", this.width);
+        svg.attr("height", this.height);
+        svg.attr('xmlns', 'http://www.w3.org/2000/svg');
+        var group = svg.append("g");
 
 
         if (options.noiseIntensity > 0) {
@@ -56,18 +77,16 @@ Trianglify.Pattern = function(options, width, height) {
         filter.append('feColorMatrix').attr('type', 'matrix').attr('values', "0.3333 0.3333 0.3333 0 0 \n 0.3333 0.3333 0.3333 0 0 \n 0.3333 0.3333 0.3333 0 0 \n 0 0 0 1 0")
         var filterRect = svg.append("rect").attr("opacity", options.noiseIntensity).attr('width', '100%').attr('height', '100%').attr("filter", "url(#noise)");
         }
-        path = path.data(d3.geom.delaunay(vertices).map(function(d) { return "M" + d.join("L") + "Z"; }), String);
-
-        path.exit().remove();
-
-        path.enter().append("path").attr("d", String).each(function(d, i) {
-        var box = this.getBBox();
-        var x = box.x + box.width / 2;
-        var y = box.y + box.height / 2;
-        console.log("x: "+x+" y: "+y);
-        var c = color(x, y);
-        d3.select(this).attr({ fill: c, stroke: c})
-        });
+        var polys = d3.geom.delaunay(vertices);
+        // path = path.data(polys); //.map(function(d) { return "M" + d.join("L") + "Z"; }), String
+        console.log(polys);
+        polys.forEach(function(d) {
+            var x = (d[0][0] + d[1][0] + d[2][0])/3;
+            var y = (d[0][1] + d[1][1] + d[2][1])/3;
+            var c = color(x, y);
+            group.append("path").attr("d", "M" + d.join("L") + "Z").attr({ fill: c, stroke: c});
+        })
+        return svg.node();
     }
 }
 
