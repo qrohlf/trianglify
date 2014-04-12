@@ -56,7 +56,7 @@
             display: block;
         }
 
-        #saveas {
+        #download {
             font-size: 30px;
             margin-top: 30px;
             display: block;
@@ -77,14 +77,21 @@
             text-decoration: none;
         }
 
+        #pngconverter {
+            display: none;
+        }
+
     </style>
     </head>
 
     <body>
         <div class="container">
             <a href="#" id="button">Click for a new pattern</a>
-            <a href="#" id="saveas" target="_blank">Download current background</a>
-            <p>(use right click > save as svg)</p>
+            <div id="download">
+              Download current background as:
+              <a href="#" id="saveas" target="_blank">SVG</a> | <a href="#" id="saveaspng" target="_blank">PNG</a>
+            </div>
+            <p>(use right click > save as...)</p>
             <div id="noise-control">
                 Noise: <a href="#" id="subtractnoise">-</a><span id="noise">0</span><a href="#" id="addnoise">+</a>
                 <p>Note: noise effect will cause rendering to take longer</p>
@@ -94,15 +101,19 @@
                 <p>Made by <a href="http://qrohlf.com/">@qrohlf</a></p>
             </div>
         </div>
+        <canvas id="pngconverter">Your browser does not support the HTML Canvas element.</canvas>
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script src="trianglify.js"></script>
         <script>
         var t = new Trianglify({noiseIntensity: 0});
         var button = document.getElementById('button'),
             saveas = document.getElementById('saveas'),
+            saveaspng = document.getElementById('saveaspng'),
             subtractnoise = document.getElementById('subtractnoise'),
             addnoise = document.getElementById('addnoise'),
-            noise_display = document.getElementById('noise');
+            noise_display = document.getElementById('noise'),
+            pngconverter = document.getElementById('pngconverter'),
+            ctx = pngconverter.getContext('2d');
 
         button.onclick = function() {
             recolor();
@@ -127,11 +138,24 @@
             var pattern = t.generate(document.body.clientWidth, height());
             document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
             saveas.setAttribute('href', pattern.dataUri);
+            makePNG(pattern.dataUri);
         };
 
         function recolor() {
             t.options.x_gradient = Trianglify.randomColor();
             t.options.y_gradient = t.options.x_gradient.map(function(c){return d3.rgb(c).brighter(.5)});
+        }
+
+        function makePNG(dataUri) {
+            ctx.canvas.width  = document.body.clientWidth;
+            ctx.canvas.height = height();
+            var img = new Image();
+            img.addEventListener("load", function() {
+                ctx.drawImage(img, 0, 0);
+                var pngUri = pngconverter.toDataURL();
+                saveaspng.setAttribute('href', pngUri);
+            }, false);
+            img.src = dataUri;
         }
 
         function noise(i) {
