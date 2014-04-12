@@ -31,7 +31,6 @@ Trianglify.Pattern = function(options, width, height) {
     this.options = options
     this.width = width;
     this.height = height;
-    console.log(this);
     this.svg = this.generateSVG();
 
     var s = new XMLSerializer();

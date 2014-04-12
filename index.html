@@ -20,14 +20,14 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100%;
+            min-height: 100%;
         }
 
         body {
             background-color: #34495e;
             background-repeat: no-repeat;
             background-position: center;
-            background-size: cover;
+            background-size: 100% 100%;
             position: relative;
         }
 
@@ -38,6 +38,12 @@
             color: white;
             font-family: 'Helvetica', 'Arial', sans-serif;
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        @media screen and (max-width: 600px) {
+            .container {
+                padding-top: 60px;
+            }
         }
 
         a, a:visited, a:hover {
@@ -111,11 +117,14 @@
             noise(-0.2);
             return false;
         };
+        window.onresize = function() {
+            redraw();
+        };
 
         redraw();
 
         function redraw() {
-            var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
+            var pattern = t.generate(document.body.clientWidth, height());
             document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
             saveas.setAttribute('href', pattern.dataUri);
         };
@@ -132,6 +141,14 @@
                 noise_display.innerHTML = t.options.noiseIntensity.toFixed(1);
                 redraw();
             }
+        }
+
+        function height() {
+            return Math.max(
+                document.body.scrollHeight, document.documentElement.scrollHeight,
+                document.body.offsetHeight, document.documentElement.offsetHeight,
+                document.body.clientHeight, document.documentElement.clientHeight
+            );
         }
         // analytics
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
