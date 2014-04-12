@@ -4,7 +4,7 @@ Trianglify is a library that I wrote to generate nice SVG background images like
 
 ![example](example.jpg)
 
-It uses [d3.js](http://d3js.org) to build the polygons and SVG and SVG filters for rendering, and includes the [ColorBrewer](http://bl.ocks.org/mbostock/5577023) color palette library to get you up and running quickly. It was written in a single day because I got fed up with Adobe Illustrator.
+It was inspired by [btmills/geopattern](https://github.com/btmills/geopattern), and uses [d3.js](http://d3js.org) to build the polygons and SVG and SVG filters for rendering. It also includes the [colorbrewer](http://bl.ocks.org/mbostock/5577023) color palette library to get you up and running quickly. It was written in a single day because I got fed up with Adobe Illustrator.
 
 # Demo:
 
@@ -39,6 +39,9 @@ var t = new Trianglify();
 var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
 document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
 ```
+
+# Colors
+a list of all the available colorbrewer palettes available can be found [here](http://bl.ocks.org/mbostock/5577023), or you can [specify your own](#options)
 
 # Examples:
 
@@ -77,8 +80,6 @@ window.open(new Trianglify({
 ```
 
 ![](examples/example3.svg)
-
-(a list of all the available ColorBrewer palettes available can be found [here](http://bl.ocks.org/mbostock/5577023), or you can [specify your own](#options))
 
 
 # Options
