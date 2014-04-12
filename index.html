@@ -1,18 +1,129 @@
+
 <!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<html>
 
-path {
-  /*stroke: #fff;*/
-}
+  <!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/lair/favicon.png">
 
-circle {
-  fill: #000;
-  pointer-events: none;
-}
+    <title>Trianglify by @qrohlf</title>
 
-</style>
-<body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://d3js.org/colorbrewer.v1.min.js"></script>
-<script src="lib/meshgenerator.js"></script>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background-color: #34495e;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            margin: 0 auto;
+            padding-top: 250px;
+            color: white;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        a, a:visited, a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        #button {
+            font-size: 60px;
+            display: block;
+        }
+
+        #saveas {
+            font-size: 30px;
+            margin-top: 30px;
+            display: block;
+        }
+
+        #noise-control {
+            margin-top: 120px;
+            font-size: 20px;
+        }
+
+        #noise-control a, #noise-control a:hover, #noise-control a:visited {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 5px;
+            border-radius: 3px;
+            width: 20px;
+            margin: 0px 5px;
+            text-decoration: none;
+        }
+
+    </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <a href="#" id="button">Click for a new pattern</a>
+            <a href="#" id="saveas">Download current background</a>
+            <p>(use right click > save as svg)</p>
+            <div id="noise-control">
+                Noise: <a href="#" id="subtractnoise">-</a><span id="noise">0</span><a href="#" id="addnoise">+</a>
+                <p>Note: noise effect will cause rendering to take longer</p>
+            </div>
+            <div id="links">
+                <a href="https://github.com/qrohlf/trianglify">View on Github</a> &middot; Made by <a href="https://qrohlf.com/">@qrohlf</a>
+            </div>
+        </div>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="trianglify.js"></script>
+        <script>
+        var t = new Trianglify({noiseIntensity: 0});
+        var button = document.getElementById('button'),
+            saveas = document.getElementById('saveas'),
+            subtractnoise = document.getElementById('subtractnoise'),
+            addnoise = document.getElementById('addnoise'),
+            noise_display = document.getElementById('noise');
+
+        button.onclick = function() {
+            redraw();
+        };
+        addnoise.onclick = function() {
+            noise(0.2);
+        };
+        subtractnoise.onclick = function() {
+            noise(-0.2);
+        };
+
+        redraw();
+
+        function redraw() {
+            t.options.x_gradient = Trianglify.randomColor();
+            t.options.y_gradient = t.options.x_gradient.map(function(c){return d3.rgb(c).brighter(.5)});
+            var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
+            document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
+            saveas.setAttribute('href', pattern.dataUri);
+        };
+
+        function noise(i) {
+            i += t.options.noiseIntensity;
+            if (i >= 0 && i <= 1) {
+                t.options.noiseIntensity = i;
+                noise_display.innerHTML = t.options.noiseIntensity.toFixed(1);
+                redraw();
+            }
+        }
+        </script>
+    </body>
+</html>
