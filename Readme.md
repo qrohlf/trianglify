@@ -8,7 +8,9 @@ It was inspired by [btmills/geopattern](https://github.com/btmills/geopattern), 
 
 # Demo:
 
-http://qrohlf.com/trianglify
+Official: http://qrohlf.com/trianglify
+
+[nixterrimus](https://github.com/nixterrimus) also made a nice demo app: [link](http://nixterrimus.github.io/Triangle-Play-App/) ([source](https://github.com/nixterrimus/Triangle-Play-App))
 
 # Usage:
 
