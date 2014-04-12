@@ -97,6 +97,7 @@
             noise_display = document.getElementById('noise');
 
         button.onclick = function() {
+            recolor();
             redraw();
         };
         addnoise.onclick = function() {
@@ -109,12 +110,15 @@
         redraw();
 
         function redraw() {
-            t.options.x_gradient = Trianglify.randomColor();
-            t.options.y_gradient = t.options.x_gradient.map(function(c){return d3.rgb(c).brighter(.5)});
             var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
             document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
             saveas.setAttribute('href', pattern.dataUri);
         };
+
+        function recolor() {
+            t.options.x_gradient = Trianglify.randomColor();
+            t.options.y_gradient = t.options.x_gradient.map(function(c){return d3.rgb(c).brighter(.5)});
+        }
 
         function noise(i) {
             i += t.options.noiseIntensity;

@@ -18,11 +18,8 @@ function Trianglify(options) {
 Trianglify.randomColor = function() {
     var keys = Object.keys(colorbrewer);
     var palette = colorbrewer[keys[Math.floor(Math.random()*keys.length)]];
-    console.log(palette);
     keys = Object.keys(palette);
-    console.log(keys);
     var colors = palette[keys[Math.floor(Math.random()*keys.length)]];
-    console.log(colors);
     return colors;
 }
 
@@ -42,6 +39,10 @@ Trianglify.Pattern = function(options, width, height) {
     this.base64 = btoa(this.svgString);
     this.dataUri = 'data:image/svg+xml;base64,' + this.base64;
     this.dataUrl = 'url('+this.dataUri+')';
+}
+
+Trianglify.Pattern.prototype.append = function() {
+    document.body.appendChild(this.svg);
 }
 
 Trianglify.Pattern.gradient_2d = function (x_gradient, y_gradient, width, height) {
@@ -96,8 +97,6 @@ Trianglify.Pattern.prototype.generateSVG = function () {
     var filterRect = svg.append("rect").attr("opacity", options.noiseIntensity).attr('width', '100%').attr('height', '100%').attr("filter", "url(#noise)");
     }
     var polys = d3.geom.delaunay(vertices);
-    // path = path.data(polys); //.map(function(d) { return "M" + d.join("L") + "Z"; }), String
-    console.log(polys);
     polys.forEach(function(d) {
         var x = (d[0][0] + d[1][0] + d[2][0])/3;
         var y = (d[0][1] + d[1][1] + d[2][1])/3;
