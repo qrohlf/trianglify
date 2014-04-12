@@ -76,7 +76,7 @@
     <body>
         <div class="container">
             <a href="#" id="button">Click for a new pattern</a>
-            <a href="#" id="saveas">Download current background</a>
+            <a href="#" id="saveas" target="_blank">Download current background</a>
             <p>(use right click > save as svg)</p>
             <div id="noise-control">
                 Noise: <a href="#" id="subtractnoise">-</a><span id="noise">0</span><a href="#" id="addnoise">+</a>
@@ -99,12 +99,15 @@
         button.onclick = function() {
             recolor();
             redraw();
+            return false;
         };
         addnoise.onclick = function() {
             noise(0.2);
+            return false;
         };
         subtractnoise.onclick = function() {
             noise(-0.2);
+            return false;
         };
 
         redraw();
