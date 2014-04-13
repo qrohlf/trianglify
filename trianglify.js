@@ -84,7 +84,7 @@ Trianglify.Pattern.prototype.generateSVG = function () {
     var group = svg.append("g");
 
 
-    if (options.noiseIntensity > 0) {
+    if (options.noiseIntensity > 0.01) {
     var filter = svg.append("filter").attr("id", "noise");
 
     var noise = filter.append('feTurbulence').attr('type', 'fractalNoise').attr('in', 'fillPaint').attr('fill', '#F00').attr('baseFrequency', 0.7).attr('numOctaves', '10').attr('stitchTiles', 'stitch');
