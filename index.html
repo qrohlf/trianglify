@@ -113,7 +113,7 @@
                     <ul>
                         <li>Noise: <a href="#" id="subtractnoise" class="btn box small">-</a><span id="noise">0</span><a href="#" id="addnoise" class="btn box small">+</a></li>
                         <li>Cellsize: <a href="#" id="subtractcellsize" class="btn box small">-</a><span id="cellsize">0</span><a href="#" id="addcellsize" class="btn box small">+</a></li>
-                        <li>Cellpadding: <a href="#" id="subtractcellpadding" class="btn box small">-</a><span id="cellpadding">0</span><a href="#" id="addcellpadding" class="btn box small">+</a></li>
+                        <li>Cellpadding: <a href="#" id="subtractcellpadding" class="btn box small">-</a><span id="cellpadding">0</span><a href="#" id="addcellpadding" class="btn box small" title="cellpadding must be smaller than cellsize/2">+</a></li>
                     </ul>
                     <p>Note: noise effect will cause rendering to take longer</p>
                 </div>
@@ -230,7 +230,7 @@
 
         function cellpadding(i) {
             i += t.options.cellpadding;
-            if (i >= 0) {
+            if (i >= 0  && i < t.options.cellsize/2) {
                 t.options.cellpadding = i;
                 redraw();
             }
