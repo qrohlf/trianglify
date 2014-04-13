@@ -214,6 +214,9 @@
             if (i >= 0 && i <= 1) {
                 t.options.noiseIntensity = i;
                 redraw();
+            } else if (i < 0) { 
+                t.options.noiseIntensity = 0;
+                redraw();
             }
         }
 
