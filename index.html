@@ -225,6 +225,9 @@
             if (i >= 0) {
                 t.options.cellsize = i;
                 t.options.bleed = i;
+                if (t.options.cellpadding >= t.options.cellsize/2) {
+                    t.options.cellpadding = 5*Math.floor((t.options.cellsize/2 - 1)/5);
+                }
                 redraw();
             }
         }
