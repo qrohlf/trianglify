@@ -31,6 +31,12 @@ Or you can simply clone the repo
 git clone https://github.com/qrohlf/trianglify.git
 ```
 
+Or if you're using nodejs
+
+```bash
+npm install trianglify
+```
+
 # Usage:
 
 Include d3 and `trianglify.js` or `trianglify.min.js` on your page:
