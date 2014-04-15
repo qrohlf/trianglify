@@ -1,0 +1,23 @@
+{
+  "name": "trianglify",
+  "main": "trianglify.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/qrohlf/trianglify",
+  "authors": [
+    "Quinn Rohlf <qr@qrohlf.com>"
+  ],
+  "description": "Trianglify is a javascript library for generating colorful triangle meshes that can be used as SVG images and CSS backgrounds.",
+  "keywords": [
+    "svg",
+    "d3.js",
+    "visualization"
+  ],
+  "license": "GPLv3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
