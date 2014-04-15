@@ -111,4 +111,8 @@ Pull requests are welcome! Fork the repo on [Github](https://github.com/qrohlf/t
 
 Trianglify is licensed under the GPLv3 License. Happy hacking!
 
+# Credits
+- Trianglify makes use of the excellent [d3.js](https://github.com/mbostock/d3) visualization library by Michael Bostock.
+- Trianglify includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
+- Trianglify uses the excellent (and free!) [GitHub Pages](https://pages.github.com) for hosting. 
 
