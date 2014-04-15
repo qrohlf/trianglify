@@ -12,6 +12,25 @@ Official: http://qrohlf.com/trianglify
 
 [nixterrimus](https://github.com/nixterrimus) also made a nice demo app: [link](http://nixterrimus.github.io/Triangle-Play-App/) ([source](https://github.com/nixterrimus/Triangle-Play-App))
 
+# Getting Trianglify
+Trianglify is available via Bower
+
+```bash
+bower install trianglify
+```
+
+Or as a zip archive
+
+```bash
+https://github.com/qrohlf/trianglify/archive/gh-pages.zip
+```
+
+Or you can simply clone the repo
+
+```bash
+git clone https://github.com/qrohlf/trianglify.git
+```
+
 # Usage:
 
 Include d3 and `trianglify.js` or `trianglify.min.js` on your page:
