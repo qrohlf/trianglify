@@ -109,6 +109,6 @@ Pull requests are welcome! Fork the repo on [Github](https://github.com/qrohlf/t
 
 # License
 
-Trianglify is licensed under the MIT License. Happy hacking!
+Trianglify is licensed under the GPLv3 License. Happy hacking!
 
 
