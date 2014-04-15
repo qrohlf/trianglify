@@ -16,6 +16,15 @@ function Trianglify(options) {
     }
 }
 
+//nodejs stuff
+if (typeof module !== 'undefined' && module.exports) {
+    d3 = require("d3");
+    document = require("jsdom").jsdom();
+    XMLSerializer = require("xmldom").XMLSerializer;
+    btoa = require('btoa');
+    module.exports = Trianglify;
+}
+
 Trianglify.randomColor = function() {
     var keys = Object.keys(colorbrewer);
     var palette = colorbrewer[keys[Math.floor(Math.random()*keys.length)]];
