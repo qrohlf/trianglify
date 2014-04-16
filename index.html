@@ -9,7 +9,7 @@
     <meta property="og:image" content="http://qrohlf.com/trianglify/examples/example1.jpg" />
 
     <title>Trianglify by @qrohlf</title>
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,400,600,700,800' type='text/css'>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400' type='text/css'>
 
     <style type="text/css">
         html {
@@ -30,6 +30,7 @@
             background-size: 100% 100%;
             position: relative;
             font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
         }
 
         .container {
@@ -91,6 +92,15 @@
             display: none !important;
         }
 
+        .download::before {
+            display: inline-block;
+            content: '';
+            height: 16px;
+            width: 16px;
+            margin-right: 10px;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQElEQVQ4T92TMU7DQBBFZ7zbUOEbkBtgQQ7gBsmp4hpB2BuQI8ANwgnYWIjarmJEwwEc4SOEG4SKZjfDrKMgO2yiSHS4W83M+zPzxwh//HBffX8wIhevZtnOvP8IOEuuVYD46NsNEUznZabaMe8OfBBfsQN1AOeDqxQpOK3K7L4N2RT3k9EdELxXL1mx6QKji8tISnFDgIppIQF9WGPT+vW5dhAEjF3bLk9IkfP7hL1dIpA2xk7Rec0Kn0zMrTUTV7jvNhqQkGPOSRHheA1gIhAxwD4cBhC3gJi6jhtAW5FpC55zYjEo6lIvXCxKVE/QasgbG7Nqr+PCNqADA8qRIGS1eNdYzRKFlIpVlZvpkH+r2RmCtsboXzYCsRuIQ/8hUQFIej57yn9s9CVGsQqDI6u4/ebqiNVWX0LXb3q5nf8Nymmadx3ne7YAAAAASUVORK5CYII=);
+        }
+
     </style>
     </head>
 
@@ -102,7 +112,8 @@
                 <p>Made by <a href="http://qrohlf.com/">Quinn Rohlf</a></p>
                 <p>
                     <a href="#" id="button" class="btn box">Click for a new pattern</a>
-                    <a href="#" id="saveas" target="_blank" class="btn box" title="right click > save as svg" download="trianglify-background.svg">Download current background</a>
+                    <a href="#" id="saveas" target="_blank" class="download btn box" title="right click > save as svg" download="trianglify-background.svg">SVG</a>
+                    <!-- <a href="https://cloudconvert.org/svg-to-png" target="_blank" class="download btn box">PNG</a> -->
                 </p>
                 <div id="controls" class="hidden">
                     <ul>
