@@ -19,7 +19,8 @@ function Trianglify(options) {
 //nodejs stuff
 if (typeof module !== 'undefined' && module.exports) {
     d3 = require("d3");
-    document = require("jsdom").jsdom();
+    jsdom = require("jsdom");
+    document = new (jsdom.level(1, "core").Document)();
     XMLSerializer = require("xmldom").XMLSerializer;
     btoa = require('btoa');
     module.exports = Trianglify;
