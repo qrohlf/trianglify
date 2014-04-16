@@ -107,8 +107,11 @@
                 <p>Made by <a href="http://qrohlf.com/">Quinn Rohlf</a></p>
                 <p>
                     <a href="#" id="button" class="btn box">Click for a new pattern</a>
-                    <a href="#" id="saveas" target="_blank" class="btn box" title="right click > save as svg">Download current background</a>
                 </p>
+                <p>
+                  Download current background as: <br/>
+                    <a href="#" id="saveassvg" target="_blank" class="btn box" title="right click > save as svg"> SVG</a>
+                    <a href="#" id="saveaspng" target="_blank" class="btn box" title="right click > save as png">PNG</a>
                 <div id="controls" class="hidden">
                     <ul>
                         <li>Noise: <a href="#" id="subtractnoise" class="btn box small">-</a><span id="noise">0</span><a href="#" id="addnoise" class="btn box small">+</a></li>
@@ -131,7 +134,8 @@
         <script>
         var t = new Trianglify({noiseIntensity: 0});
         var button = document.getElementById('button'),
-            saveas = document.getElementById('saveas'),
+            saveassvg = document.getElementById('saveassvg'),
+            saveaspng = document.getElementById('saveaspng'),
             subtractnoise = document.getElementById('subtractnoise'),
             addnoise = document.getElementById('addnoise'),
             noise_display = document.getElementById('noise'),
@@ -198,7 +202,9 @@
             console.log("drawing "+document.body.clientWidth+"x"+height())
             var pattern = t.generate(document.body.clientWidth, height());
             document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
-            saveas.setAttribute('href', pattern.dataUri);
+            saveassvg.setAttribute('href', pattern.dataUri);
+            pattern.toImage();
+            saveaspng.setAttribute('href', pattern.dataUri);
             noise_display.innerHTML = t.options.noiseIntensity.toFixed(1);
             cellsize_display.innerHTML = t.options.cellsize.toFixed(0);
             cellpadding_display.innerHTML = t.options.cellpadding.toFixed(0);
@@ -214,7 +220,7 @@
             if (i >= 0 && i <= 1) {
                 t.options.noiseIntensity = i;
                 redraw();
-            } else if (i < 0) { 
+            } else if (i < 0) {
                 t.options.noiseIntensity = 0;
                 redraw();
             }
