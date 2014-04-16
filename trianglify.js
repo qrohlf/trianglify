@@ -1,7 +1,15 @@
 // Trianglify. Made by (and copyright) @qrohlf, licensed under the GPLv3.
 // Needs d3.js
+//
+// JSHint stuff:
+/* global module, require, jsdom:true, d3:true, document:true, XMLSerializer:true, btoa:true*/
 function Trianglify(options) {
-    if (typeof options == 'undefined') options = {};
+    if (typeof options === 'undefined') {
+        options = {};
+    }
+    function defaults(opt, def) {
+        return (typeof opt !== 'undefined') ?  opt : def;
+    }
     // defaults
     this.options = {
         cellsize: defaults(options.cellsize, 150), // zero not valid here
@@ -10,11 +18,9 @@ function Trianglify(options) {
         noiseIntensity: defaults(options.noiseIntensity, 0.3),
         x_gradient: defaults(options.x_gradient, Trianglify.randomColor()),
         format: defaults(options.format, "svg"),
-    }
-    this.options.y_gradient = options.y_gradient || this.options.x_gradient.map(function(c){return d3.rgb(c).brighter(.5)})
-    function defaults(opt, def) {
-        return (typeof opt !== 'undefined') ?  opt : def;
-    }
+    };
+
+    this.options.y_gradient = options.y_gradient || this.options.x_gradient.map(function(c){return d3.rgb(c).brighter(0.5);});
 }
 
 //nodejs stuff
@@ -28,33 +34,33 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 Trianglify.randomColor = function() {
-    var keys = Object.keys(colorbrewer);
-    var palette = colorbrewer[keys[Math.floor(Math.random()*keys.length)]];
+    var keys = Object.keys(Trianglify.colorbrewer);
+    var palette = Trianglify.colorbrewer[keys[Math.floor(Math.random()*keys.length)]];
     keys = Object.keys(palette);
     var colors = palette[keys[Math.floor(Math.random()*keys.length)]];
     return colors;
-}
+};
 
 Trianglify.prototype.generate = function(width, height) {
     return new Trianglify.Pattern(this.options, width, height);
-}
+};
 
 Trianglify.Pattern = function(options, width, height) {
-    this.options = options
+    this.options = options;
     this.width = width;
     this.height = height;
     this.polys = this.generatePolygons();
-
-    if (options.format === undefined || options.format === "svg" || options.format === "image/svg+xml") {
-        this.toVector();
-    } else {
-        this.toImage(options.format);
-    }
-}
+    this.svg = this.generateSVG();
+    var s = new XMLSerializer();
+    this.svgString = s.serializeToString(this.svg);
+    this.base64 = btoa(this.svgString);
+    this.dataUri = 'data:image/svg+xml;base64,' + this.base64;
+    this.dataUrl = 'url('+this.dataUri+')';
+};
 
 Trianglify.Pattern.prototype.append = function() {
     document.body.appendChild(this.svg);
-}
+};
 
 Trianglify.Pattern.gradient_2d = function (x_gradient, y_gradient, width, height) {
 
@@ -66,13 +72,13 @@ Trianglify.Pattern.gradient_2d = function (x_gradient, y_gradient, width, height
             .range(y_gradient)
             .domain(d3.range(0, height, height/y_gradient.length)); //[-bleed, width+bleed]
         return d3.interpolateRgb(color_x(x), color_y(y))(0.5);
-    }
-}
+    };
+};
 
 Trianglify.Pattern.prototype.generatePolygons = function () {
     var options = this.options;
-    cellsX = Math.ceil((this.width+options.bleed*2)/options.cellsize),
-    cellsY = Math.ceil((this.height+options.bleed*2)/options.cellsize);
+    var cellsX = Math.ceil((this.width+options.bleed*2)/options.cellsize);
+    var cellsY = Math.ceil((this.height+options.bleed*2)/options.cellsize);
 
     var vertices = d3.range(cellsX*cellsY).map(function(d) {
         // figure out which cell we are in
@@ -85,12 +91,12 @@ Trianglify.Pattern.prototype.generatePolygons = function () {
     });
 
     return d3.geom.delaunay(vertices);
-}
+};
 
 
-Trianglify.Pattern.prototype.buildSVG = function () {
+Trianglify.Pattern.prototype.generateSVG = function () {
     var options = this.options;
-    color = Trianglify.Pattern.gradient_2d(options.x_gradient, options.y_gradient, this.width, this.height);
+    var color = Trianglify.Pattern.gradient_2d(options.x_gradient, options.y_gradient, this.width, this.height);
 
     var elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     var svg = d3.select(elem);
@@ -104,23 +110,37 @@ Trianglify.Pattern.prototype.buildSVG = function () {
     if (options.noiseIntensity > 0.01) {
         var filter = svg.append("filter").attr("id", "noise");
 
-        var noise = filter.append('feTurbulence')
-                          .attr('type', 'fractalNoise')
-                          .attr('in', 'fillPaint')
-                          .attr('fill', '#F00')
-                          .attr('baseFrequency', 0.7)
-                          .attr('numOctaves', '10')
-                          .attr('stitchTiles', 'stitch');
+        filter.append('feTurbulence')
+            .attr('type', 'fractalNoise')
+            .attr('in', 'fillPaint')
+            .attr('fill', '#F00')
+            .attr('baseFrequency', 0.7)
+            .attr('numOctaves', '10')
+            .attr('stitchTiles', 'stitch');
+        
         var transfer = filter.append('feComponentTransfer');
-        transfer.append('feFuncR').attr('type', 'linear').attr('slope', '2').attr('intercept', '-.5');
-        transfer.append('feFuncG').attr('type', 'linear').attr('slope', '2').attr('intercept', '-.5');
-        transfer.append('feFuncB').attr('type', 'linear').attr('slope', '2').attr('intercept', '-.5');
-        filter.append('feColorMatrix').attr('type', 'matrix').attr('values', "0.3333 0.3333 0.3333 0 0 \n 0.3333 0.3333 0.3333 0 0 \n 0.3333 0.3333 0.3333 0 0 \n 0 0 0 1 0")
-        var filterRect = svg.append("rect")
-                            .attr("opacity", options.noiseIntensity)
-                            .attr('width', '100%')
-                            .attr('height', '100%')
-                            .attr("filter", "url(#noise)");
+        transfer.append('feFuncR')
+            .attr('type', 'linear')
+            .attr('slope', '2')
+            .attr('intercept', '-.5');
+        transfer.append('feFuncG')
+            .attr('type', 'linear')
+            .attr('slope', '2')
+            .attr('intercept', '-.5');
+        transfer.append('feFuncB')
+            .attr('type', 'linear')
+            .attr('slope', '2')
+            .attr('intercept', '-.5');
+        
+        filter.append('feColorMatrix')
+            .attr('type', 'matrix')
+            .attr('values', "0.3333 0.3333 0.3333 0 0 \n 0.3333 0.3333 0.3333 0 0 \n 0.3333 0.3333 0.3333 0 0 \n 0 0 0 1 0");
+        
+        svg.append("rect")
+            .attr("opacity", options.noiseIntensity)
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr("filter", "url(#noise)");
     }
 
     this.polys.forEach(function(d) {
@@ -128,104 +148,16 @@ Trianglify.Pattern.prototype.buildSVG = function () {
         var y = (d[0][1] + d[1][1] + d[2][1])/3;
         var c = color(x, y);
         group.append("path").attr("d", "M" + d.join("L") + "Z").attr({ fill: c, stroke: c});
-    })
+    });
     return svg.node();
-}
-
-Trianglify.Pattern.prototype.drawToCanvas = function(ctx, forceSize, loc) {
-    if (!(ctx instanceof CanvasRenderingContext2D)) {
-        console.log("Must provide a 2D canvas rendering context.");
-        return;
-    }
-
-    var options = this.options;
-    color = Trianglify.Pattern.gradient_2d(options.x_gradient, options.y_gradient, this.width, this.height);
-
-    if (forceSize === true || forceSize === undefined) {
-        ctx.canvas.width  = this.width;
-        ctx.canvas.height = this.height;
-    }
-
-    if (loc === undefined) {loc = [0,0];}
-
-    if (options.noiseIntensity > 0.01) {
-      console.log("Canvas-based exports do not yet support noiseIntensity; continuing without.");
-    }
-
-    this.polys.forEach(function(d) {
-        var x = (d[0][0] + d[1][0] + d[2][0])/3;
-        var y = (d[0][1] + d[1][1] + d[2][1])/3;
-
-        ctx.beginPath();
-        ctx.moveTo(loc[0]+d[0][0],loc[1]+d[0][1]);
-        ctx.lineTo(loc[0]+d[1][0],loc[1]+d[1][1]);
-        ctx.lineTo(loc[0]+d[2][0],loc[1]+d[2][1]);
-        ctx.lineTo(loc[0]+d[0][0],loc[1]+d[0][1]);
-        ctx.fillStyle = ctx.strokeStyle = color(x, y);
-        ctx.fill();
-        ctx.stroke(); // this prevents seams between the polygons
-    })
-}
-
-Trianglify.Pattern.prototype.toVector = function() {
-    this.svg = this.buildSVG();
-    var s = new XMLSerializer();
-    this.svgString = s.serializeToString(this.svg);
-    this.base64 = btoa(this.svgString);
-    this.dataUri = 'data:image/svg+xml;base64,' + this.base64;
-    this.dataUrl = 'url('+this.dataUri+')';
-}
-
-Trianglify.Pattern.prototype.toImage = function (format, ctx) {
-    if (format === undefined) {
-      format = "";
-    } else if (format.indexOf("/") < 0) {
-      format = "image/" + format;
-    }
-
-    if (format !== "image/png" && format !== "image/jpeg" && format !== "") {
-      console.log("Warning: image types other than PNG or JPEG may have very limited browser support. (Selected: "+format+")");
-    }
-
-    var deleteAfter = false;
-    if (!(ctx instanceof CanvasRenderingContext2D)) {
-      if (ctx === undefined) {
-        ctx = this.appendCanvas();
-        deleteAfter = true;
-      } else {
-        console.log("Must provide a 2D canvas rendering context or leave empty to generate new canvas.");
-        return;
-      }
-    } else {
-      this.drawToCanvas(ctx);
-    }
-
-    this.dataUri = ctx.canvas.toDataURL(format);
-    this.dataUrl = 'url('+this.dataUri+')';
-
-    if (deleteAfter) {
-      document.body.removeChild(ctx.canvas);
-    }
-}
+};
 
 Trianglify.Pattern.prototype.append = function() {
     document.body.appendChild(this.svg);
-}
-
-Trianglify.Pattern.prototype.appendCanvas = function (show) {
-    var cnv = document.createElement("canvas");
-    if (!show) {
-      cnv.style.display = "none";
-    }
-
-    document.body.appendChild(cnv);
-    var ctx = cnv.getContext("2d");
-    this.drawToCanvas(ctx);
-    return ctx;
-}
+};
 
 //colorbrewer palettes from http://bl.ocks.org/mbostock/5577023
-var colorbrewer = {YlGn: {
+Trianglify.colorbrewer = {YlGn: {
 3: ["#f7fcb9","#addd8e","#31a354"],
 4: ["#ffffcc","#c2e699","#78c679","#238443"],
 5: ["#ffffcc","#c2e699","#78c679","#31a354","#006837"],
