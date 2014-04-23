@@ -8,9 +8,14 @@ It was inspired by [btmills/geopattern](https://github.com/btmills/geopattern), 
 
 # Demo:
 
-Official: http://qrohlf.com/trianglify
+**Official:**  
+http://qrohlf.com/trianglify
 
-[nixterrimus](https://github.com/nixterrimus) also made a nice demo app: [link](http://nixterrimus.github.io/Triangle-Play-App/) ([source](https://github.com/nixterrimus/Triangle-Play-App))
+**More:**  
+- [@nixterrimus](https://github.com/nixterrimus) has a nice demo app that lets you modify the parameters and choose between the built-in color palettes: [link](http://nixterrimus.github.io/Triangle-Play-App/) ([source](https://github.com/nixterrimus/Triangle-Play-App))
+- [@allssndro](https://github.com/alessndro) put together a version that lets you choose from the top ColourLovers palettes: [link](http://alessndro.github.io/trianglify-background-generator/) ([source](https://github.com/alessndro/trianglify-background-generator))
+
+*If you've built something cool with Trianglify, shoot me an email (qr@qrohlf.com) and I'll add it to the list!*
 
 # Getting Trianglify
 Trianglify is available via Bower
