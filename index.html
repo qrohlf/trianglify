@@ -112,7 +112,8 @@
                 <p>Made by <a href="http://qrohlf.com/">Quinn Rohlf</a></p>
                 <p>
                     <a href="#" id="button" class="btn box">Click for a new pattern</a>
-                    <a href="#" id="saveas" target="_blank" class="download btn box" title="right click > save as svg" download="trianglify-background.svg">SVG</a>
+                    <a href="#" id="saveas_png" target="_blank" class="download btn box" title="right click > save as png" download="trianglify-background.png">PNG</a>
+                    <a href="#" id="saveas_svg" target="_blank" class="download btn box" title="right click > save as svg" download="trianglify-background.svg">SVG</a>
                     <!-- <a href="https://cloudconvert.org/svg-to-png" target="_blank" class="download btn box">PNG</a> -->
                 </p>
                 <p>(if you need a PNG, try downloading the image in SVG format and then using <a href="https://cloudconvert.org/svg-to-png">Cloud Convert</a>)</p>
@@ -133,12 +134,16 @@
                 </footer>
             </div>
         </div>
+        <div class="hidden">
+            <canvas id="png"></canvas>
+        </div>
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script src="trianglify.js"></script>
         <script>
         var t = new Trianglify({noiseIntensity: 0});
         var button = document.getElementById('button'),
-            saveas = document.getElementById('saveas'),
+            saveas_png = document.getElementById('saveas_png'),
+            saveas_svg = document.getElementById('saveas_svg'),
             subtractnoise = document.getElementById('subtractnoise'),
             addnoise = document.getElementById('addnoise'),
             noise_display = document.getElementById('noise'),
@@ -205,10 +210,21 @@
             console.log("drawing "+document.body.clientWidth+"x"+height())
             var pattern = t.generate(document.body.clientWidth, height());
             document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
-            saveas.setAttribute('href', pattern.dataUri);
+            saveas_svg.setAttribute('href', pattern.dataUri);
             noise_display.innerHTML = t.options.noiseIntensity.toFixed(1);
             cellsize_display.innerHTML = t.options.cellsize.toFixed(0);
             cellpadding_display.innerHTML = t.options.cellpadding.toFixed(0);
+
+            var canvas = document.getElementById('png'),
+                img = new Image;
+
+            canvas.width = pattern.width;
+            canvas.height = pattern.height;
+            img.onload = function () {
+                canvas.getContext('2d').drawImage(img, 0, 0);
+                saveas_png.setAttribute('href', canvas.toDataURL('image/png'));
+            };
+            img.src = pattern.dataUri;
         };
 
         function recolor() {
