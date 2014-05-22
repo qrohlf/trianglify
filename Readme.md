@@ -132,6 +132,8 @@ cellpadding | set the minimum distance between each point | integers > 0 and < c
 noiseIntensity | set the opacity of the noise filter. This has a significant impact on SVG rendering time - set to 0 to disable. | 0 to 1 | 0.3
 x_gradient | an array of colors to use to construct a gradient for the x-axis | array of colors in hexadecimal string format (i.e. `["#961E00", "#FF0000", "#EEEEEE"]`) | random selection from colorbrewer palettes
 y_gradient | an array of colors to use to construct a gradient for the y-axis | array of colors in hexadecimal string format (i.e. `["#961E00", "#FF0000", "#EEEEEE"]`) | x_gradient, brightened by a factor of 0.5
+fillOpacity | sets the opacity of the inside of the cells | 0 to 1 | 1
+strokeOpacity | sets the opacity of the outline of the cells | 0 to 1 | 1
 
 # Contributing
 
