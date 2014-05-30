@@ -106,7 +106,6 @@ Trianglify.Pattern.prototype.generateSVG = function () {
     svg.attr("width", this.width);
     svg.attr("height", this.height);
     svg.attr('xmlns', 'http://www.w3.org/2000/svg');
-   // svg.attr('opacity', options.fillOpacity);
     var group = svg.append("g");
 
     if (options.noiseIntensity > 0.01) {
