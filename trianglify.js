@@ -18,6 +18,8 @@ function Trianglify(options) {
         noiseIntensity: defaults(options.noiseIntensity, 0.3),
         x_gradient: defaults(options.x_gradient, Trianglify.randomColor()),
         format: defaults(options.format, "svg"),
+        fillOpacity: defaults(options.fillOpacity, 1),
+        strokeOpacity: defaults(options.strokeOpacity, 1)
     };
 
     this.options.y_gradient = options.y_gradient || this.options.x_gradient.map(function(c){return d3.rgb(c).brighter(0.5);});
@@ -106,7 +108,6 @@ Trianglify.Pattern.prototype.generateSVG = function () {
     svg.attr('xmlns', 'http://www.w3.org/2000/svg');
     var group = svg.append("g");
 
-
     if (options.noiseIntensity > 0.01) {
         var filter = svg.append("filter").attr("id", "noise");
 
@@ -147,7 +148,7 @@ Trianglify.Pattern.prototype.generateSVG = function () {
         var x = (d[0][0] + d[1][0] + d[2][0])/3;
         var y = (d[0][1] + d[1][1] + d[2][1])/3;
         var c = color(x, y);
-        group.append("path").attr("d", "M" + d.join("L") + "Z").attr({ fill: c, stroke: c});
+        group.append("path").attr("d", "M" + d.join("L") + "Z").attr({ fill: c, stroke: c }).attr('fill-opacity', options.fillOpacity).attr('stroke-opacity', options.strokeOpacity);
     });
     return svg.node();
 };
