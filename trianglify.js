@@ -86,8 +86,8 @@ Trianglify.Pattern.prototype.generatePolygons = function () {
         // figure out which cell we are in
         var col = d % cellsX;
         var row = Math.floor(d / cellsX);
-        var x = -options.bleed + col*options.cellsize + Math.random() * (options.cellsize - options.cellpadding*2) + options.cellpadding;
-        var y = -options.bleed + row*options.cellsize + Math.random() * (options.cellsize - options.cellpadding*2) + options.cellpadding;
+        var x = Math.round(-options.bleed + col*options.cellsize + Math.random() * (options.cellsize - options.cellpadding*2) + options.cellpadding);
+        var y = Math.round(-options.bleed + row*options.cellsize + Math.random() * (options.cellsize - options.cellpadding*2) + options.cellpadding);
         // return [x*cellsize, y*cellsize];
         return [x, y]; // Populate the actual background with points
     });
@@ -118,7 +118,7 @@ Trianglify.Pattern.prototype.generateSVG = function () {
             .attr('baseFrequency', 0.7)
             .attr('numOctaves', '10')
             .attr('stitchTiles', 'stitch');
-        
+
         var transfer = filter.append('feComponentTransfer');
         transfer.append('feFuncR')
             .attr('type', 'linear')
@@ -132,11 +132,11 @@ Trianglify.Pattern.prototype.generateSVG = function () {
             .attr('type', 'linear')
             .attr('slope', '2')
             .attr('intercept', '-.5');
-        
+
         filter.append('feColorMatrix')
             .attr('type', 'matrix')
             .attr('values', "0.3333 0.3333 0.3333 0 0 \n 0.3333 0.3333 0.3333 0 0 \n 0.3333 0.3333 0.3333 0 0 \n 0 0 0 1 0");
-        
+
         svg.append("rect")
             .attr("opacity", options.noiseIntensity)
             .attr('width', '100%')
