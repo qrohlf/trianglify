@@ -6,7 +6,7 @@ Trianglify is a library that I wrote to generate nice SVG background images like
 
 It was inspired by [btmills/geopattern](https://github.com/btmills/geopattern), and uses [d3.js](http://d3js.org) to build the polygons and SVG and SVG filters for rendering. It also includes the [colorbrewer](http://bl.ocks.org/mbostock/5577023) color palette library to get you up and running quickly. It was written in a single day because I got fed up with Adobe Illustrator.
 
-# Demo:
+# Demo
 
 **Official:**  
 http://qrohlf.com/trianglify
@@ -15,25 +15,11 @@ http://qrohlf.com/trianglify
 - [@nixterrimus](https://github.com/nixterrimus) has a nice demo app that lets you modify the parameters and choose between the built-in color palettes: [link](http://nixterrimus.github.io/Triangle-Play-App/) ([source](https://github.com/nixterrimus/Triangle-Play-App))
 - [@alssndro](https://github.com/alssndro) put together a version that lets you choose from the top ColourLovers palettes: [link](http://alssndro.github.io/trianglify-background-generator/) ([source](https://github.com/alssndro/trianglify-background-generator))
 
-*If you've built something cool with Trianglify, shoot me an email (qr@qrohlf.com) and I'll add it to the list!*
-
 # Getting Trianglify
-Trianglify is available via Bower
+The recommended way to use Trianglify is via Bower:
 
 ```bash
 bower install trianglify
-```
-
-Or as a zip archive
-
-```bash
-https://github.com/qrohlf/trianglify/archive/gh-pages.zip
-```
-
-Or you can simply clone the repo
-
-```bash
-git clone https://github.com/qrohlf/trianglify.git
 ```
 
 Or if you're using nodejs
@@ -42,7 +28,9 @@ Or if you're using nodejs
 npm install trianglify
 ```
 
-# Usage:
+Alternately, you can load it via [CDNJS](http://cdnjs.com/libraries/trianglify), download the latest version as a [zip archive](https://github.com/qrohlf/trianglify/archive/gh-pages.zip), or simply clone this repo.
+
+# Usage
 
 Include d3 and `trianglify.js` or `trianglify.min.js` on your page:
 
@@ -75,28 +63,28 @@ document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
 # Colors
 a list of all the available colorbrewer palettes available can be found [here](http://bl.ocks.org/mbostock/5577023), or you can [specify your own](#options)
 
-# Examples:
+# Examples
 
 ## Smaller Cell Size
 
 ```
 window.open(new Trianglify({
-    x_gradient: colorbrewer.PuOr[9], 
-    noiseIntensity: 0, 
+    x_gradient: colorbrewer.PuOr[9],
+    noiseIntensity: 0,
     cellsize: 90}).generate(700, 400).dataUri)
 ```
 
 ![](examples/example1.jpg)
 
 
-## Differing x and y gradients 
+## Differing x and y gradients
 
 ```
 window.open(new Trianglify({
-    x_gradient: colorbrewer.YlGnBu[9], 
+    x_gradient: colorbrewer.YlGnBu[9],
     y_gradient: colorbrewer.RdPu[9],
-    noiseIntensity: 0.1, 
-    cellpadding: 10, 
+    noiseIntensity: 0.1,
+    cellpadding: 10,
     cellsize: 100}).generate(700, 400).dataUri);
 ```
 
@@ -107,7 +95,7 @@ window.open(new Trianglify({
 
 ```
 window.open(new Trianglify({
-    cellpadding: 80, 
+    cellpadding: 80,
     cellsize: 200}).generate(700, 400).dataUri)
 ```
 
@@ -137,7 +125,14 @@ strokeOpacity | sets the opacity of the outline of the cells | 0 to 1 | 1
 
 # Contributing
 
-Pull requests are welcome! Fork the repo on [Github](https://github.com/qrohlf/trianglify/fork).
+Pull requests are welcome! Fork the repo on [Github](https://github.com/qrohlf/trianglify/fork) and submit a pull request.
+
+Trianglify uses gulp to handle code hinting and minification. Make sure to run gulp before committing changes for a pull request and check in the minified version along with your changes:
+
+```
+npm install -g gulp && npm install # you only have to do this once
+gulp # do this before you commit
+```
 
 # License
 
@@ -146,5 +141,4 @@ Trianglify is licensed under the GPLv3 License. Happy hacking!
 # Credits
 - Trianglify makes use of the excellent [d3.js](https://github.com/mbostock/d3) visualization library by Michael Bostock.
 - Trianglify includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).
-- Trianglify uses the excellent (and free!) [GitHub Pages](https://pages.github.com) for hosting. 
-
+- Trianglify uses the excellent (and free!) [GitHub Pages](https://pages.github.com) for hosting.
