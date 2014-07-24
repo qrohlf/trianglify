@@ -2,7 +2,7 @@
 
 Trianglify is a library that I wrote to generate nice SVG background images like this one:
 
-![example](example.jpg)
+![example](examples/example0.jpg)
 
 It was inspired by [btmills/geopattern](https://github.com/btmills/geopattern), and uses [d3.js](http://d3js.org) to build the polygons and SVG and SVG filters for rendering. It also includes the [colorbrewer](http://bl.ocks.org/mbostock/5577023) color palette library to get you up and running quickly. It was written in a single day because I got fed up with Adobe Illustrator.
 
