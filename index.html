@@ -115,7 +115,6 @@
                     <a href="#" id="saveas" target="_blank" class="download btn box" title="right click > save as svg" download="trianglify-background.svg">SVG</a>
                     <!-- <a href="https://cloudconvert.org/svg-to-png" target="_blank" class="download btn box">PNG</a> -->
                 </p>
-                <p>Have a project? I currently have some openings and am looking for small to medium sized web development projects. <a href="mailto:qr@qrohlf.com">Send me an email</a>!</p>
                 <div id="controls" class="hidden">
                     <ul>
                         <li>Noise: <a href="#" id="subtractnoise" class="btn box small">-</a><span id="noise">0</span><a href="#" id="addnoise" class="btn box small">+</a></li>
@@ -221,7 +220,7 @@
             if (i >= 0 && i <= 1) {
                 t.options.noiseIntensity = i;
                 redraw();
-            } else if (i < 0) { 
+            } else if (i < 0) {
                 t.options.noiseIntensity = 0;
                 redraw();
             }
