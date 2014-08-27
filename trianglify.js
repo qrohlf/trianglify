@@ -19,7 +19,7 @@ function Trianglify(options) {
         x_gradient: defaults(options.x_gradient, Trianglify.randomColor()),
         format: defaults(options.format, "svg"),
         fillOpacity: defaults(options.fillOpacity, 1),
-        strokeOpacity: defaults(options.strokeOpacity, 1),
+        strokeOpacity: defaults(options.strokeOpacity, 1)
     };
 
     this.options.y_gradient = options.y_gradient || this.options.x_gradient.map(function(c){return d3.rgb(c).brighter(0.5);});
