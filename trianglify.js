@@ -19,7 +19,7 @@ function Trianglify(options) {
         x_gradient: defaults(options.x_gradient, Trianglify.randomColor()),
         format: defaults(options.format, "svg"),
         fillOpacity: defaults(options.fillOpacity, 1),
-        strokeOpacity: defaults(options.strokeOpacity, 1)
+        strokeOpacity: defaults(options.strokeOpacity, 1),
     };
 
     this.options.y_gradient = options.y_gradient || this.options.x_gradient.map(function(c){return d3.rgb(c).brighter(0.5);});
@@ -52,12 +52,17 @@ Trianglify.Pattern = function(options, width, height) {
     this.width = width;
     this.height = height;
     this.polys = this.generatePolygons();
-    this.svg = this.generateSVG();
-    var s = new XMLSerializer();
-    this.svgString = s.serializeToString(this.svg);
-    this.base64 = btoa(this.svgString);
-    this.dataUri = 'data:image/svg+xml;base64,' + this.base64;
-    this.dataUrl = 'url('+this.dataUri+')';
+    if(options.format==="png") {
+      this.canvas = this.generateCanvas();
+      this.dataUri = this.canvas.toDataURL("image/png");    
+    } else {
+      this.svg = this.generateSVG();
+      var s = new XMLSerializer();
+      this.svgString = s.serializeToString(this.svg);
+      this.base64 = btoa(this.svgString);
+      this.dataUri = 'data:image/svg+xml;base64,' + this.base64;
+    } 
+    this.dataUrl = 'url('+this.dataUri+')';  
 };
 
 Trianglify.Pattern.prototype.append = function() {
@@ -95,6 +100,47 @@ Trianglify.Pattern.prototype.generatePolygons = function () {
     return d3.geom.delaunay(vertices);
 };
 
+Trianglify.Pattern.prototype.generateCanvas = function () {
+    var options = this.options;
+    var xn,yn;
+    var number = 0;
+    var opacity = options.noiseIntensity;
+    var color = Trianglify.Pattern.gradient_2d(options.x_gradient, options.y_gradient, this.width, this.height);
+    var canvas = document.createElement("canvas");
+    canvas.style.display = "none";
+    var context = canvas.getContext("2d");
+    canvas.width = this.width;
+    canvas.height = this.height;
+    document.body.appendChild(canvas);
+               
+    this.polys.forEach(function(d) {
+        var x = (d[0][0] + d[1][0] + d[2][0])/3;
+        var y = (d[0][1] + d[1][1] + d[2][1])/3;
+        var c = color(x, y);
+        context.beginPath();
+        context.moveTo(d[0][0],d[0][1]);
+        context.lineTo(d[1][0],d[1][1]);
+        context.lineTo(d[2][0],d[2][1]);
+        context.closePath();
+        context.lineWidth = 2;
+        context.fillStyle = c;
+        context.fill();
+        context.strokeStyle = c;
+        context.stroke();
+                 
+    });    
+    if (options.noiseIntensity > 0.01) {
+      for ( xn = 0; xn < canvas.width; xn++ ) {
+          for ( yn = 0; yn < canvas.height; yn++ ) {
+             number = Math.floor( Math.random() * 60 );
+     
+             context.fillStyle = "rgba(" + number + "," + number + "," + number + "," + opacity + ")";
+             context.fillRect(xn, yn, 1, 1);
+          }
+       }
+    }                 
+    return canvas; 
+};
 
 Trianglify.Pattern.prototype.generateSVG = function () {
     var options = this.options;

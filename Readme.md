@@ -72,6 +72,10 @@ var pattern = t.generate(document.body.clientWidth, document.body.clientHeight);
 document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
 ```
 
+# Generate PNG (default: SVG)
+var t = new Trianglify({format:"png"});
+...
+
 # Colors
 a list of all the available colorbrewer palettes available can be found [here](http://bl.ocks.org/mbostock/5577023), or you can [specify your own](#options)
 
