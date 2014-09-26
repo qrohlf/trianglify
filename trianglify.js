@@ -148,7 +148,11 @@ Trianglify.Pattern.prototype.generateSVG = function () {
         var x = (d[0][0] + d[1][0] + d[2][0])/3;
         var y = (d[0][1] + d[1][1] + d[2][1])/3;
         var c = color(x, y);
-        group.append("path").attr("d", "M" + d.join("L") + "Z").attr({ fill: c, stroke: c }).attr('fill-opacity', options.fillOpacity).attr('stroke-opacity', options.strokeOpacity);
+        var g = group.append("path").attr("d", "M" + d.join("L") + "Z").attr({ fill: c, stroke: c });
+        if (options.fillOpacity != 1)
+            g.attr('fill-opacity', options.fillOpacity);
+        if (options.strokeOpacity != 1)
+            g.attr('stroke-opacity', options.strokeOpacity);
     });
     return svg.node();
 };
