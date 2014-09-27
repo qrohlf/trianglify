@@ -27,4 +27,6 @@ gulp.task('minify', ['clean', 'jshint'], function() {
     .pipe(gulp.dest('.'));
 });
 
+gulp.watch('trianglify.js', ['minify'])
+
 gulp.task('default', ['minify']);
