@@ -112,11 +112,11 @@ Trianglify.Pattern.prototype.generateSVG = function () {
         var filter = svg.append("filter").attr("id", "noise");
 
         filter.append('feTurbulence')
-            .attr('type', 'fractalNoise')
+            .attr('type', 'fractalNoise') // 'turbulence' is slower 
             .attr('in', 'fillPaint')
             .attr('fill', '#F00')
-            .attr('baseFrequency', 0.7)
-            .attr('numOctaves', '10')
+            .attr('baseFrequency', 0.7) // negligible effect
+            .attr('numOctaves', '1') // inversely proportional to speed
             .attr('stitchTiles', 'stitch');
 
         var transfer = filter.append('feComponentTransfer');
