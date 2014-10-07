@@ -135,7 +135,7 @@
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script src="trianglify.js"></script>
         <script>
-        var t = new Trianglify({noiseIntensity: 0});
+        var t = new Trianglify();
         var button = document.getElementById('button'),
             saveas = document.getElementById('saveas'),
             subtractnoise = document.getElementById('subtractnoise'),
@@ -195,24 +195,24 @@
                 console.log("height changed from "+prevheight+" to "+height());
                 prevheight = height();
                 redraw();
-            };
+            }
         }
 
         redraw();
 
         function redraw() {
-            console.log("drawing "+document.body.clientWidth+"x"+height())
+            console.log("drawing "+document.body.clientWidth+"x"+height());
             var pattern = t.generate(document.body.clientWidth, height());
             document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
             saveas.setAttribute('href', pattern.dataUri);
             noise_display.innerHTML = t.options.noiseIntensity.toFixed(1);
             cellsize_display.innerHTML = t.options.cellsize.toFixed(0);
             cellpadding_display.innerHTML = t.options.cellpadding.toFixed(0);
-        };
+        }
 
         function recolor() {
             t.options.x_gradient = Trianglify.randomColor();
-            t.options.y_gradient = t.options.x_gradient.map(function(c){return d3.rgb(c).brighter(.5)});
+            t.options.y_gradient = t.options.x_gradient.map(function(c){return d3.rgb(c).brighter(0.5);});
         }
 
         function noise(i) {

@@ -6,12 +6,10 @@ var stylish = require('jshint-stylish');
 var del = require('del');
 
 gulp.task('clean', function(callback) {
-  del('trianglify.min.js', callback)
+  del('trianglify.min.js', callback);
 });
 
 gulp.task('jshint', function() {
-  // Minify and copy all JavaScript (except vendor scripts)
-  // with sourcemaps all the way down
   return gulp.src('trianglify.js')
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
@@ -19,8 +17,8 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('minify', ['clean', 'jshint'], function() {
-  // Minify and copy all JavaScript (except vendor scripts)
-  // with sourcemaps all the way down
+  // Minify and copy the javascript after removing the old file
+  // and running the new stuff through jshint
   return gulp.src('trianglify.js')
     .pipe(uglify())
     .pipe(rename('trianglify.min.js'))
