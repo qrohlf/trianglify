@@ -28,14 +28,15 @@
   },
   "homepage": "https://github.com/qrohlf/trianglify",
   "devDependencies": {
+    "chai": "^1.9.2",
     "del": "^0.1.1",
     "gulp": "^3.8.6",
     "gulp-jshint": "^1.7.1",
+    "gulp-mocha": "^1.1.1",
     "gulp-rename": "^1.2.0",
     "gulp-uglify": "^0.3.1",
     "jshint-stylish": "^0.4.0",
-    "mocha": "^1.21.4",
-    "should": "^4.0.4"
+    "mocha": "^1.21.4"
   },
   "npmName": "trianglify",
   "npmFileMap": [

@@ -4,11 +4,13 @@ var jshint = require('gulp-jshint');
 var rename = require('gulp-rename');
 var stylish = require('jshint-stylish');
 var del = require('del');
+var mocha = require('gulp-mocha');
 
 gulp.task('clean', function(callback) {
   del('trianglify.min.js', callback);
 });
 
+// Check source for syntax errors and style issues
 gulp.task('jshint', function() {
   return gulp.src('trianglify.js')
     .pipe(jshint())
@@ -16,9 +18,14 @@ gulp.task('jshint', function() {
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('minify', ['clean', 'jshint'], function() {
-  // Minify and copy the javascript after removing the old file
-  // and running the new stuff through jshint
+// Run test suite
+gulp.task('test', ['jshint'], function () {
+    return gulp.src('test/test.js', {read: false})
+        .pipe(mocha({reporter: 'spec'}));
+});
+
+// Minify the hinted and tested code
+gulp.task('minify', ['clean', 'jshint', 'test'], function() {
   return gulp.src('trianglify.js')
     .pipe(uglify())
     .pipe(rename('trianglify.min.js'))
