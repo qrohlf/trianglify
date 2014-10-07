@@ -116,7 +116,7 @@ Trianglify.Pattern.prototype.generateSVG = function () {
             .attr('in', 'fillPaint')
             .attr('fill', '#F00')
             .attr('baseFrequency', 0.7)
-            .attr('numOctaves', '10')
+            .attr('numOctaves', '3') // See PR #23 for details about performance implications here
             .attr('stitchTiles', 'stitch');
 
         var transfer = filter.append('feComponentTransfer');
