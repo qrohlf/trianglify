@@ -92,7 +92,7 @@ Trianglify.Pattern.prototype.generatePolygons = function () {
         return [x, y]; // Populate the actual background with points
     });
 
-    return d3.geom.delaunay(vertices);
+    return d3.geom.voronoi().triangles(vertices);
 };
 
 
