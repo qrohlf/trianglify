@@ -2,16 +2,16 @@
 
 Trianglify is a library that I wrote to generate nice SVG background images like this one:
 
-![example](examples/example0.jpg)
+![](examples/example1.jpg)
 
 It was inspired by [btmills/geopattern](https://github.com/btmills/geopattern), and uses [d3.js](http://d3js.org) to build the polygons and SVG and SVG filters for rendering. It also includes the [colorbrewer](http://bl.ocks.org/mbostock/5577023) color palette library to get you up and running quickly. It was written in a single day because I got fed up with Adobe Illustrator.
 
 # Demo
 
-**Official:**  
+**Official:**
 http://qrohlf.com/trianglify
 
-**More:**  
+**More:**
 - [@nixterrimus](https://github.com/nixterrimus) has a nice demo app that lets you modify the parameters and choose between the built-in color palettes: [link](http://nixterrimus.github.io/Triangle-Play-App/) ([source](https://github.com/nixterrimus/Triangle-Play-App))
 - [@alssndro](https://github.com/alssndro) put together a version that lets you choose from the top ColourLovers palettes: [link](http://alssndro.github.io/trianglify-background-generator/) ([source](https://github.com/alssndro/trianglify-background-generator))
 
@@ -63,9 +63,14 @@ document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
 # Colors
 a list of all the available colorbrewer palettes available can be found [here](http://bl.ocks.org/mbostock/5577023), or you can [specify your own](#options)
 
+# Contributing
+
+Pull Requests and Issues are welcome! Please make sure to read the [contributing guidelines](CONTRIBUTING.md), though.
+
+
 # Examples
 
-## Smaller Cell Size
+## Basic Usage
 
 ```
 window.open(new Trianglify({
@@ -122,17 +127,6 @@ x_gradient | an array of colors to use to construct a gradient for the x-axis | 
 y_gradient | an array of colors to use to construct a gradient for the y-axis | array of colors in hexadecimal string format (i.e. `["#961E00", "#FF0000", "#EEEEEE"]`) | x_gradient, brightened by a factor of 0.5
 fillOpacity | sets the opacity of the inside of the cells | 0 to 1 | 1
 strokeOpacity | sets the opacity of the outline of the cells | 0 to 1 | 1
-
-# Contributing
-
-Pull requests are welcome! Fork the repo on [Github](https://github.com/qrohlf/trianglify/fork) and submit a pull request.
-
-Trianglify uses gulp to handle code hinting and minification. Make sure to run gulp before committing changes for a pull request and check in the minified version along with your changes:
-
-```
-npm install -g gulp && npm install # you only have to do this once
-gulp # do this before you commit
-```
 
 # License
 
