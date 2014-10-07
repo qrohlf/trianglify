@@ -5,10 +5,6 @@ var rename = require('gulp-rename');
 var stylish = require('jshint-stylish');
 var del = require('del');
 
-var sources = [
-    'trianglify.js'
-];
-
 gulp.task('clean', function(callback) {
   del('trianglify.min.js', callback)
 });
@@ -29,11 +25,6 @@ gulp.task('minify', ['clean', 'jshint'], function() {
     .pipe(uglify())
     .pipe(rename('trianglify.min.js'))
     .pipe(gulp.dest('.'));
-});
-
-// run `gulp watch` for continuous minification and 
-gulp.task("watch", function(){
-    gulp.watch(sources, ['minify', 'jshint']);
 });
 
 gulp.task('default', ['minify']);
