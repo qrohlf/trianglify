@@ -70,11 +70,13 @@ Pull Requests and Issues are welcome! Please make sure to read the [contributing
 
 # Examples
 
+*you can try out all of the below examples in your dev console on the [demo page](http://qrohlf.com/trianglify/)*
+
 ## Basic Usage
 
 ```
 window.open(new Trianglify({
-    x_gradient: colorbrewer.PuOr[9],
+    x_gradient: Trianglify.colorbrewer.PuOr[9],
     noiseIntensity: 0,
     cellsize: 90}).generate(700, 400).dataUri)
 ```
@@ -86,8 +88,8 @@ window.open(new Trianglify({
 
 ```
 window.open(new Trianglify({
-    x_gradient: colorbrewer.YlGnBu[9],
-    y_gradient: colorbrewer.RdPu[9],
+    x_gradient: Trianglify.colorbrewer.YlGnBu[9],
+    y_gradient: Trianglify.colorbrewer.RdPu[9],
     noiseIntensity: 0.1,
     cellpadding: 10,
     cellsize: 100}).generate(700, 400).dataUri);
@@ -122,7 +124,7 @@ option | usage | valid | default
 cellsize | set how large the generated cells should be | integers > 0 | 150
 bleed | set how far outside the visible area of the SVG points should be rendered | integers > 0 | cellsize
 cellpadding | set the minimum distance between each point | integers > 0 and < cellsize/2 | cellsize*0.1
-noiseIntensity | set the opacity of the noise filter. This has a significant impact on SVG rendering time - set to 0 to disable. | 0 to 1 | 0.3
+noiseIntensity | set the opacity of the noise filter. This has a significant impact on SVG rendering time - set to 0 to disable. | 0 to 1 | 0
 x_gradient | an array of colors to use to construct a gradient for the x-axis | array of colors in hexadecimal string format (i.e. `["#961E00", "#FF0000", "#EEEEEE"]`) | random selection from colorbrewer palettes
 y_gradient | an array of colors to use to construct a gradient for the y-axis | array of colors in hexadecimal string format (i.e. `["#961E00", "#FF0000", "#EEEEEE"]`) | x_gradient, brightened by a factor of 0.5
 fillOpacity | sets the opacity of the inside of the cells | 0 to 1 | 1
