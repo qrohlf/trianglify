@@ -27,6 +27,9 @@
     "url": "https://github.com/qrohlf/trianglify/issues"
   },
   "homepage": "https://github.com/qrohlf/trianglify",
+  "scripts": {
+    "test": "mocha test/test.js"
+  },
   "devDependencies": {
     "chai": "^1.9.2",
     "del": "^0.1.1",
