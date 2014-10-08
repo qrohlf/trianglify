@@ -31,9 +31,13 @@
     "chai": "^1.9.2",
     "del": "^0.1.1",
     "gulp": "^3.8.6",
+    "gulp-bump": "^0.1.11",
+    "gulp-filter": "^1.0.2",
+    "gulp-git": "^0.5.2",
     "gulp-jshint": "^1.7.1",
     "gulp-mocha": "^1.1.1",
     "gulp-rename": "^1.2.0",
+    "gulp-tag-version": "^1.1.0",
     "gulp-uglify": "^0.3.1",
     "jshint-stylish": "^0.4.0",
     "mocha": "^1.21.4"
