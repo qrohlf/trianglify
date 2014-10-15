@@ -30,7 +30,7 @@ Or if you're using nodejs
 npm install trianglify
 ```
 
-Alternately, you can load it via [CDNJS](http://cdnjs.com/libraries/trianglify), download the latest version as a [zip archive](https://github.com/qrohlf/trianglify/archive/gh-pages.zip), or simply clone this repo.
+Alternately, you can load it via [CDNJS](http://cdnjs.com/libraries/trianglify), download the latest version as a [zip archive](https://github.com/qrohlf/trianglify/archive/master.zip), or simply clone this repo.
 
 # Usage
 
