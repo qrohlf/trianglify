@@ -6,6 +6,7 @@
   "dependencies": {
     "btoa": "1",
     "d3": "3",
+    "delaunay-fast": "^1.0.1",
     "jsdom": "^3.1.0",
     "xmldom": "0.1"
   },
