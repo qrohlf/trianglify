@@ -11,12 +11,12 @@ var filter = require('gulp-filter');
 var tag_version = require('gulp-tag-version');
 
 gulp.task('clean', function(callback) {
-  del('trianglify.min.js', callback);
+  del('dist', callback);
 });
 
 // Check source for syntax errors and style issues
 gulp.task('jshint', function() {
-  return gulp.src('trianglify.js')
+  return gulp.src('lib/trianglify.js')
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'));
@@ -30,10 +30,10 @@ gulp.task('test', ['jshint'], function () {
 
 // Minify the hinted and tested code
 gulp.task('minify', ['clean', 'jshint', 'test'], function() {
-  return gulp.src('trianglify.js')
+  return gulp.src('lib/trianglify.js')
     .pipe(uglify())
     .pipe(rename('trianglify.min.js'))
-    .pipe(gulp.dest('.'));
+    .pipe(gulp.dest('dist'));
 });
 
 function version_bump(type) {
