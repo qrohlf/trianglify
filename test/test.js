@@ -46,3 +46,40 @@ describe('Trianglify', function(){
       datum[1][0].should.have.length(2);
   });
 });
+
+var colorutils = require('../lib/colorutils');
+var Color = require('color');
+describe('colorutils', function() {
+  it('should return an all-black gradient given black inputs', function() {
+    var rothko = colorutils.get_gradient(['#000', '#000']);
+    rothko(0).rgb().should.eql({r: 0, g: 0, b: 0});
+  });
+
+  it('should return a greyscale gradient given white/black inputs', function() {
+    var greyscale = colorutils.get_gradient(['#FFF', '#000']);
+    greyscale(0).rgb().should.eql({r: 255, g: 255, b: 255});
+    greyscale(0.5).rgb().should.eql({r: 128, g: 128, b: 128});
+    greyscale(1).rgb().should.eql({r: 0, g: 0, b: 0});
+  });
+
+  it('should do gradients with an arbitrary number of stops', function() {
+    var colors = ["#ffffcc","#a1dab4","#41b6c4","#225ea8"];
+    var gradient = colorutils.get_gradient(colors);
+
+    // check on stops
+    var target, result, x;
+    for (var i = 0; i < colors.length; i++) {
+      target = Color(colors[i]);
+      x = i/(colors.length - 1);
+      result = gradient(x);
+      result.rgb().should.eql(target.rgb());
+    }
+
+    for (i = 0; i < colors.length - 1; i++) {
+      target = Color(colors[i]).mix(Color(colors[i+1]));
+      x = i/(colors.length - 1) + 1/(colors.length - 1) * 0.5;
+      result = gradient(x);
+      result.rgb().should.eql(target.rgb());
+    }
+  });
+});
