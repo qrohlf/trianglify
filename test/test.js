@@ -11,26 +11,25 @@ describe('Trianglify', function(){
   });
 
   it('should throw an error on invalid options', function() {
-    (function() {Trianglify(100, 100, {bad_option: true});}).should.throw(Error);
+    (function() {Trianglify({width: 100, height: 100, bad_option: true});}).should.throw(Error);
   });
 
   it('should throw an error on invalid dimensions', function() {
-    (function() {Trianglify();}).should.throw(Error);
-    (function() {Trianglify(-1, 100);}).should.throw(Error);
-    (function() {Trianglify(100, -1);}).should.throw(Error);
+    (function() {Trianglify({width: -1, height: 100});}).should.throw(Error);
+    (function() {Trianglify({width: 100, height: -1});}).should.throw(Error);
   });
 
   it('return a Pattern given valid options', function() {
-    Trianglify(100, 100).should.include.keys(['opts', 'data', 'svg', 'canvas']);
+    Trianglify().should.include.keys(['opts', 'data', 'svg', 'canvas']);
   });
 
   it('should populate opts with defaults', function() {
     var default_props = Object.keys(Trianglify.defaults);
-    Trianglify(100, 100).opts.should.have.keys(default_props);
+    Trianglify().opts.should.have.keys(default_props);
   });
 
   it('should override opts with user-provided options', function() {
-    Trianglify(100, 100, {cell_size: 1234}).opts.cell_size.should.equal(1234);
+    Trianglify({cell_size: 1234}).opts.cell_size.should.equal(1234);
   });
 
 
