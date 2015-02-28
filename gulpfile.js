@@ -10,7 +10,7 @@ var notifier = require('node-notifier');
 
 var production = process.env.NODE_ENV == 'production';
 
-// Spin up a watchify instance
+// Spin up a browserify instance
 var bundler = browserify('./lib/index.js', {
   standalone: 'Trianglify',
   cache: {},
