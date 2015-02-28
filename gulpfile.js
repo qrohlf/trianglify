@@ -1,59 +1,38 @@
+var fs = require('fs');
+var path = require('path');
+
+var browserify = require('browserify');
 var gulp = require('gulp');
-var uglify = require('gulp-uglify');
-var jshint = require('gulp-jshint');
-var rename = require('gulp-rename');
-var stylish = require('jshint-stylish');
-var del = require('del');
-var mocha = require('gulp-mocha');
-var git = require('gulp-git');
-var bump = require('gulp-bump');
-var filter = require('gulp-filter');
-var tag_version = require('gulp-tag-version');
+var watchify = require('watchify/bin/args');
+var source = require('vinyl-source-stream');
+var sourcemaps = require('gulp-sourcemaps');
+var notifier = require('node-notifier');
 
-gulp.task('clean', function(callback) {
-  del('dist', callback);
+var production = process.env.NODE_ENV == 'production';
+
+// Spin up a watchify instance
+var bundler = browserify('./lib/index.js', {
+  standalone: 'Trianglify',
+  cache: {},
+  packageCache: {},
+  fullPaths: true
 });
 
-// Check source for syntax errors and style issues
-gulp.task('jshint', function() {
-  return gulp.src('lib/trianglify.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(jshint.reporter('fail'));
-});
-
-// Run test suite
-gulp.task('test', ['jshint'], function () {
-    return gulp.src('test/test.js', {read: false})
-        .pipe(mocha({reporter: 'spec'}));
-});
-
-// Minify the hinted and tested code
-gulp.task('minify', ['clean', 'jshint', 'test'], function() {
-  return gulp.src('lib/trianglify.js')
-    .pipe(uglify())
-    .pipe(rename('trianglify.min.js'))
+gulp.task('browserify', function() {
+  // start the deps bundler
+  return bundler.bundle()
+    .on('error', function(error) {
+      notifier.notify({
+        'title': 'Browserify Build Failed',
+        'message': path.relative(__dirname, error.filename)
+      });
+      console.log(error.message);
+      this.emit('end');
+    })
+    .pipe(source('./trianglify.min.js'))
     .pipe(gulp.dest('dist'));
 });
 
-function version_bump(type) {
-    // get all the files to bump version in
-    return gulp.src(['./package.json', './bower.json'])
-        // bump the version number in those files
-        .pipe(bump({type: type}))
-        // save it back to filesystem
-        .pipe(gulp.dest('./'))
-        // commit the changed version number
-        .pipe(git.commit('bump package version'))
+gulp.task('clean', function(done) {fs.unlink('dist', done)});
 
-        // read only one file to get the version number
-        .pipe(filter('package.json'))
-        // **tag it in the repository**
-        .pipe(tag_version());
-}
-
-gulp.task('patch', function() { return version_bump('patch'); });
-gulp.task('feature', function() { return version_bump('minor'); });
-gulp.task('release', function() { return version_bump('major'); });
-
-gulp.task('default', ['minify']);
+gulp.task('default', ['browserify']);

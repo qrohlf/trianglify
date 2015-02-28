@@ -1,7 +1,7 @@
 var should = require('chai').should();
 var expect = require('chai').expect;
-var Trianglify = require('../lib/trianglify');
 
+var Trianglify = require('../lib/trianglify');
 var Pattern = require('../lib/pattern');
 
 describe('Trianglify', function(){
@@ -46,6 +46,16 @@ describe('Trianglify', function(){
   });
 
 });
+
+
+describe('Pattern', function() {
+  describe('#svg', function() {
+    //Not 100% sure how to test this
+    it('should return an SVG DOM node');
+
+
+  })
+})
 
 var colorutils = require('../lib/colorutils');
 var Color = require('color');
