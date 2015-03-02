@@ -4,16 +4,10 @@
   "description": "Trianglify is a javascript library for generating colorful triangle meshes that can be used as SVG images and CSS backgrounds.",
   "main": "trianglify.js",
   "dependencies": {
-    "babel": "^4.6.1",
-    "browserify": "^9.0.3",
-    "btoa": "1",
     "chroma-js": "^0.6.3",
-    "color": "^0.7.3",
-    "d3": "3",
     "delaunay-fast": "^1.0.1",
     "jsdom": "^3.1.2",
-    "watchify": "^2.4.0",
-    "xmldom": "0.1"
+    "seedrandom": "^2.3.11"
   },
   "directories": {
     "example": "examples"
@@ -41,7 +35,8 @@
     "jsdom": false
   },
   "devDependencies": {
-    "chai": "^1.9.2",
+    "browserify": "^9.0.3",
+    "chai": "^2.1.0",
     "del": "^0.1.1",
     "gulp": "^3.8.6",
     "gulp-bump": "^0.1.11",

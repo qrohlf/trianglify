@@ -3,7 +3,6 @@ var path = require('path');
 
 var browserify = require('browserify');
 var gulp = require('gulp');
-var watchify = require('watchify/bin/args');
 var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var notifier = require('node-notifier');
@@ -11,7 +10,7 @@ var notifier = require('node-notifier');
 var production = process.env.NODE_ENV == 'production';
 
 // Spin up a browserify instance
-var bundler = browserify('./lib/index.js', {
+var bundler = browserify('./lib/trianglify.js', {
   standalone: 'Trianglify',
   cache: {},
   packageCache: {},
