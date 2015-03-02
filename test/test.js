@@ -45,6 +45,24 @@ describe('Trianglify', function(){
       datum[1][0].should.have.length(2);
   });
 
+  it('should behave as a pure function when given a seed for the RNG', function() {
+    var svg1 = Trianglify({seed: 'foobar', x_colors: 'random', y_colors: 'random'}).svg().outerHTML;
+    var svg2 = Trianglify({seed: 'foobar', x_colors: 'random', y_colors: 'random'}).svg().outerHTML;
+    svg1.should.equal(svg2);
+  });
+
+  it('should seed with random data by default', function() {
+    Trianglify().svg().outerHTML.should.not.equal(Trianglify().svg().outerHTML);
+  })
+
+  it('should randomize colors when asked to');
+
+  it('should match_x when asked to');
+
+  it('should draw from a random palette if provided');
+
+  it('should do all interpolation in the specified color space');
+
 });
 
 
@@ -56,15 +74,3 @@ describe('Pattern', function() {
 
   })
 })
-
-var colorutils = require('../lib/colorutils');
-describe('colorutils', function() {
-  describe('#get_2d_gradient', function() {
-    it('should return a function that takes two color arrays and returns a 2d interpolation function', function() {
-      var grad2d = colorutils.get_2d_gradient(["#000", "#FFF"], ["#000", "#FFF"]);
-      grad2d(0, 0).rgb().should.eql([0, 0, 0]);
-      // grad2d(0.5, 0.5).rgb().should.eql([128, 128, 128]); not the case in LAB
-      grad2d(1, 1).rgb().should.eql([255, 255, 255]);
-    });
-  });
-});
