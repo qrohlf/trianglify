@@ -70,7 +70,13 @@ describe('Pattern', function() {
   describe('#svg', function() {
     //Not 100% sure how to test this
     it('should return an SVG DOM node');
+  });
 
+  describe('#canvas', function() {
+    it('should return a canvas DOM node');
+  });
 
+  describe('#png', function() {
+    it('should return a png file');
   })
 })
