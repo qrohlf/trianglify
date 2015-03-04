@@ -3,9 +3,11 @@ var path = require('path');
 
 var browserify = require('browserify');
 var gulp = require('gulp');
+var jshint = require('gulp-jshint');
+var notifier = require('node-notifier');
 var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
-var notifier = require('node-notifier');
+var stylish = require('jshint-stylish');
 
 var production = process.env.NODE_ENV == 'production';
 
@@ -17,7 +19,7 @@ var bundler = browserify('./lib/trianglify.js', {
   fullPaths: true
 });
 
-gulp.task('browserify', function() {
+gulp.task('browserify', ['jshint'], function() {
   // start the deps bundler
   return bundler.bundle()
     .on('error', function(error) {
@@ -32,6 +34,19 @@ gulp.task('browserify', function() {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('clean', function(done) {fs.unlink('dist', done)});
+// Check source for syntax errors and style issues
+// TODO notifications. Probably need to look into switching to gulp-notify
+gulp.task('jshint', function() {
+  return gulp.src(['lib/**/*.js', 'test/**/*.js', 'gulpfile.js'])
+    .pipe(jshint())
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('watch', ['browserify'], function() {
+  gulp.watch('lib/**/*.js', ['browserify']);
+});
+
+gulp.task('clean', function(done) {fs.unlink('dist', done);});
 
 gulp.task('default', ['browserify']);

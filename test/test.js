@@ -53,7 +53,18 @@ describe('Trianglify', function(){
 
   it('should seed with random data by default', function() {
     Trianglify().svg().outerHTML.should.not.equal(Trianglify().svg().outerHTML);
-  })
+  });
+
+  it('should support custom color functions', function() {
+    var rothko = function(x, y) {
+      return '#000000'; //
+    };
+
+    Trianglify({color_function: rothko}).polys.forEach(function(p) {
+      p[0].should.equal('#000000');
+    });
+
+  });
 
   it('should randomize colors when asked to');
 
@@ -78,5 +89,5 @@ describe('Pattern', function() {
 
   describe('#png', function() {
     it('should return a png file');
-  })
-})
+  });
+});

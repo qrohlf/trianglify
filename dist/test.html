@@ -5,7 +5,7 @@
 </head>
 <body>
 <script>
-var pattern = Trianglify({x_colors: 'random', y_colors: 'match_x'})
+var pattern = Trianglify({x_colors: 'random', y_colors: 'match_x'});
 var canvas = document.body.appendChild(pattern.canvas());
 canvas.addEventListener('click', function() {
   window.open(pattern.png());
