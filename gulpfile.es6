@@ -33,7 +33,7 @@ gulp.task('watchify', function() {
     .on('error', function(error) {
       notifier.notify({
         'title': 'Browserify Build Failed',
-        'message': path.relative(__dirname, error.filename)+':'+error.loc.line
+        'message': error.message
       });
       console.log(error.message);
       this.emit('end');

@@ -10,7 +10,6 @@
   "license": "nil",
   "repository": "derp",
   "dependencies": {
-    "trianglify": "git://github.com/qrohlf/trianglify.git#v0.2.0",
     "babel": "^4.4.6",
     "babelify": "^5.0.3",
     "bower": "^1.3.12",
@@ -28,6 +27,7 @@
     "main-bower-files": "^2.5.0",
     "node-notifier": "^4.1.2",
     "react": "^0.13.0-rc1",
+    "trianglify": "git://github.com/qrohlf/trianglify.git#v0.2.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.4.0"
