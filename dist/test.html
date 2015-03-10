@@ -4,16 +4,18 @@
   <script type="text/javascript" src="trianglify.min.js"></script>
 </head>
 <body>
-<canvas id="canvas"></canvas>
-<br />
-<p>You really need to fix the antialiasing issue with canvas</p>
 <script>
-var pattern = Trianglify({x_colors: 'random', y_colors: 'match_x', seed: 'qux'});
-var canvas = document.getElementById('canvas');
-pattern.canvas(canvas);
-var rothko = Trianglify({x_colors: ['black', 'gray'], y_colors: 'match_x', seed: 'foo'});
-document.body.appendChild(rothko.canvas());
-document.body.appendChild(rothko.svg());
+var pattern = Trianglify({
+  x_colors: ['black', 'gray'],
+  y_colors: 'match_x',
+  seed: 'qux',
+  width: 1400,
+  height: 800,
+  cell_size: 200,
+  stroke_width: 1.51
+});
+document.body.appendChild(pattern.canvas());
+document.body.appendChild(pattern.svg());
 </script>
 </body>
 </html>
