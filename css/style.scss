@@ -1,5 +1,7 @@
+@import 'bootstrap/variables';
 $icon-font-path: '/fonts/';
 $font-family-sans-serif: proxima-nova, sans-serif;
+$container-lg: $container-md;
 @import 'bootstrap';
 
 // Box-sizing fix

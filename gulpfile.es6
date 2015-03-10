@@ -76,18 +76,21 @@ gulp.task('clean', (done)=> fs.unlink('dist', done));
 
 gulp.task('index', function() {
   gulp.src('html/index.html')
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist'))
+    .pipe(reload({stream: true}));
 });
 
 gulp.task('images', function() {
   gulp.src('images/**')
-    .pipe(gulp.dest('dist/images'));
+    .pipe(gulp.dest('dist/images'))
+    .pipe(reload({stream: true}));
 });
 
 gulp.task('fonts', function() {
   gulp.src(['fonts/**', 'bower_components/**/*.{ttf,woff,eof,svg}'])
     .pipe(flatten())
-    .pipe(gulp.dest('dist/fonts'));
+    .pipe(gulp.dest('dist/fonts'))
+    .pipe(reload({stream: true}));
 });
 
 

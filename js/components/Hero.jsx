@@ -37,7 +37,7 @@ module.exports = class Hero extends React.Component {
             cell_size={this.state.cell_size}
             color_space={this.state.color_space}
             stroke_width={this.state.stroke_width}
-            x_colors={Trianglify.colorbrewer[this.state.color_set]}
+            x_colors={Trianglify.colorbrewer[this.state.color_set]} //Hacked RdBu: ["#67001f","#b2182b","#d6604d","#EEC2B0","#92c5de","#4393c3","#2166ac","#053061"]
             y_colors='match_x'
             seed='qux'/>
 
@@ -47,7 +47,7 @@ module.exports = class Hero extends React.Component {
           </div>
         </div>
 
-        <div className="container">
+        <div className="controls container">
           <div className="row">
             <div className="col-md-3 text-center">
               <h3>Variance</h3>
@@ -66,7 +66,7 @@ module.exports = class Hero extends React.Component {
             <div className="col-md-3 text-center">
               <h3>Color Space</h3>
               <ButtonGroupSelect selected={this.state.color_space}
-                options={['lab', 'rgb', 'hsl', 'hsv']}
+                options={['rgb', 'lab', 'hsl', 'hsv']}
                 onChange={(e) => this.setState({color_space: e.target.value})}/>
             </div>
             <div className="col-md-3 text-center">

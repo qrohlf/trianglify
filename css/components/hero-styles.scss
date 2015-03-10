@@ -5,7 +5,8 @@
     position: relative;
     overflow: hidden;
     text-align: center;
-    // background-color: rgba(0, 0, 0, 0.05);
+    // background-color: rgba(0, 0, 0, 0.10);
+    ///graaaaaaaagrrrggaaaaaaahhhh
 
     canvas {
       position: absolute;
@@ -19,11 +20,11 @@
       position: relative;
       top: 50%;
       transform: translateY(-50%);
+      margin: 15px;
 
       h1, h2 {
-        color: lighten(black, 10%);
+        color: white;
         text-transform: lowercase;
-        text-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       }
 
       h1 {
@@ -33,6 +34,6 @@
   }
 
   .controls {
-
+    margin-bottom: 64px;
   }
 }
