@@ -5,7 +5,7 @@
     position: relative;
     overflow: hidden;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.05);
+    // background-color: rgba(0, 0, 0, 0.05);
 
     canvas {
       position: absolute;
@@ -21,7 +21,7 @@
       transform: translateY(-50%);
 
       h1, h2 {
-        color: white;
+        color: lighten(black, 10%);
         text-transform: lowercase;
         text-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       }

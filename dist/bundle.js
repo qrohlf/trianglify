@@ -118,12 +118,36 @@ module.exports = (function (_React$Component) {
 
     _get(Object.getPrototypeOf(Hero.prototype), "constructor", this).call(this, props);
     this.state = Trianglify.defaults;
-    this.state.color_index = 0;
+    this.state.height = window.innerHeight;
+    this.state.width = window.innerWidth;
+    this.state.color_set = "RdBu";
   }
 
   _inherits(Hero, _React$Component);
 
   _prototypeProperties(Hero, null, {
+    handleResize: {
+      value: function handleResize(e) {
+        this.setState({ width: window.innerWidth });
+        this.setState({ height: window.innerHeight });
+      },
+      writable: true,
+      configurable: true
+    },
+    componentDidMount: {
+      value: function componentDidMount() {
+        window.addEventListener("resize", this.handleResize.bind(this));
+      },
+      writable: true,
+      configurable: true
+    },
+    componentWillUnmount: {
+      value: function componentWillUnmount() {
+        window.removeEventListener("resize", this.handleResize.bind(this));
+      },
+      writable: true,
+      configurable: true
+    },
     render: {
       value: function render() {
         var _this = this;
@@ -135,14 +159,15 @@ module.exports = (function (_React$Component) {
             "div",
             { className: "masthead" },
             React.createElement(TrianglifyCanvas, {
-              height: 800,
-              width: 1920,
+              height: this.state.height * 0.7,
+              width: this.state.width,
               variance: this.state.variance,
               cell_size: this.state.cell_size,
               color_space: this.state.color_space,
               stroke_width: this.state.stroke_width,
-              x_colors: ["#213EFF", "#FF2436"],
-              seed: "quxbaz" }),
+              x_colors: Trianglify.colorbrewer[this.state.color_set],
+              y_colors: "match_x",
+              seed: "qux" }),
             React.createElement(
               "div",
               { className: "content" },
@@ -176,7 +201,12 @@ module.exports = (function (_React$Component) {
                   value: this.state.variance,
                   onChange: function (e) {
                     return _this.setState({ variance: e.target.value });
-                  } })
+                  } }),
+                React.createElement(
+                  "p",
+                  { className: "text-muted" },
+                  this.state.variance
+                )
               ),
               React.createElement(
                 "div",
@@ -190,7 +220,12 @@ module.exports = (function (_React$Component) {
                   value: this.state.cell_size,
                   onChange: function (e) {
                     return _this.setState({ cell_size: parseInt(e.target.value) });
-                  } })
+                  } }),
+                React.createElement(
+                  "p",
+                  { className: "text-muted" },
+                  this.state.cell_size
+                )
               ),
               React.createElement(
                 "div",
@@ -205,6 +240,29 @@ module.exports = (function (_React$Component) {
                   onChange: function (e) {
                     return _this.setState({ color_space: e.target.value });
                   } })
+              ),
+              React.createElement(
+                "div",
+                { className: "col-md-3 text-center" },
+                React.createElement(
+                  "h3",
+                  null,
+                  "Color Palette"
+                ),
+                React.createElement(
+                  "select",
+                  { className: "form-control", value: this.state.color_set,
+                    onChange: function (e) {
+                      return _this.setState({ color_set: e.target.value });
+                    } },
+                  Object.keys(Trianglify.colorbrewer).map(function (colors) {
+                    return React.createElement(
+                      "option",
+                      { value: colors },
+                      colors
+                    );
+                  })
+                )
               )
             )
           )
@@ -12492,7 +12550,7 @@ if (typeof Object.create === 'function') {
 }
 
 },{}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/browserify-sign/node_modules/elliptic/package.json":[function(require,module,exports){
-module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={
+module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={
   "name": "elliptic",
   "version": "1.0.1",
   "description": "EC cryptography",
@@ -12597,7 +12655,7 @@ module.exports = function evp(crypto, password, salt, keyLen) {
 };
 }).call(this,require("buffer").Buffer)
 },{"buffer":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/buffer/index.js"}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/browserify-sign/node_modules/parse-asn1/aesid.json":[function(require,module,exports){
-module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
+module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
 "2.16.840.1.101.3.4.1.2": "aes-128-cbc",
 "2.16.840.1.101.3.4.1.3": "aes-128-ofb",
 "2.16.840.1.101.3.4.1.4": "aes-128-cfb",
@@ -16652,7 +16710,7 @@ function findPrime(bits, gen) {
 
 }
 },{"bn.js":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js","miller-rabin":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/node_modules/miller-rabin/lib/mr.js","randombytes":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/randombytes/browser.js"}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/lib/primes.json":[function(require,module,exports){
-module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={
+module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={
     "modp1": {
         "gen": "02",
         "prime": "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a63a3620ffffffffffffffff"
