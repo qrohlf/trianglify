@@ -15,6 +15,7 @@ let sass = require('gulp-sass');
 let flatten = require('gulp-flatten');
 let minifyCSS = require('gulp-minify-css');
 let notifier = require('node-notifier');
+var autoprefixer = require('gulp-autoprefixer');
 
 let browserSync = require('browser-sync');
 let reload = browserSync.reload;
@@ -60,6 +61,10 @@ gulp.task('sass', function() {
         });
         console.log(error.message+' at '+error.fileName+':'+error.lineNumber);
       })
+      .pipe(autoprefixer({
+          browsers: ['last 2 versions'],
+          cascade: false
+      }))
       .pipe(minifyCSS())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'))
@@ -87,7 +92,7 @@ gulp.task('fonts', function() {
 
 
 gulp.task('watch', ['watchify', 'sass', 'index', 'images', 'fonts'], function() {
-  gulp.watch('./css/**', ['sass']);
+  gulp.watch('./css/**/*', ['sass']);
   gulp.watch('./html/index.html', ['index']);
   gulp.watch('./images/**', ['images']);
 });

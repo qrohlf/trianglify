@@ -15,22 +15,16 @@ module.exports = class GlyphiconGrid extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log(nextProps.cell_size);
+    console.log(nextProps.stroke_width);
     for(var key in nextProps) {
       if (this.props[key] !== nextProps[key]) {
-        console.log('re-render triggered');
         return true;
       }
     }
-    console.log('re-render not happening');
     return false;
   }
 
   componentDidUpdate() {
-    this.renderCanvas();
-  }
-
-  onClick() { // For demonstration purposes
     this.renderCanvas();
   }
 
@@ -40,6 +34,6 @@ module.exports = class GlyphiconGrid extends React.Component {
   }
 
   render() {
-    return <canvas onClick={this.onClick.bind(this)}/>;
+    return <canvas />;
   }
 }

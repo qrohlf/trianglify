@@ -1,0 +1,38 @@
+.component-hero {
+  .masthead {
+    height: 70vh;
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.05);
+
+    canvas {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+    }
+
+    .content {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+
+      h1, h2 {
+        color: white;
+        text-transform: lowercase;
+        text-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        font-size: 100px;
+      }
+    }
+  }
+
+  .controls {
+
+  }
+}

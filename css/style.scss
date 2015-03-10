@@ -1,4 +1,5 @@
 $icon-font-path: '/fonts/';
+$font-family-sans-serif: proxima-nova, sans-serif;
 @import 'bootstrap';
 
 // Box-sizing fix
@@ -7,4 +8,33 @@ html {
 }
 *, *:before, *:after {
   box-sizing: inherit;
+}
+
+// Components
+@import './components/hero-styles';
+
+// Range sliders are super janky. Need a better implementation.
+input[type=range]{
+    -webkit-appearance: none;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    background: #ddd;
+    border: none;
+    height: 4px;
+    border-radius: 2px;
+    margin-top: 6px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid #aaa;
+    margin-top: -6px;
 }

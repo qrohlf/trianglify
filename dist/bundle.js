@@ -3,82 +3,29 @@
 
 var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
 
-var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
 var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
 require("babel/register");
 var React = require("react");
-var TrianglifyCanvas = require("./components/TrianglifyCanvas.jsx");
-var Trianglify = require("trianglify");
+var Hero = require("./components/Hero.jsx");
 
 var App = (function (_React$Component) {
-  function App(props) {
+  function App() {
     _classCallCheck(this, App);
 
-    _get(Object.getPrototypeOf(App.prototype), "constructor", this).call(this, props);
-    this.state = Trianglify.defaults;
+    if (_React$Component != null) {
+      _React$Component.apply(this, arguments);
+    }
   }
 
   _inherits(App, _React$Component);
 
   _prototypeProperties(App, null, {
-    handleOptionChange: {
-      value: function handleOptionChange(opt) {
-        var newopt = {};
-
-        return function (e) {
-          newopt[opt] = e.target.value;
-          this.setState(newopt);
-        };
-      },
-      writable: true,
-      configurable: true
-    },
     render: {
       value: function render() {
-        var _this = this;
-
-        return React.createElement(
-          "div",
-          { className: "container" },
-          React.createElement(
-            "div",
-            { className: "row" },
-            React.createElement(
-              "h1",
-              null,
-              "Trianglify Docs, yo"
-            ),
-            React.createElement(
-              "div",
-              { className: "col-md-3" },
-              React.createElement(
-                "p",
-                null,
-                "variance: ",
-                this.state.variance
-              ),
-              React.createElement("input", { type: "range", min: "0", max: "1", step: "0.01",
-                value: this.state.variance,
-                onChange: this.handleOptionChange("variance").bind(this) }),
-              React.createElement(
-                "p",
-                null,
-                "cell_size: ",
-                this.state.cell_size
-              ),
-              React.createElement("input", { type: "range", min: "10", max: "200", step: "10",
-                value: this.state.cell_size,
-                onChange: function (e) {
-                  return _this.setState({ cell_size: parseInt(e.target.value) });
-                } })
-            ),
-            React.createElement(TrianglifyCanvas, { variance: this.state.variance, cell_size: this.state.cell_size, seed: "foobar" })
-          )
-        );
+        return React.createElement(Hero, null);
       },
       writable: true,
       configurable: true
@@ -90,7 +37,188 @@ var App = (function (_React$Component) {
 
 React.render(React.createElement(App, null), document.body);
 
-},{"./components/TrianglifyCanvas.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/TrianglifyCanvas.jsx","babel/register":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/babel/register.js","react":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/react/react.js","trianglify":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/trianglify/lib/trianglify.js"}],"/Users/qrohlf/Projects/trianglify-documentation/js/components/TrianglifyCanvas.jsx":[function(require,module,exports){
+},{"./components/Hero.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/Hero.jsx","babel/register":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/babel/register.js","react":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/react/react.js"}],"/Users/qrohlf/Projects/trianglify-documentation/js/components/ButtonGroupSelect.jsx":[function(require,module,exports){
+"use strict";
+
+var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+var React = require("react");
+
+module.exports = (function (_React$Component) {
+  function ButtonGroupSelect(props) {
+    _classCallCheck(this, ButtonGroupSelect);
+
+    _get(Object.getPrototypeOf(ButtonGroupSelect.prototype), "constructor", this).call(this, props);
+  }
+
+  _inherits(ButtonGroupSelect, _React$Component);
+
+  _prototypeProperties(ButtonGroupSelect, null, {
+    onClick: {
+      value: function onClick(e) {
+        this.props.onChange(e);
+      },
+      writable: true,
+      configurable: true
+    },
+    render: {
+      value: function render() {
+
+        var createButton = function createButton(item) {
+          return React.createElement(
+            "button",
+            {
+              key: item,
+              value: item,
+              className: item === this.props.selected ? "btn" : "btn btn-default" },
+            item
+          );
+        };
+
+        return React.createElement(
+          "div",
+          { className: "btn-group", onClick: this.onClick.bind(this) },
+          this.props.options.map(createButton.bind(this))
+        );
+      },
+      writable: true,
+      configurable: true
+    }
+  });
+
+  return ButtonGroupSelect;
+})(React.Component);
+
+},{"react":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/react/react.js"}],"/Users/qrohlf/Projects/trianglify-documentation/js/components/Hero.jsx":[function(require,module,exports){
+"use strict";
+
+var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
+
+var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc && desc.writable) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _inherits = function (subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; };
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+var React = require("react");
+var Trianglify = require("trianglify");
+
+var TrianglifyCanvas = require("./TrianglifyCanvas.jsx");
+var ButtonGroupSelect = require("./ButtonGroupSelect.jsx");
+
+module.exports = (function (_React$Component) {
+  function Hero(props) {
+    _classCallCheck(this, Hero);
+
+    _get(Object.getPrototypeOf(Hero.prototype), "constructor", this).call(this, props);
+    this.state = Trianglify.defaults;
+    this.state.color_index = 0;
+  }
+
+  _inherits(Hero, _React$Component);
+
+  _prototypeProperties(Hero, null, {
+    render: {
+      value: function render() {
+        var _this = this;
+
+        return React.createElement(
+          "div",
+          { className: "component-hero" },
+          React.createElement(
+            "div",
+            { className: "masthead" },
+            React.createElement(TrianglifyCanvas, {
+              height: 800,
+              width: 1920,
+              variance: this.state.variance,
+              cell_size: this.state.cell_size,
+              color_space: this.state.color_space,
+              stroke_width: this.state.stroke_width,
+              x_colors: ["#213EFF", "#FF2436"],
+              seed: "quxbaz" }),
+            React.createElement(
+              "div",
+              { className: "content" },
+              React.createElement(
+                "h1",
+                null,
+                "Trianglify"
+              ),
+              React.createElement(
+                "h2",
+                null,
+                "A javascript library for generating colorful triangle art"
+              )
+            )
+          ),
+          React.createElement(
+            "div",
+            { className: "container" },
+            React.createElement(
+              "div",
+              { className: "row" },
+              React.createElement(
+                "div",
+                { className: "col-md-3 text-center" },
+                React.createElement(
+                  "h3",
+                  null,
+                  "Variance"
+                ),
+                React.createElement("input", { type: "range", min: "0", max: "1", step: "0.01",
+                  value: this.state.variance,
+                  onChange: function (e) {
+                    return _this.setState({ variance: e.target.value });
+                  } })
+              ),
+              React.createElement(
+                "div",
+                { className: "col-md-3 text-center" },
+                React.createElement(
+                  "h3",
+                  null,
+                  "Cell Size"
+                ),
+                React.createElement("input", { type: "range", min: "10", max: "200", step: "10",
+                  value: this.state.cell_size,
+                  onChange: function (e) {
+                    return _this.setState({ cell_size: parseInt(e.target.value) });
+                  } })
+              ),
+              React.createElement(
+                "div",
+                { className: "col-md-3 text-center" },
+                React.createElement(
+                  "h3",
+                  null,
+                  "Color Space"
+                ),
+                React.createElement(ButtonGroupSelect, { selected: this.state.color_space,
+                  options: ["lab", "rgb", "hsl", "hsv"],
+                  onChange: function (e) {
+                    return _this.setState({ color_space: e.target.value });
+                  } })
+              )
+            )
+          )
+        );
+      },
+      writable: true,
+      configurable: true
+    }
+  });
+
+  return Hero;
+})(React.Component);
+
+},{"./ButtonGroupSelect.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/ButtonGroupSelect.jsx","./TrianglifyCanvas.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/TrianglifyCanvas.jsx","react":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/react/react.js","trianglify":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/trianglify/lib/trianglify.js"}],"/Users/qrohlf/Projects/trianglify-documentation/js/components/TrianglifyCanvas.jsx":[function(require,module,exports){
 "use strict";
 
 var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
@@ -130,14 +258,12 @@ module.exports = (function (_React$Component) {
     },
     shouldComponentUpdate: {
       value: function shouldComponentUpdate(nextProps, nextState) {
-        console.log(nextProps.cell_size);
+        console.log(nextProps.stroke_width);
         for (var key in nextProps) {
           if (this.props[key] !== nextProps[key]) {
-            console.log("re-render triggered");
             return true;
           }
         }
-        console.log("re-render not happening");
         return false;
       },
       writable: true,
@@ -145,14 +271,6 @@ module.exports = (function (_React$Component) {
     },
     componentDidUpdate: {
       value: function componentDidUpdate() {
-        this.renderCanvas();
-      },
-      writable: true,
-      configurable: true
-    },
-    onClick: {
-      value: function onClick() {
-        // For demonstration purposes
         this.renderCanvas();
       },
       writable: true,
@@ -168,7 +286,7 @@ module.exports = (function (_React$Component) {
     },
     render: {
       value: function render() {
-        return React.createElement("canvas", { onClick: this.onClick.bind(this) });
+        return React.createElement("canvas", null);
       },
       writable: true,
       configurable: true
@@ -12374,7 +12492,7 @@ if (typeof Object.create === 'function') {
 }
 
 },{}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/browserify-sign/node_modules/elliptic/package.json":[function(require,module,exports){
-module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={
+module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={
   "name": "elliptic",
   "version": "1.0.1",
   "description": "EC cryptography",
@@ -12479,7 +12597,7 @@ module.exports = function evp(crypto, password, salt, keyLen) {
 };
 }).call(this,require("buffer").Buffer)
 },{"buffer":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/buffer/index.js"}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/browserify-sign/node_modules/parse-asn1/aesid.json":[function(require,module,exports){
-module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
+module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
 "2.16.840.1.101.3.4.1.2": "aes-128-cbc",
 "2.16.840.1.101.3.4.1.3": "aes-128-ofb",
 "2.16.840.1.101.3.4.1.4": "aes-128-cfb",
@@ -16534,7 +16652,7 @@ function findPrime(bits, gen) {
 
 }
 },{"bn.js":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js","miller-rabin":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/node_modules/miller-rabin/lib/mr.js","randombytes":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/randombytes/browser.js"}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/lib/primes.json":[function(require,module,exports){
-module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={
+module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={
     "modp1": {
         "gen": "02",
         "prime": "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a63a3620ffffffffffffffff"
@@ -39961,7 +40079,7 @@ module.exports = {
 },{}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/trianglify/lib/pattern.js":[function(require,module,exports){
 /*
  * Pattern.js
- * Contains rendering implementations that consume Trianglify geometry and opts
+ * Contains rendering implementations for trianglify-generated geometry
  */
 
 // conditionally load jsdom if we don't have a browser environment available.
@@ -39980,6 +40098,7 @@ function Pattern(polys, opts) {
       path.setAttribute("d", "M" + poly[1].join("L") + "Z");
       path.setAttribute("fill", poly[0]);
       path.setAttribute("stroke", poly[0]);
+      path.setAttribute("stroke-width", opts.stroke_width);
       svg.appendChild(path);
     });
 
@@ -39999,6 +40118,7 @@ function Pattern(polys, opts) {
 
     polys.forEach(function(poly) {
       ctx.fillStyle = ctx.strokeStyle = poly[0];
+      ctx.lineWidth = opts.stroke_width;
       ctx.beginPath();
       ctx.moveTo.apply(ctx, poly[1][0]);
       ctx.lineTo.apply(ctx, poly[1][1]);
@@ -40011,7 +40131,7 @@ function Pattern(polys, opts) {
   }
 
   // PNG rendering method
-  // currently returns a data url since toBlob support really isn't there yet...
+  // currently returns a data url as a string since toBlob support really isn't there yet...
   function render_png() {
     return render_canvas().toDataURL("image/png");
   }
@@ -40045,12 +40165,13 @@ var Pattern = require('./pattern');
 
 var defaults = {
   cell_size: 75,                    // Size of the cells used to generate a randomized grid
-  variance: 0.75,                      // how much to randomize the grid
+  variance: 0.75,                   // how much to randomize the grid
   x_colors: colorbrewer.RdYlBu,     // X color stops
   y_colors: colorbrewer.RdYlBu,     // Y color stops
   palette: colorbrewer,             // Palette to use for 'random' color option
   color_space: 'lab',               // Color space used for gradient construction & interpolation
   color_function: false,            // Color function f(x, y) that returns a color specification that is consumable by chroma-js
+  stroke_width: 1.51,               // Width of stroke. Defaults to 1.51 to fix an issue with canvas antialiasing.
   width: 600,                       // Width of pattern
   height: 400,                      // Height of pattern
   seed: null                        // Seed for the RNG
