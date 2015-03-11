@@ -98,6 +98,7 @@ gulp.task('watch', ['watchify', 'sass', 'index', 'images', 'fonts'], function() 
   gulp.watch('./css/**/*', ['sass']);
   gulp.watch('./html/index.html', ['index']);
   gulp.watch('./images/**', ['images']);
+  gulp.watch('./fonts/**/*', ['fonts']);
 });
 
 gulp.task('serve', ['watch'], function() {

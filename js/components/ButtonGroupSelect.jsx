@@ -16,7 +16,7 @@ module.exports = class ButtonGroupSelect extends React.Component {
         <button
         key={item}
         value={item}
-        className={item === this.props.selected ? 'btn btn-primary' : 'btn btn-default'}>
+        className={item === this.props.selected ? 'btn btn-active' : 'btn btn-default'}>
         {item}
         </button>
       )

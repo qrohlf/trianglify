@@ -1,10 +1,22 @@
 @import 'bootstrap/variables';
 $icon-font-path: '/fonts/';
 $font-family-sans-serif: proxima-nova, sans-serif;
+$font-family-base: $font-family-sans-serif;
+$font-family-monospace: source-code-pro, monospace;
+$code-color: inherit;
+$code-bg: none;
+$pre-bg: darken(white, 3%);
 $container-lg: $container-md;
-@import 'bootstrap';
 
-// Box-sizing fix
+$font-size-base: 16px;
+$font-size-h1: 24px;
+// $font-size-h2: 18px;
+$font-size-h3: 18px;
+
+@import 'bootstrap';
+@import './icomoon';
+
+// Global tweaks & fixes
 html {
   box-sizing: border-box;
 }
@@ -12,8 +24,10 @@ html {
   box-sizing: inherit;
 }
 
+
 // Components
 @import './components/hero-styles';
+@import './components/main-nav-styles';
 
 // Range sliders are super janky. Need a better implementation.
 input[type=range]{
@@ -23,6 +37,7 @@ input[type=range]{
 }
 
 input[type=range]::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
     background: #ddd;
     border: none;
     height: 4px;
@@ -39,4 +54,34 @@ input[type=range]::-webkit-slider-thumb {
     background: white;
     border: 1px solid #aaa;
     margin-top: -6px;
+}
+
+input[type=range]:focus {
+  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+
+// Some heading overrides
+h1 {
+  font-family: proxima-nova-soft;
+  text-transform: uppercase;
+  margin-top: 64px;
+}
+
+
+.main-content {
+  h1:first-child {
+    margin-top: 0;
+  }
+}
+
+.glyphicon-lg {
+  font-size: 32px;
+}
+
+pre {
+  font-size: 13px;
+}
+
+p code {
+  border: 1px solid $pre-border-color;
 }

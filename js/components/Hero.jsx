@@ -11,19 +11,26 @@ module.exports = class Hero extends React.Component {
     this.state.height = window.innerHeight;
     this.state.width = window.innerWidth;
     this.state.color_set = 'RdBu';
+    this.state.resize_timer = null;
+  }
+
+  debounceResize() {
+    clearTimeout(this.state.resize_timer);
+    this.setState({resize_timer: setTimeout(this.handleResize.bind(this), 100)});
   }
 
   handleResize(e) {
+    console.log('resize event!');
     this.setState({width: window.innerWidth});
     this.setState({height: window.innerHeight});
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleResize.bind(this));
+    window.addEventListener('resize', this.debounceResize.bind(this));
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize.bind(this));
+    window.removeEventListener('resize', this.debounceResize.bind(this));
   }
 
   render() {
@@ -31,7 +38,7 @@ module.exports = class Hero extends React.Component {
       <div className="component-hero">
         <div className="masthead">
           <TrianglifyCanvas
-            height={this.state.height * 0.7}
+            height={this.state.height * 0.85}
             width={this.state.width}
             variance={this.state.variance}
             cell_size={this.state.cell_size}
@@ -44,6 +51,10 @@ module.exports = class Hero extends React.Component {
           <div className="content">
             <h1>Trianglify</h1>
             <h2>A javascript library for generating colorful triangle art</h2>
+            <p>
+              <a className="fancybutton" href="https://github.com/qrohlf/trianglify"><span className='icon-github'></span> star</a>
+              <a className="fancybutton" href="https://twitter.com/qrohlf"><span className='icon-twitter3'></span> follow</a>
+            </p>
           </div>
         </div>
 

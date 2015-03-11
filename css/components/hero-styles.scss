@@ -1,26 +1,31 @@
 .component-hero {
   .masthead {
-    height: 70vh;
+    height: 85vh;
     max-width: 100%;
     position: relative;
     overflow: hidden;
     text-align: center;
-    // background-color: rgba(0, 0, 0, 0.10);
+    // background-color: rgba(0, 0, 0, 0.07);
     ///graaaaaaaagrrrggaaaaaaahhhh
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
 
     canvas {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+      min-width: 100%;
       z-index: -1;
     }
 
     .content {
-      position: relative;
-      top: 50%;
-      transform: translateY(-50%);
+      $scrim: rgba(0, 0, 0, 0.13);
       margin: 15px;
+      background-color: $scrim;
+      box-shadow: 0 0 60px 60px $scrim;
 
       h1, h2 {
         color: white;
@@ -28,12 +33,39 @@
       }
 
       h1 {
+        font-family: proxima-nova, sans-serif;
+        margin-top: 0;
         font-size: 100px;
+      }
+
+      .fancybutton {
+        display: inline-block;
+        font-size: 18px;
+        border: 2px solid white;
+        text-transform: uppercase;
+        border-radius: $border-radius-base;
+        padding: 5px 10px;
+        margin: 5px 10px;
+        color: white;
+        vertical-align: middle;
+        &:hover {
+          text-decoration: none;
+          background: white;
+          color: darken(white, 40%);
+        }
+        .icon-twitter3, .icon-github {
+          font-size: 22px;
+        }
       }
     }
   }
 
   .controls {
     margin-bottom: 64px;
+    color: darken(white, 70%);
   }
+}
+
+.btn-active {
+  @include button-variant(white, darken(white, 40%), darken(white, 40%));
 }
