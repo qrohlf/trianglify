@@ -8,6 +8,8 @@ var notifier = require('node-notifier');
 var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var stylish = require('jshint-stylish');
+var uglify = require('gulp-uglify');
+var buffer = require('vinyl-buffer');
 
 var production = process.env.NODE_ENV == 'production';
 
@@ -18,6 +20,7 @@ var bundler = browserify('./lib/trianglify.js', {
   packageCache: {},
   fullPaths: true
 });
+bundler.exclude('crypto');
 
 gulp.task('browserify', ['jshint'], function() {
   // start the deps bundler
@@ -31,6 +34,8 @@ gulp.task('browserify', ['jshint'], function() {
       this.emit('end');
     })
     .pipe(source('./trianglify.min.js'))
+    .pipe(buffer())
+    .pipe(uglify())
     .pipe(gulp.dest('dist'));
 });
 
