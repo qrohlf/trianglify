@@ -15,7 +15,6 @@ module.exports = class GlyphiconGrid extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log(nextProps.stroke_width);
     for(var key in nextProps) {
       if (this.props[key] !== nextProps[key]) {
         return true;

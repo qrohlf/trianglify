@@ -23,6 +23,6 @@ module.exports = class ButtonGroupSelect extends React.Component {
       ;
     }
 
-    return <div className="btn-group" onClick={this.onClick.bind(this)}>{this.props.options.map(createButton.bind(this))}</div>
+    return <div className="btn-group" style={this.props.style} onClick={this.onClick.bind(this)}>{this.props.options.map(createButton.bind(this))}</div>
   }
 }

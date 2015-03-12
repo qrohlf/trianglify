@@ -14,7 +14,7 @@
 
     <div class="container main-content">
       <div class="col-md-10">
-        <h1>Trianglify</h1>
+        <h1 id="overview">Trianglify</h1>
         <p>
           Trianglify generates colorful geometric patterns from random input. It was inspired by btmills'
           <a href="https://github.com/btmills/geopattern">geopattern</a> project, and can output patterns in a variety of formats.
@@ -29,37 +29,116 @@
           <li>Only 32kB minified</li>
         </ul>
 
-        <h1 id="usage">Usage</h1>
-        <p>Not a programmer? Check out the <a href="#">Trianglify wallpaper generator</a> example.</p>
+        <h1 id="gettingstarted">Getting Started</h1>
 
-        <p>Officially maintained packages for Trianglify are on bower, npm, and CDNJS. The examples below are shown for node, but will work
-        with the bower and CDN versions of Trianglify as well (just ignore the <code>require</code> statements).</p>
+        <p>You can find officially maintained packages for Trianglify on <a href="http://bower.io/search/?q=trianglify">bower</a>,
+        <a href="https://www.npmjs.com/package/trianglify">npm</a>, and <a href="http://cdnjs.com/libraries/trianglify">CDNJS</a>.</p>
 
-        <p>Trianglify exports a function which takes a single options argument. It returns a pattern object that holds information about the
-        geometry of the generated pattern as well as rendering functions that will render the pattern to an image.</p>
+        <p>Trianglify exports a function which takes a set of options as the argument. It returns an object with the pattern it generated
+        and methods to render that pattern to SVG, PNG, or canvas.</p>
 
-<pre><code>// Basic Trianglify usage
-var canvas = Trianglify().canvas(); // Generate a pattern and render it
-document.body.appendChild(canvas);  // Append the render to the document</code></pre>
+<pre><code class="language-javascript">// Basic Trianglify usage
+var options = {cell_size: 30, x_colors: 'random'};
+var pattern = Trianglify(options); // Generate a pattern
+document.body.appendChild(pattern.canvas());  // Append to the document
+</code></pre>
 
-        <h1 id="examples">Examples</h1>
-        <p>Mauris vitae tempor felis, sed consectetur urna. Duis tincidunt mauris sed interdum pellentesque. Phasellus egestas turpis vitae viverra mattis. Donec sed tellus neque. Morbi mollis vestibulum dolor, eu malesuada elit lacinia sed. Ut urna dolor, ultrices id metus ac, laoreet ultricies quam. Quisque ut leo sed mi malesuada accumsan. Duis imperdiet viverra purus fermentum suscipit. Aenean risus odio, convallis in urna sed, tempor cursus augue.</p>
+        <p>Not a programmer? Check out the <a href="#">Trianglify wallpaper generator</a> example to make and download patterns.</p>
+
+        <h1 id="outputs">Output Format</h1>
+        <p>The pattern object returned by Trianglify has the following properties/methods:</p>
+
+        <h2>pattern.polys</h2>
+        <p>An array of the polygon colors and polygons that make up the pattern</p>
+
+        <h2>pattern.opts</h2>
+        <p>The options set for this pattern (see the <a href="#options">options</a> section for details).</p>
+
+        <h2>pattern.svg()</h2>
+        <p>Render the pattern to SVG format and return it as a DOM node that can be appended to the document.</p>
+
+        <h2>pattern.canvas([<em>canvas</em>])</h2>
+        <p>Render the pattern to a canvas and return it as a DOM node that can be appended to the document.
+        If a reference to an existing canvas is passed in as the <em>canvas</em> argument, Trianglify will render to it instead.</p>
+
+        <h1 id="options">Options</h1>
+        <p>Trianglify starts with the following values by default, which can be customized by passing in an object with the options you want
+        to override.</p>
+        <pre><code class="language-javascript">var defaults = {
+  cell_size: 75,
+  variance: 0.75,
+  x_colors: Trianglify.colorbrewer.RdYlBu,
+  y_colors: 'match_x',
+  palette: Trianglify.colorbrewer,
+  color_space: 'lab'
+  color_function: false,
+  stroke_width: 1.51,
+  width: 600,
+  height: 400,
+  seed: null
+}</code></pre>
+
+        <h2 id="width">width</h2>
+        <p>The desired width of the pattern in pixels.</p>
+
+        <h2 id="height">height</h2>
+        <p>The desired height of the pattern in pixels.</p>
+
+        <h2 id="seed">seed</h2>
+        <p>A string or numeric seed for the random number generator. When this is set to <code>null</code> or <code>undefined</code>,
+        the generator will be seeded automatically.</p>
+
+        <h2 id="cell_size">cell_size</h2>
+        <p>This option controls the size of the cells that Trianglify uses to generate patterns. A bigger cell size will result in
+        larger triangles in the output. This should be an integer value > 0. Use the slider below to see the effect this option has.</p>
+        <div class="trianglify-demo" data-demo="cell_size"> </div>
+
+        <h2 id="variance">variance</h2>
+        <p>This option can range from 0 to 1 and controls the variablity of the triangle vertices that Trianglify generates. 0 gives
+        a very regular grid of triangles, while 1 gives a very irregular pattern. Use the slider below to see the effect this option has.</p>
+        <div class="trianglify-demo" data-demo="variance"> </div>
+
+        <h2 id="palette">palette</h2>
+        <p>This option allows you to change the set of color gradients that Trianglify chooses from when the 'random' option is set
+        on either axis. It accepts an array of arrays. (While the example uses color keywords, all CSS color formats are supported).</p>
+        <div class="trianglify-demo" data-demo="palette"> </div>
+
+        <h2 id="color_space">color_space</h2>
+        <p>This option changes the color space Trianglify uses for interpolation. See
+        <a href="http://vis4.net/blog/posts/avoid-equidistant-hsv-colors/">this article</a> for a good explanation of why this matters.</p>
+        <div class="trianglify-demo" data-demo="color_space"> </div>
+
+        <h2 id="color_function">color_function</h2>
+        <p>This option allows you to specify your own function for coloring the pattern. It should take the x and y coordinates of the
+        triangle centroid and return the color you want the triangle to have in a valid CSS color format.</p>
+        <div class="trianglify-demo" data-demo="color_function"> </div>
+
+        <h2 id="stroke_width">stroke_width</h2>
+        <p>This option allows you to specify the width of the stroke applied to the pattern. If you are using the canvas rendering mechanism,
+        I recommend leaving it at it's default of 1.51, which will prevent ugly antialiasing artefacts.</p>
+
       </div>
 
       <div class="col-md-2">
         <nav class="main-nav">
           <ul>
             <li><a href='#overview'>Overview</a></li>
-            <li><a href='#'>Features</a></li>
-            <li><a href='#'>Usage</a></li>
-            <li><a href='#'>Examples</a></li>
-            <li><a href='#'>API</a></li>
+            <li><a href='#features'>Features</a></li>
+            <li><a href='#gettingstarted'>Getting Started</a></li>
+            <li><a href='#'>Options</a>
+              <ul>
+                <li><a href="#width">width</a></li>
+                <li><a href="#height">height</a></li>
+                <li><a href="#seed">seed</a></li>
+                <li><a href="#cell_size">cell_size</a></li>
+                <li><a href="#variance">variance</a></li>
+                <li><a href="#palette">palette</a></li>
+                <li><a href="#color_space">color_space</a></li>
+                <li><a href="#color_function">color_function</a></li>
+                <li><a href="#stroke_width">stroke_width</a></li>
+              </ul>
+            </li>
             <li><a href='#'>License</a></li>
-          </ul>
-
-          <hr>
-
-          <ul>
             <li><a href="#">GitHub</a>
           </ul>
         </nav>

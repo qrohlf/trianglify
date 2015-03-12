@@ -1,0 +1,28 @@
+.main-content {
+  p, pre {
+    margin-bottom: 24px;
+  }
+
+  pre {
+    font-size: 13px;
+    color: white;
+    // font-weight: bold;
+  }
+
+  p code {
+    border: 1px solid $pre-border-color;
+  }
+
+  h1:first-child {
+    margin-top: 0;
+  }
+
+  h2 {
+    margin-top: 32px;
+    font-weight: bold;
+  }
+
+  h1 {
+    margin-top: 64px;
+  }
+}

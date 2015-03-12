@@ -2,19 +2,25 @@
 $icon-font-path: '/fonts/';
 $font-family-sans-serif: proxima-nova, sans-serif;
 $font-family-base: $font-family-sans-serif;
-$font-family-monospace: source-code-pro, monospace;
-$code-color: inherit;
-$code-bg: none;
-$pre-bg: darken(white, 3%);
+$font-family-monospace: Menlo, Monaco, Consolas, monospace;
+
+
 $container-lg: $container-md;
 
+// Code styling
+$code-color: inherit;
+$code-bg: darken(white, 5%);
+$pre-bg: #1d1f21;//none;//#1d1f21;
+$pre-border-color: darken(white, 20%);
+
 $font-size-base: 16px;
-$font-size-h1: 24px;
-// $font-size-h2: 18px;
+$font-size-h1: 26px;
+$font-size-h2: 18px;
 $font-size-h3: 18px;
 
 @import 'bootstrap';
-@import './icomoon';
+@import 'icomoon';
+@import 'tomorrow-night';
 
 // Global tweaks & fixes
 html {
@@ -26,8 +32,10 @@ html {
 
 
 // Components
-@import './components/hero-styles';
-@import './components/main-nav-styles';
+@import "./components/hero-styles";
+@import "./components/main-nav-styles";
+@import "./components/main-content-styles";
+@import "./components/options-demo-styles";
 
 // Range sliders are super janky. Need a better implementation.
 input[type=range]{
@@ -64,24 +72,9 @@ input[type=range]:focus {
 h1 {
   font-family: proxima-nova-soft;
   text-transform: uppercase;
-  margin-top: 64px;
-}
-
-
-.main-content {
-  h1:first-child {
-    margin-top: 0;
-  }
+  margin-top: 48px;
 }
 
 .glyphicon-lg {
   font-size: 32px;
-}
-
-pre {
-  font-size: 13px;
-}
-
-p code {
-  border: 1px solid $pre-border-color;
 }

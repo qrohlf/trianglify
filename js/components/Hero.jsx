@@ -1,4 +1,5 @@
-let React = require('react');
+// let React = require('react');
+let React = require('react/addons');
 let Trianglify = require('trianglify');
 
 let TrianglifyCanvas = require('./TrianglifyCanvas.jsx');
@@ -7,11 +8,12 @@ let ButtonGroupSelect = require('./ButtonGroupSelect.jsx');
 module.exports = class Hero extends React.Component {
   constructor(props) {
     super(props);
-    this.state = Trianglify.defaults;
+    this.state = React.addons.update(Trianglify.defaults, {}); // Copy Trianglify.defaults instead of referencing it. Prevents heisenbugs
     this.state.height = window.innerHeight;
     this.state.width = window.innerWidth;
-    this.state.color_set = 'RdBu';
+    this.state.color_set = 'YlGnBu';
     this.state.resize_timer = null;
+    this.state.cell_size = 100;
   }
 
   debounceResize() {
@@ -84,7 +86,7 @@ module.exports = class Hero extends React.Component {
               <h3>Color Palette</h3>
               <select className='form-control' value={this.state.color_set}
                 onChange={(e) => this.setState({color_set: e.target.value})}>
-                {Object.keys(Trianglify.colorbrewer).map( (colors)=> <option value={colors}>{colors}</option>)}
+                {Object.keys(Trianglify.colorbrewer).map( (colors)=> <option key={colors} value={colors}>{colors}</option>)}
               </select>
             </div>
           </div>
