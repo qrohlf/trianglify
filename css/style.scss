@@ -45,6 +45,7 @@ h2 {
 a, a:visited {
   color: #225378;
   cursor: pointer;
+  transition: color 0.2s ease;
 }
 
 a.button {
@@ -111,6 +112,12 @@ p {
   h1 {
     font-size: 5rem;
     margin: 0 0;
+    a {
+      color: $text-color-dark;
+    }
+    a:hover {
+      color: lighten($text-color-dark, 15%);
+    }
   }
 
   p {

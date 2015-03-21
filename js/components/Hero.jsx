@@ -11,7 +11,7 @@ module.exports = class Hero extends React.Component {
     this.state = React.addons.update(Trianglify.defaults, {}); // Copy Trianglify.defaults instead of referencing it. Prevents heisenbugs
     this.state.height = window.innerHeight;
     this.state.width = window.innerWidth;
-    this.state.color_set = 'RdYlGn';
+    this.state.x_colors = 'RdYlGn';
     this.state.resize_timer = null;
     this.state.cell_size = 100;
   }
@@ -35,16 +35,22 @@ module.exports = class Hero extends React.Component {
     window.removeEventListener('resize', this.debounceResize.bind(this));
   }
 
+  randomize() {
+    this.setState({variance: rand()});
+    this.setState({cell_size: 25+rand()*500});
+    this.setState({x_colors: 'random'});
+  }
+
   render() {
     return (
       <div className='component-hero'>
         <TrianglifyCanvas
           height={this.state.height + 10}
           width={this.state.width + 10}
-          x_colors={Trianglify.colorbrewer[this.state.color_set]}
-          seed='foobar'/>
+          x_colors={this.state.x_colors}
+          variance={this.state.variance}/>
         <div className="content">
-          <h1>Trianglify</h1>
+          <h1><a onClick={this.randomize.bind(this)}>Trianglify</a></h1>
           <p>algorithmically generated triangle art</p>
           <p>
             <a className="fancybutton" href="https://github.com/qrohlf/trianglify"><span className='icon-github'></span> star</a>

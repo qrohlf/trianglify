@@ -73,7 +73,7 @@ pattern.canvas(document.getElementById('mycanvas'));
 pattern.png();
 </code></pre>
 
-        <p>You can also easily write your own rendering implementations using the geometry in <code>pattern.polys</code>, which
+        <p>It's simple to write your own rendering implementations using the geometry in <code>pattern.polys</code>, which
         contains an array of each polygon's vertices and color.</p>
       </div>
     </section>
@@ -84,7 +84,7 @@ pattern.png();
 <pre><code>var defaults = {
   cell_size: 75,
   variance: 0.75,
-  x_colors: Trianglify.colorbrewer.RdYlBu,
+  x_colors: 'random',
   y_colors: 'match_x'
   palette: Trianglify.colorbrewer,
   color_space: 'lab'
@@ -96,6 +96,12 @@ pattern.png();
 };
 </code></pre>
         <p>For more information on what the above options do and what values they accept check out the <a href="https://github.com/qrohlf/Trianglify">README</a> on GitHub.</p>
+      </div>
+    </section>
+
+    <section class="dark blue">
+      <div class="content">
+        <h2>Trianglify is maintained by <a href="http://qrohlf.com">Quinn Rohlf</a> and GPLv3-licensed.</h2>
       </div>
     </section>
 
