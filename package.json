@@ -26,6 +26,7 @@
     "gulp-util": "^3.0.4",
     "lodash": "^3.3.1",
     "main-bower-files": "^2.5.0",
+    "marked": "^0.3.3",
     "node-notifier": "^4.1.2",
     "react": "^0.13.0-rc1",
     "trianglify": "git://github.com/qrohlf/trianglify.git#v0.2.0",

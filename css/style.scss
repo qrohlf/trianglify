@@ -1,80 +1,235 @@
-@import 'bootstrap/variables';
-$icon-font-path: '/fonts/';
-$font-family-sans-serif: proxima-nova, sans-serif;
-$font-family-base: $font-family-sans-serif;
-$font-family-monospace: Menlo, Monaco, Consolas, monospace;
+@import "normalize";
+@import "icomoon";
+@import "tomorrow-night";
+@import "rangeslider";
 
+// Global vars
+$sans-serif: proxima-nova, sans-serif;
+$monospace: Inconsolata, monospace;
+$text-color-dark: lighten(black, 30%);
+$text-color-light: darken(white, 10%);
 
-$container-lg: $container-md;
-
-// Code styling
-$code-color: inherit;
-$code-bg: darken(white, 5%);
-$pre-bg: #1d1f21;//none;//#1d1f21;
-$pre-border-color: darken(white, 20%);
-
-$font-size-base: 16px;
-$font-size-h1: 26px;
-$font-size-h2: 18px;
-$font-size-h3: 18px;
-
-@import 'bootstrap';
-@import 'icomoon';
-@import 'tomorrow-night';
+// Palette
+$dark-blue: #2C3E50;
+$dark-red: #E74C3C;
 
 // Global tweaks & fixes
 html {
   box-sizing: border-box;
 }
+
 *, *:before, *:after {
   box-sizing: inherit;
 }
 
-
-// Components
-@import "./components/hero-styles";
-@import "./components/main-nav-styles";
-@import "./components/main-content-styles";
-@import "./components/options-demo-styles";
-
-// Range sliders are super janky. Need a better implementation.
-input[type=range]{
-    -webkit-appearance: none;
-    margin-top: 15px;
-    margin-bottom: 15px;
+body {
+  font-family: $sans-serif;
+  font-size: 16px;
+  text-align: center;
+  color: $text-color-dark;
 }
 
-input[type=range]::-webkit-slider-runnable-track {
-    -webkit-appearance: none;
-    background: #ddd;
-    border: none;
-    height: 4px;
-    border-radius: 2px;
-    margin-top: 6px;
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
 }
 
-input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    border: none;
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    background: white;
-    border: 1px solid #aaa;
-    margin-top: -6px;
-}
-
-input[type=range]:focus {
-  outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
-}
-
-// Some heading overrides
 h1 {
-  font-family: proxima-nova-soft;
-  text-transform: uppercase;
-  margin-top: 48px;
+  font-size: 3rem;
 }
 
-.glyphicon-lg {
-  font-size: 32px;
+h2 {
+  font-size: 1.15rem;
+  font-weight: normal;
+}
+
+a, a:visited {
+  color: #225378;
+  cursor: pointer;
+}
+
+a.button {
+  display: inline-block;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background: white;
+  border: 1px solid darken(white, 20%);
+  border-radius: 5px;
+  color: $text-color-dark;
+  user-select: none;
+  &:hover {
+    background: darken(white, 1%);
+  }
+}
+
+.dark a, .dark a:visited {
+  color: #ACF0F2;
+}
+
+code {
+  font-family: $monospace;
+  font-size: 14px;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 3rem 0;
+  code {
+    text-align: left;
+    display: inline-block;
+    padding: 1rem;
+    border-radius: 5px;
+  }
+}
+
+p {
+  max-width: 400px;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.clearfix {
+  &:before, &:after {
+    content: ' ';
+    display: table;
+  }
+}
+
+
+.component-hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+
+  //fix for bad font smoothing in chrome
+  -webkit-font-smoothing: antialiased;
+
+  h1 {
+    font-size: 5rem;
+    margin: 0 0;
+  }
+
+  p {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  canvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    z-index: -1;
+  }
+
+  .fancybutton {
+    display: inline-block;
+    font-size: 18px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    margin: 5px 10px;
+    color: $text-color-dark;
+    vertical-align: middle;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: lighten($text-color-dark, 10%);
+    }
+
+    .icon-twitter3, .icon-github {
+      font-size: 22px;
+    }
+  }
+
+  .arrow-down {
+    position: absolute;
+    left: 50%;
+    bottom: 50px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+    display: block;
+    height: 3rem;
+    width: 3rem;
+    background: white;
+    border-radius: 50%;
+    transition: all .2s ease;
+    margin-left: -1.5rem;
+    opacity: 0.7;
+    &:hover {
+      box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
+      transform: scale(1.06);
+      opacity: 1;
+    }
+    &:after {
+      content: '';
+      display: inline-block;
+      background: url(/images/arrow-down.png) center no-repeat;
+      height: 3rem;
+      width: 3rem;
+      background-size: 100%;
+      opacity: 0.5;
+    }
+  }
+}
+
+// section styles
+section.dark {
+  color: $text-color-light;
+  background: lighten(black, 25%);
+  //fix for bad font smoothing in chrome
+  -webkit-font-smoothing: antialiased;
+
+  pre code {
+    background: lighten(black, 20%);
+  }
+}
+
+section.light {
+  color: $text-color-dark;
+  background: #FFFFD9;
+
+  pre code {
+    background: #EDDEBA;
+    color: #5E584A;
+  }
+}
+
+section.blue {
+  background: #1695A3;
+  color: white;
+  pre code {
+    background: darken(#1695A3, 5%);
+  }
+}
+
+section.orange {
+  background: #EB7F00;
+}
+
+section .content {
+  @extend .clearfix;
+  min-width: 400px;
+  max-width: 700px;
+  width: 50%;
+  margin: 0 auto;
+  padding: 5rem 0;
+
+  canvas {
+    max-width: 100%;
+  }
+}
+
+.component-colorbrewerdemo {
+  columns: 3;
+  margin: 3rem 0;
+
+  .item {
+    @extend .clearfix;
+    margin-bottom: 1rem;
+  }
 }
