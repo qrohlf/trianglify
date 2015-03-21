@@ -1,16 +1,17 @@
+// Generate png images on the command line
+// Usage: node generate-png.js filename.png
+
 var Trianglify = require('../lib/trianglify.js');
 var fs = require('fs');
 
 var pngURI = Trianglify({
-  x_colors: 'RdYlGn',
-  variance: 0,
-  width: 1440,
-  height: 900
+  x_colors: 'random',
+  width: 600,
+  height: 400,
+  cell_size: 40
 }).png();
 
 var data = pngURI.substr(pngURI.indexOf('base64') + 7);
 var buffer = new Buffer(data, 'base64');
 
-
-fs.writeFileSync(Math.random().toString(36).substr(2, 5)+'.png', buffer);
-
+fs.writeFileSync(process.argv[2], buffer);
