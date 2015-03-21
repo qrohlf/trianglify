@@ -50,9 +50,10 @@ module.exports = class Hero extends React.Component {
           x_colors={this.state.x_colors}
           variance={this.state.variance}/>
         <div className="content">
-          <h1><a onClick={this.randomize.bind(this)}>Trianglify</a></h1>
+          <h1>Trianglify</h1>
           <p>algorithmically generated triangle art</p>
           <p>
+            <a className="fancybutton" onClick={this.randomize.bind(this)}><span className='icon-spinner11'></span> generate</a>
             <a className="fancybutton" href="https://github.com/qrohlf/trianglify"><span className='icon-github'></span> star</a>
             <a className="fancybutton" href="https://twitter.com/qrohlf"><span className='icon-twitter3'></span> follow</a>
           </p>

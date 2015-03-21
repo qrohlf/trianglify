@@ -144,6 +144,7 @@ p {
     vertical-align: middle;
     text-decoration: none;
     transition: color 0.2s ease;
+    user-select: none;
 
     &:hover {
       color: lighten($text-color-dark, 10%);
