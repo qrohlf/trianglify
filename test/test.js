@@ -1,5 +1,6 @@
 var should = require('chai').should();
 var expect = require('chai').expect;
+var doc = (typeof document !== "undefined") ? document : require('jsdom').jsdom('<html/>');
 
 var Trianglify = require('../lib/trianglify');
 var Pattern = require('../lib/pattern');
@@ -66,13 +67,24 @@ describe('Trianglify', function(){
 
   });
 
-  it('should randomize colors when asked to');
+  it('should randomize colors when asked to', function() {
+    // Not a perfect test, but at least we catch failures that would cause an error to be thrown if x_colors is 'random'
+    Trianglify({x_colors: 'random'});
+  });
 
-  it('should match_x when asked to');
+  it('should match_x when asked to', function() {
+    var a = Trianglify({x_colors: 'YlGn', y_colors: 'match_x', height: 100, width: 100, cell_size: 20, seed: 'foo'});
+    var b = Trianglify({x_colors: 'YlGn', y_colors: 'YlGn', height: 100, width: 100, cell_size: 20, seed: 'foo'});
+    a.svg().outerHTML.should.equal(b.svg().outerHTML);
+  });
 
-  it('should draw from a random palette if provided');
+  it('should draw from a random palette if provided', function() {
+    var opts = {palette: [['#000', '#000'], ['#FFF', '#FFF']]};
 
-  it('should do all interpolation in the specified color space');
+    for (var i = 0; i < 5; i++) {
+      ['#000000', '#ffffff'].should.include(Trianglify(opts).polys[0][0]);
+    }
+  });
 
 });
 
@@ -80,14 +92,20 @@ describe('Trianglify', function(){
 describe('Pattern', function() {
   describe('#svg', function() {
     //Not 100% sure how to test this
-    it('should return an SVG DOM node');
+    it('should return an SVG DOM node', function() {
+      Trianglify().svg().tagName.should.eql('svg');
+    });
   });
 
   describe('#canvas', function() {
-    it('should return a canvas DOM node');
+    it('should return a canvas DOM node', function() {
+      Trianglify().canvas().tagName.should.eql('canvas');
+    });
   });
 
   describe('#png', function() {
-    it('should return a png file');
+    it('should return a PNG-encoded data URI', function() {
+      (typeof Trianglify().png()).should.eql('string');
+    });
   });
 });
