@@ -45,7 +45,6 @@ module.exports = class Hero extends React.Component {
   }
 
   render() {
-    console.log(this.state.cell_size);
     return (
       <div className='component-hero'>
         <TrianglifyCanvas
