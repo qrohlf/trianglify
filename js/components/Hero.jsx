@@ -13,7 +13,7 @@ module.exports = class Hero extends React.Component {
     this.state.width = window.innerWidth;
     this.state.x_colors = 'RdYlGn';
     this.state.resize_timer = null;
-    this.state.cell_size = 100;
+    this.state.seed = Math.random();
   }
 
   debounceResize() {
@@ -22,13 +22,14 @@ module.exports = class Hero extends React.Component {
   }
 
   handleResize(e) {
-    console.log('resize event!');
     this.setState({width: window.innerWidth});
-    this.setState({height: window.innerHeight});
+    this.setState({height: React.findDOMNode(this).offsetHeight});
+
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.debounceResize.bind(this));
+    this.setState({height: React.findDOMNode(this).offsetHeight});
   }
 
   componentWillUnmount() {
@@ -36,26 +37,31 @@ module.exports = class Hero extends React.Component {
   }
 
   randomize() {
-    this.setState({variance: rand()});
-    this.setState({cell_size: 25+rand()*500});
-    this.setState({x_colors: 'random'});
+    this.setState({
+      variance: Math.random(),
+      cell_size: this.state.width/50 + Math.random()*100,
+      x_colors: 'random',
+      seed: Math.random()});
   }
 
   render() {
+    console.log(this.state.cell_size);
     return (
       <div className='component-hero'>
         <TrianglifyCanvas
           height={this.state.height + 10}
           width={this.state.width + 10}
           x_colors={this.state.x_colors}
-          variance={this.state.variance}/>
+          variance={this.state.variance}
+          cell_size={this.state.cell_size}
+          seed={this.state.seed}/>
         <div className="content">
           <h1>Trianglify</h1>
           <p>algorithmically generated triangle art</p>
           <p>
-            <a className="fancybutton" onClick={this.randomize.bind(this)}><span className='icon-spinner11'></span> generate</a>
-            <a className="fancybutton" href="https://github.com/qrohlf/trianglify"><span className='icon-github'></span> star</a>
-            <a className="fancybutton" href="https://twitter.com/qrohlf"><span className='icon-twitter3'></span> follow</a>
+            <a className="fancybutton" onClick={this.randomize.bind(this)}><span className='icon icon-spinner11'></span> generate</a>
+            <a className="fancybutton" href="https://github.com/qrohlf/trianglify"><span className='icon icon-github'></span> star</a>
+            <a className="fancybutton" href="https://twitter.com/qrohlf"><span className='icon icon-twitter3'></span> follow</a>
           </p>
         </div>
         <a className="arrow-down" href="#gettingstarted"></a>

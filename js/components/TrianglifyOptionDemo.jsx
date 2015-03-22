@@ -29,7 +29,7 @@ module.exports = class TrianglifyOptionDemo extends React.Component {
   // Return the appropriate input for what we're demoing
   getInput() {
     return {
-      cell_size: <input type="range" min="10" max="200" step="10"
+      cell_size: <input type="range" min="20" max="200" step="10"
           value={this.state.cell_size}
           onChange={(e) => this.setState({cell_size: parseInt(e.target.value)})} />,
       variance: <input type="range" min="0" max="1" step="0.01"

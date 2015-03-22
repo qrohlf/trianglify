@@ -7,7 +7,7 @@
     <title>Trianglify by @qrohlf</title>
     <script src="//use.typekit.net/cup5bnl.js"></script>
     <script>try{Typekit.load();}catch(e){}</script>
-    <link href="/style.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
   </head>
   <body>
     <section id="hero">
@@ -17,10 +17,10 @@
       <div class="content">
         <h1>Getting Started</h1>
         <h2>You can grab a copy of Trianglify from <a href="https://www.npmjs.com/package/trianglify">npm</a>, <a href="http://bower.io/search/?q=trianglify">bower</a>, or <a href="https://cdnjs.com/libraries/trianglify">cdnjs</a></h2>
-        <img src="/images/gg6el.png" alt="example" height="200" width="400"/>
+        <div class="trianglify-canvas" data-options='{"height": 300, "width": 300, "cell_size": 40, "x_colors": "YlGnBu"}' > </div>
 <pre><code class="language-javascript">var pattern = Trianglify({
-  height: 200,
-  width: 400,
+  height: 300,
+  width: 300,
   cell_size: 40});
 
 document.body.appendChild(pattern.canvas());
@@ -102,10 +102,10 @@ pattern.png();
 
     <section class="dark blue">
       <div class="content">
-        <h2>Trianglify is maintained by <a href="http://qrohlf.com">Quinn Rohlf</a> and GPLv3-licensed.</h2>
+        <h2>Trianglify is maintained by <a href="http://qrohlf.com">Quinn Rohlf</a> and GPLv3-licensed. Check it out on <a href="https://github.com/qrohlf/trianglify">GitHub</a>.</h2>
       </div>
     </section>
 
-    <script src="/bundle.js"></script>
+    <script src="./bundle.js"></script>
   </body>
 </html>

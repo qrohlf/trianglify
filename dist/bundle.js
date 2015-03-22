@@ -5,6 +5,7 @@ require("babel/register");
 var React = require("react");
 var Hero = require("./components/Hero.jsx");
 var TrianglifyOptionDemo = require("./components/TrianglifyOptionDemo.jsx");
+var TrianglifyCanvas = require("./components/TrianglifyCanvas.jsx");
 var ColorBrewerDemo = require("./components/ColorBrewerDemo.jsx");
 var highlight = require("highlight.js");
 
@@ -13,8 +14,15 @@ React.render(React.createElement(Hero, null), document.getElementById("hero"));
 var demos = document.getElementsByClassName("trianglify-demo");
 for (var i = 0; i < demos.length; i++) {
   var demo = demos[i];
-  console.log(demo.dataset.demo);
   React.render(React.createElement(TrianglifyOptionDemo, { demo: demo.dataset.demo }), demo);
+}
+
+var canvases = document.getElementsByClassName("trianglify-canvas");
+for (var i = 0; i < canvases.length; i++) {
+  var canvas = canvases[i];
+  console.log(canvas);
+  console.log(canvas.dataset.options);
+  React.render(React.createElement(TrianglifyCanvas, JSON.parse(canvas.dataset.options)), canvas);
 }
 
 React.render(React.createElement(ColorBrewerDemo, null), document.getElementById("trianglify-demo-colorbrewer"));
@@ -97,7 +105,7 @@ window.smoothScroll = (function () {
   });return r;
 })();
 
-},{"./components/ColorBrewerDemo.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/ColorBrewerDemo.jsx","./components/Hero.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/Hero.jsx","./components/TrianglifyOptionDemo.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/TrianglifyOptionDemo.jsx","babel/register":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/babel/register.js","highlight.js":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/highlight.js/lib/index.js","react":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/react/react.js"}],"/Users/qrohlf/Projects/trianglify-documentation/js/components/ButtonGroupSelect.jsx":[function(require,module,exports){
+},{"./components/ColorBrewerDemo.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/ColorBrewerDemo.jsx","./components/Hero.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/Hero.jsx","./components/TrianglifyCanvas.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/TrianglifyCanvas.jsx","./components/TrianglifyOptionDemo.jsx":"/Users/qrohlf/Projects/trianglify-documentation/js/components/TrianglifyOptionDemo.jsx","babel/register":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/babel/register.js","highlight.js":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/highlight.js/lib/index.js","react":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/react/react.js"}],"/Users/qrohlf/Projects/trianglify-documentation/js/components/ButtonGroupSelect.jsx":[function(require,module,exports){
 "use strict";
 
 var _prototypeProperties = function (child, staticProps, instanceProps) { if (staticProps) Object.defineProperties(child, staticProps); if (instanceProps) Object.defineProperties(child.prototype, instanceProps); };
@@ -278,7 +286,7 @@ module.exports = (function (_React$Component) {
     this.state.width = window.innerWidth;
     this.state.x_colors = "RdYlGn";
     this.state.resize_timer = null;
-    this.state.cell_size = 100;
+    this.state.seed = Math.random();
   }
 
   _inherits(Hero, _React$Component);
@@ -294,9 +302,8 @@ module.exports = (function (_React$Component) {
     },
     handleResize: {
       value: function handleResize(e) {
-        console.log("resize event!");
         this.setState({ width: window.innerWidth });
-        this.setState({ height: window.innerHeight });
+        this.setState({ height: React.findDOMNode(this).offsetHeight });
       },
       writable: true,
       configurable: true
@@ -304,6 +311,7 @@ module.exports = (function (_React$Component) {
     componentDidMount: {
       value: function componentDidMount() {
         window.addEventListener("resize", this.debounceResize.bind(this));
+        this.setState({ height: React.findDOMNode(this).offsetHeight });
       },
       writable: true,
       configurable: true
@@ -317,15 +325,18 @@ module.exports = (function (_React$Component) {
     },
     randomize: {
       value: function randomize() {
-        this.setState({ variance: rand() });
-        this.setState({ cell_size: 25 + rand() * 500 });
-        this.setState({ x_colors: "random" });
+        this.setState({
+          variance: Math.random(),
+          cell_size: this.state.width / 50 + Math.random() * 100,
+          x_colors: "random",
+          seed: Math.random() });
       },
       writable: true,
       configurable: true
     },
     render: {
       value: function render() {
+        console.log(this.state.cell_size);
         return React.createElement(
           "div",
           { className: "component-hero" },
@@ -333,7 +344,9 @@ module.exports = (function (_React$Component) {
             height: this.state.height + 10,
             width: this.state.width + 10,
             x_colors: this.state.x_colors,
-            variance: this.state.variance }),
+            variance: this.state.variance,
+            cell_size: this.state.cell_size,
+            seed: this.state.seed }),
           React.createElement(
             "div",
             { className: "content" },
@@ -353,19 +366,19 @@ module.exports = (function (_React$Component) {
               React.createElement(
                 "a",
                 { className: "fancybutton", onClick: this.randomize.bind(this) },
-                React.createElement("span", { className: "icon-spinner11" }),
+                React.createElement("span", { className: "icon icon-spinner11" }),
                 " generate"
               ),
               React.createElement(
                 "a",
                 { className: "fancybutton", href: "https://github.com/qrohlf/trianglify" },
-                React.createElement("span", { className: "icon-github" }),
+                React.createElement("span", { className: "icon icon-github" }),
                 " star"
               ),
               React.createElement(
                 "a",
                 { className: "fancybutton", href: "https://twitter.com/qrohlf" },
-                React.createElement("span", { className: "icon-twitter3" }),
+                React.createElement("span", { className: "icon icon-twitter3" }),
                 " follow"
               )
             )
@@ -506,7 +519,7 @@ module.exports = (function (_React$Component) {
         var _this = this;
 
         return ({
-          cell_size: React.createElement("input", { type: "range", min: "10", max: "200", step: "10",
+          cell_size: React.createElement("input", { type: "range", min: "20", max: "200", step: "10",
             value: this.state.cell_size,
             onChange: function (e) {
               return _this.setState({ cell_size: parseInt(e.target.value) });
@@ -12756,7 +12769,7 @@ if (typeof Object.create === 'function') {
 }
 
 },{}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/browserify-sign/node_modules/elliptic/package.json":[function(require,module,exports){
-module.exports=module.exports=module.exports=module.exports={
+module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={
   "name": "elliptic",
   "version": "1.0.1",
   "description": "EC cryptography",
@@ -12861,7 +12874,7 @@ module.exports = function evp(crypto, password, salt, keyLen) {
 };
 }).call(this,require("buffer").Buffer)
 },{"buffer":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/buffer/index.js"}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/browserify-sign/node_modules/parse-asn1/aesid.json":[function(require,module,exports){
-module.exports=module.exports=module.exports=module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
+module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={"2.16.840.1.101.3.4.1.1": "aes-128-ecb",
 "2.16.840.1.101.3.4.1.2": "aes-128-cbc",
 "2.16.840.1.101.3.4.1.3": "aes-128-ofb",
 "2.16.840.1.101.3.4.1.4": "aes-128-cfb",
@@ -16916,7 +16929,7 @@ function findPrime(bits, gen) {
 
 }
 },{"bn.js":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/node_modules/bn.js/lib/bn.js","miller-rabin":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/node_modules/miller-rabin/lib/mr.js","randombytes":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/randombytes/browser.js"}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/lib/primes.json":[function(require,module,exports){
-module.exports=module.exports=module.exports=module.exports={
+module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports=module.exports={
     "modp1": {
         "gen": "02",
         "prime": "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a63a3620ffffffffffffffff"
@@ -17236,7 +17249,7 @@ function getr(priv) {
 }
 }).call(this,require("buffer").Buffer)
 },{"bn.js":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/browserify-rsa/node_modules/bn.js/lib/bn.js","buffer":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/buffer/index.js","randombytes":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/randombytes/browser.js"}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/browserify-rsa/node_modules/bn.js/lib/bn.js":[function(require,module,exports){
-arguments[4]["/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"][0].apply(exports,arguments)
+arguments[4]["/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/bn.js/lib/bn.js"][0].apply(exports,arguments)
 },{}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/parse-asn1/EVP_BytesToKey.js":[function(require,module,exports){
 (function (Buffer){
 var createHash = require('create-hash');
@@ -17577,7 +17590,7 @@ arguments[4]["/Users/qrohlf/Projects/trianglify-documentation/node_modules/brows
 },{"../../asn1":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/parse-asn1/node_modules/asn1.js/lib/asn1.js","buffer":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/buffer/index.js","inherits":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/inherits/inherits_browser.js"}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/parse-asn1/node_modules/asn1.js/lib/asn1/encoders/index.js":[function(require,module,exports){
 arguments[4]["/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/browserify-sign/node_modules/parse-asn1/node_modules/asn1.js/lib/asn1/encoders/index.js"][0].apply(exports,arguments)
 },{"./der":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/parse-asn1/node_modules/asn1.js/lib/asn1/encoders/der.js"}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/parse-asn1/node_modules/asn1.js/node_modules/bn.js/lib/bn.js":[function(require,module,exports){
-arguments[4]["/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/diffie-hellman/node_modules/miller-rabin/node_modules/bn.js/lib/bn.js"][0].apply(exports,arguments)
+arguments[4]["/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/browserify-rsa/node_modules/bn.js/lib/bn.js"][0].apply(exports,arguments)
 },{}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/parse-asn1/node_modules/asn1.js/node_modules/minimalistic-assert/index.js":[function(require,module,exports){
 arguments[4]["/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/browserify-sign/node_modules/parse-asn1/node_modules/asn1.js/node_modules/minimalistic-assert/index.js"][0].apply(exports,arguments)
 },{}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/parse-asn1/node_modules/pbkdf2-compat/browser.js":[function(require,module,exports){
@@ -20266,7 +20279,7 @@ function objectToString(o) {
 }
 }).call(this,require("buffer").Buffer)
 },{"buffer":"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/buffer/index.js"}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/stream-browserify/node_modules/readable-stream/node_modules/inherits/inherits_browser.js":[function(require,module,exports){
-arguments[4]["/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/crypto-browserify/node_modules/public-encrypt/node_modules/parse-asn1/node_modules/pbkdf2-compat/node_modules/create-hmac/node_modules/inherits/inherits_browser.js"][0].apply(exports,arguments)
+arguments[4]["/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/inherits/inherits_browser.js"][0].apply(exports,arguments)
 },{}],"/Users/qrohlf/Projects/trianglify-documentation/node_modules/browserify/node_modules/stream-browserify/node_modules/readable-stream/node_modules/isarray/index.js":[function(require,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
@@ -52329,7 +52342,7 @@ var Pattern = require('./pattern');
 var defaults = {
   cell_size: 75,                    // Size of the cells used to generate a randomized grid
   variance: 0.75,                   // how much to randomize the grid
-  x_colors: colorbrewer.RdYlBu,     // X color stops
+  x_colors: 'random',               // X color stops
   y_colors: 'match_x',              // Y color stops
   palette: colorbrewer,             // Palette to use for 'random' color option
   color_space: 'lab',               // Color space used for gradient construction & interpolation
@@ -52474,7 +52487,7 @@ function Trianglify(opts) {
   function _merge_opts(defaults, options) {
     var out = {};
 
-    // shallow-copy defaults
+    // shallow-copy defaults so we don't mutate the input objects (bad)
     for (var key in defaults) {
       out[key] = defaults[key];
     }

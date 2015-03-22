@@ -2,6 +2,7 @@ require("babel/register");
 let React = require('react');
 let Hero = require('./components/Hero.jsx');
 let TrianglifyOptionDemo = require('./components/TrianglifyOptionDemo.jsx');
+let TrianglifyCanvas = require('./components/TrianglifyCanvas.jsx');
 let ColorBrewerDemo = require('./components/ColorBrewerDemo.jsx');
 let highlight = require('highlight.js');
 
@@ -13,8 +14,15 @@ React.render(<Hero />, document.getElementById('hero'));
 var demos = document.getElementsByClassName('trianglify-demo');
 for (var i=0; i<demos.length; i++) {
   var demo = demos[i];
-  console.log(demo.dataset.demo);
   React.render(<TrianglifyOptionDemo demo={demo.dataset.demo} />, demo);
+}
+
+var canvases = document.getElementsByClassName('trianglify-canvas');
+for (var i=0; i<canvases.length; i++) {
+  var canvas = canvases[i];
+  console.log(canvas);
+  console.log(canvas.dataset.options);
+  React.render(<TrianglifyCanvas  {...JSON.parse(canvas.dataset.options)}/>, canvas);
 }
 
 React.render(<ColorBrewerDemo />, document.getElementById('trianglify-demo-colorbrewer'));

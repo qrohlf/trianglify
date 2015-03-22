@@ -88,6 +88,7 @@ p {
   text-align: left;
   margin-left: auto;
   margin-right: auto;
+  // line-height: 1.3;
 }
 
 .clearfix {
@@ -109,6 +110,10 @@ p {
   //fix for bad font smoothing in chrome
   -webkit-font-smoothing: antialiased;
 
+  .content {
+    max-width: 100%;
+  }
+
   h1 {
     font-size: 5rem;
     margin: 0 0;
@@ -123,6 +128,7 @@ p {
   p {
     font-size: 1.5rem;
     text-align: center;
+    max-width: 100%;
   }
 
   canvas {
@@ -150,7 +156,7 @@ p {
       color: lighten($text-color-dark, 10%);
     }
 
-    .icon-twitter3, .icon-github {
+    .icon {
       font-size: 22px;
     }
   }
@@ -176,16 +182,34 @@ p {
     &:after {
       content: '';
       display: inline-block;
-      background: url(/images/arrow-down.png) center no-repeat;
+      background: url(images/arrow-down.png) center no-repeat;
       height: 3rem;
       width: 3rem;
       background-size: 100%;
       opacity: 0.5;
     }
   }
+
+  //messy, but it works
+  @media (max-width: 600px) {
+    h1 {font-size: 3rem}
+    p {font-size: 1.2rem}
+    .fancybutton {
+      font-size: 1rem;
+      padding: 2px 5px;
+      margin: 2px 5px;
+      .icon {
+        font-size: 18px;
+        display: inline-block;
+      }
+    }
+  }
 }
 
 // section styles
+section {
+  // padding: 5rem 0.5rem;
+}
 section.dark {
   color: $text-color-light;
   background: lighten(black, 25%);
@@ -221,13 +245,14 @@ section.orange {
 
 section .content {
   @extend .clearfix;
-  min-width: 400px;
-  max-width: 700px;
-  width: 50%;
+  min-width: 230px;
+  width: 700px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 5rem 0;
+  padding: 4rem 1rem;
+  position: relative;
 
-  canvas {
+  canvas, img {
     max-width: 100%;
   }
 }
@@ -238,6 +263,8 @@ section .content {
 
   .item {
     @extend .clearfix;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+
+    canvas {border-radius: 50%;}
   }
 }
