@@ -226,6 +226,8 @@ module.exports = (function (_React$Component) {
   _createClass(TrianglifyOptionDemo, {
     render: {
       value: function render() {
+        var colorList = ["YlGnBu", "YlOrRd", "PuOr", "GnBu", "YlOrBr", "PRGn", "Purples", "Blues", "Oranges", "Reds", "Spectral", "PuRd"];
+
         var renderItem = function renderItem(colors) {
           return React.createElement(
             "div",
@@ -239,7 +241,7 @@ module.exports = (function (_React$Component) {
         return React.createElement(
           "div",
           { className: "component-colorbrewerdemo" },
-          Object.keys(Trianglify.colorbrewer).map(renderItem)
+          colorList.map(renderItem)
         );
       }
     }

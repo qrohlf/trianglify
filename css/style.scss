@@ -64,7 +64,7 @@ a.button {
 }
 
 .dark a, .dark a:visited {
-  color: #ACF0F2;
+  color: #A2E2E4;
 }
 
 code {
@@ -267,5 +267,6 @@ section .content {
     margin-bottom: 2rem;
 
     canvas {border-radius: 50%;}
+    column-break-inside: none;
   }
 }
