@@ -4,7 +4,7 @@
 @import "rangeslider";
 
 // Global vars
-$sans-serif: proxima-nova, sans-serif;
+$sans-serif: proxima-nova, "Proxima Nova", sans-serif;
 $monospace: Inconsolata, monospace;
 $text-color-dark: lighten(black, 30%);
 $text-color-light: darken(white, 10%);
@@ -40,6 +40,7 @@ h1 {
 h2 {
   font-size: 1.15rem;
   font-weight: normal;
+  margin: 3rem 0;
 }
 
 a, a:visited {
