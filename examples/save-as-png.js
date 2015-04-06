@@ -11,10 +11,11 @@ if (process.argv.length < 3) {
 
 // Generate a pattern and then grab the PNG data uri
 var pngURI = Trianglify({
+  width: 1920,
+  height: 1080,
+  cell_size: Math.random()*200 + 40,
   x_colors: 'random',
-  width: 600,
-  height: 400,
-  cell_size: 40
+  variance: Math.random(),
 }).png();
 
 // Strip off the uri part of the data uri, leaving the data

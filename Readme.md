@@ -9,7 +9,9 @@ Trianglify is a library that I wrote to generate nice SVG background images like
 
 It was inspired by [btmills/geopattern](https://github.com/btmills/geopattern) and the initial version was written in a single day because I got fed up with Adobe Illustrator.
 
-v0.2.0 represents a ground-up rewrite of the original, eliminating the dependency on d3.js and adding the ability to render to PNG or canvas. **v0.1.x users should note that the API has changed and v0.2.0 is not backwards-compatible**.
+Version 0.2.0 represents a ground-up rewrite of the original which eliminates the dependency on d3.js, streamlines rendering, and reworks the API for consistiency and ease-of-use.
+
+*(v0.1.x users should note that the v0.2.0 API has changed significantly and is not backwards-compatible)*
 
 # Getting Trianglify
 
@@ -46,7 +48,7 @@ git clone https://github.com/qrohlf/trianglify.git
 </script>
 ```
 
-See https://qrohlf.com/trianglify for a overview on getting started and a demonstration of some configuration options.
+See https://qrohlf.com/trianglify for interactive examples and a walkthrough of the most commonly-used Trianglify options.
 
 
 # API
