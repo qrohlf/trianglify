@@ -276,7 +276,8 @@ module.exports = (function (_React$Component) {
     this.state = React.addons.update(Trianglify.defaults, {}); // Copy Trianglify.defaults instead of referencing it. Prevents heisenbugs
     this.state.height = window.innerHeight;
     this.state.width = window.innerWidth;
-    this.state.x_colors = "RdYlGn";
+    this.state.x_colors = "RdBu";
+    this.state.cell_size = 40;
     this.state.resize_timer = null;
     this.state.seed = Math.random();
   }
