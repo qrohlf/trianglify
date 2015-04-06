@@ -1,8 +1,10 @@
-var should = require('chai').should();
-var expect = require('chai').expect;
+var chai = require('chai');
+var should = chai.should();
+var expect = chai.expect;
 var doc = (typeof document !== "undefined") ? document : require('jsdom').jsdom('<html/>');
 
 var Trianglify = require('../lib/trianglify');
+module.exports = Trianglify;
 var Pattern = require('../lib/pattern');
 
 describe('Trianglify', function(){
@@ -47,13 +49,13 @@ describe('Trianglify', function(){
   });
 
   it('should behave as a pure function when given a seed for the RNG', function() {
-    var svg1 = Trianglify({seed: 'foobar', x_colors: 'random', y_colors: 'random'}).svg().outerHTML;
-    var svg2 = Trianglify({seed: 'foobar', x_colors: 'random', y_colors: 'random'}).svg().outerHTML;
-    svg1.should.equal(svg2);
+    var svg1 = Trianglify({seed: 'foobar', x_colors: 'random', y_colors: 'random'}).svg();
+    var svg2 = Trianglify({seed: 'foobar', x_colors: 'random', y_colors: 'random'}).svg();
+    expect(svg1.isEqualNode(svg2)).to.equal(true);
   });
 
   it('should seed with random data by default', function() {
-    Trianglify().svg().outerHTML.should.not.equal(Trianglify().svg().outerHTML);
+    expect(Trianglify().svg().isEqualNode(Trianglify().svg())).to.equal(false);
   });
 
   it('should support custom color functions', function() {
@@ -75,7 +77,7 @@ describe('Trianglify', function(){
   it('should match_x when asked to', function() {
     var a = Trianglify({x_colors: 'YlGn', y_colors: 'match_x', height: 100, width: 100, cell_size: 20, seed: 'foo'});
     var b = Trianglify({x_colors: 'YlGn', y_colors: 'YlGn', height: 100, width: 100, cell_size: 20, seed: 'foo'});
-    a.svg().outerHTML.should.equal(b.svg().outerHTML);
+    a.svg().isEqualNode(b.svg()).should.equal(true);
   });
 
   it('should draw from a random palette if provided', function() {
@@ -93,13 +95,13 @@ describe('Pattern', function() {
   describe('#svg', function() {
     //Not 100% sure how to test this
     it('should return an SVG DOM node', function() {
-      Trianglify().svg().tagName.should.eql('svg');
+      Trianglify().svg().tagName.toLowerCase().should.eql('svg');
     });
   });
 
   describe('#canvas', function() {
     it('should return a canvas DOM node', function() {
-      Trianglify().canvas().tagName.should.eql('canvas');
+      Trianglify().canvas().tagName.toLowerCase().should.eql('canvas');
     });
   });
 

@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Trianglify tests</title>
+  <link rel="stylesheet" media="all" href="../node_modules/mocha/mocha.css">
+  <style type="text/css">
+  #mocha {
+  	max-width: 800px;
+  	margin: 60px auto;
+  }
+  </style>
+</head>
+<body>
+	<div id="mocha"></div>
+	<script src="../node_modules/mocha/mocha.js"></script>
+	<script>mocha.setup('bdd');</script>
+	<script src="test.browserify.js"></script>
+	<script>mocha.run();</script>
+</body>
+</html>

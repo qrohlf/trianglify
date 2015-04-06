@@ -10,6 +10,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 var buffer = require('vinyl-buffer');
+var open = require('open');
 
 var production = process.env.NODE_ENV == 'production';
 
@@ -39,10 +40,23 @@ gulp.task('browserify', ['jshint'], function() {
     .pipe(gulp.dest('dist'));
 });
 
+gulp.task('browser-test', ['jshint'], function() {
+  var testBundler = browserify('./test/test.js', {
+    standalone: 'Trianglify',
+    cache: {},
+    packageCache: {},
+    fullPaths: true
+  });
+
+  return testBundler.bundle()
+  .pipe(source('test.browserify.js'))
+  .pipe(gulp.dest('test'));
+});
+
 // Check source for syntax errors and style issues
 // TODO notifications. Probably need to look into switching to gulp-notify
 gulp.task('jshint', function() {
-  return gulp.src(['lib/**/*.js', 'test/**/*.js', 'gulpfile.js'])
+  return gulp.src(['lib/**/*.js', 'test/**/*.js', '!test/test.browserify.js', 'gulpfile.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
     .pipe(jshint.reporter('fail'));
