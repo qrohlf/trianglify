@@ -1,6 +1,6 @@
 # Trianglify
 
-[![Dependency Status](https://david-dm.org/qrohlf/trianglify.svg)](https://david-dm.org/qrohlf/trianglify) [![Build Status](https://travis-ci.org/qrohlf/trianglify.svg?branch=master)](https://travis-ci.org/qrohlf/trianglify)
+[![Build Status](https://travis-ci.org/qrohlf/trianglify.svg?branch=master)](https://travis-ci.org/qrohlf/trianglify)
 
 
 Trianglify is a library that I wrote to generate nice SVG background images like this one:
