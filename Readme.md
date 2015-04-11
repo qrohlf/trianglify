@@ -1,6 +1,4 @@
-# Trianglify
-
-[![Build Status](https://travis-ci.org/qrohlf/trianglify.svg?branch=master)](https://travis-ci.org/qrohlf/trianglify)
+# Trianglify [![Build Status](https://travis-ci.org/qrohlf/trianglify.svg?branch=master)](https://travis-ci.org/qrohlf/trianglify)
 
 
 Trianglify is a library that I wrote to generate nice SVG background images like this one:
@@ -11,7 +9,7 @@ It was inspired by [btmills/geopattern](https://github.com/btmills/geopattern) a
 
 Version 0.2.0 represents a ground-up rewrite of the original which eliminates the dependency on d3.js, streamlines rendering, and reworks the API for consistiency and ease-of-use.
 
-*(v0.1.x users should note that the v0.2.0 API has changed significantly and is not backwards-compatible)*
+*v0.1.x users should note that the v0.2.0 API has changed significantly and is not backwards-compatible*
 
 # Getting Trianglify
 

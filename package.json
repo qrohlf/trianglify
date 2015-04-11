@@ -58,7 +58,7 @@
   "npmName": "trianglify",
   "npmFileMap": [
     {
-      "basePath": "/dist/",
+      "basePath": "dist",
       "files": [
         "trianglify.min.js"
       ]
