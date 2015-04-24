@@ -107,7 +107,7 @@ Integer, defaults to `75`. Specify the size of the mesh used to generate triangl
 
 ### variance
 
-Decimal value between 0 and 1 (inclusive), defaults to 0.75. Specify the amount of randomness used when generating triangles. 
+Decimal value between 0 and 1 (inclusive), defaults to `0.75`. Specify the amount of randomness used when generating triangles. 
 
 ### seed
 
