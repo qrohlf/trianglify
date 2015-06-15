@@ -1,7 +1,6 @@
 {
   "name": "trianglify",
   "main": "trianglify.js",
-  "version": "0.2.1",
   "homepage": "https://github.com/qrohlf/trianglify",
   "authors": [
     "Quinn Rohlf <qr@qrohlf.com>"
