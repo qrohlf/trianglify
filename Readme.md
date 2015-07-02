@@ -39,7 +39,7 @@ git clone https://github.com/qrohlf/trianglify.git
 <script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.2.0/trianglify.min.js"></script>
 <script>
 	var pattern = Trianglify({
-		width: window.innerWidth, 
+		width: window.innerWidth,
 		height: window.innerHeight
 	});
 	document.body.appendChild(pattern.canvas())
@@ -84,6 +84,8 @@ Rendering function for SVG. Returns an SVGElement DOM node.
 
 Rendering function for canvas. When called with no arguments returns a HTMLCanvasElement DOM node. When passed an existing canvas element as an argument, renders the pattern to the existing canvas.
 
+To use this in a node.js environment, the optional dependency [node-canvas](https://github.com/Automattic/node-canvas) needs to be installed.
+
 ### pattern.png()
 
 Rendering function for PNG. Returns a data URI with the PNG data in base64 encoding. See [examples/save-as-png.js](examples/save-as-png.js) for an example of decoding this into a file.
@@ -95,7 +97,7 @@ Trianglify is configured by an options object passed in as the only argument. Th
 
 ### width
 
-Integer, defaults to `600`. Specify the width in pixels of the pattern to generate. 
+Integer, defaults to `600`. Specify the width in pixels of the pattern to generate.
 
 ### height
 
@@ -107,7 +109,7 @@ Integer, defaults to `75`. Specify the size of the mesh used to generate triangl
 
 ### variance
 
-Decimal value between 0 and 1 (inclusive), defaults to `0.75`. Specify the amount of randomness used when generating triangles. 
+Decimal value between 0 and 1 (inclusive), defaults to `0.75`. Specify the amount of randomness used when generating triangles.
 
 ### seed
 
