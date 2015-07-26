@@ -11,7 +11,7 @@
     "seedrandom": "^2.3.11"
   },
   "optionalDependencies": {
-    "canvas": "^1.2.3"
+    "canvas": "1.2.3"
   },
   "directories": {
     "example": "examples"
