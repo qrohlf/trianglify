@@ -1,6 +1,6 @@
 {
   "name": "trianglify",
-  "main": "trianglify.js",
+  "main": "dist/trianglify.min.js",
   "homepage": "https://github.com/qrohlf/trianglify",
   "authors": [
     "Quinn Rohlf <qr@qrohlf.com>"
@@ -16,10 +16,6 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "d3": "~3.4.12"
-  }
+    "test"
+  ]
 }

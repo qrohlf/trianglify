@@ -10,7 +10,6 @@ var sourcemaps = require('gulp-sourcemaps');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 var buffer = require('vinyl-buffer');
-var open = require('open');
 
 var production = process.env.NODE_ENV == 'production';
 
