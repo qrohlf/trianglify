@@ -7,31 +7,32 @@
     <title>Trianglify basic example</title>
     <style>
     html, body {
-      height: 100%;
-      width: 100%;
       margin: 0 0;
       padding: 0 0;
       text-align: center;
-      cursor: pointer;
-      display: flex;
-      flex-align: center;
       font-size: 0;
-    }
-
-    canvas {
-      width: 100%;
-      height: 100%;
     }
     </style>
   </head>
   <body>
   <script src="../dist/trianglify.min.js"></script>
   <script>
-    var pattern = Trianglify({
-      height: window.innerHeight,
-      width: window.innerWidth,
-      cell_size: 30+Math.random()*100});
-    document.body.appendChild(pattern.canvas());
+  // set up the base pattern
+  var pattern = Trianglify({
+    height: window.innerHeight,
+    width: window.innerWidth,
+    cell_size: 30 + Math.random() * 100})
+
+  // canvas
+  document.body.appendChild(pattern.canvas())
+
+  // svg
+  document.body.appendChild(pattern.svg())
+
+  // png
+  var png = document.createElement('img')
+  png.src = pattern.png()
+  document.body.appendChild(png)
   </script>
   </body>
 </html>
