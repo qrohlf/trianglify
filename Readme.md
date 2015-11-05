@@ -7,9 +7,7 @@ Trianglify is a library that I wrote to generate nice SVG background images like
 
 It was inspired by [btmills/geopattern](https://github.com/btmills/geopattern) and the initial version was written in a single day because I got fed up with Adobe Illustrator.
 
-Version 0.2.0 represents a ground-up rewrite of the original which eliminates the dependency on d3.js, streamlines rendering, and reworks the API for consistiency and ease-of-use.
-
-*v0.1.x users should note that the v0.2.0 API has changed significantly and is not backwards-compatible*
+*v0.1.x users should note that the  API for Trianglify has changed significantly in later releases and is not backwards-compatible*
 
 # Getting Trianglify
 
@@ -23,7 +21,7 @@ bower install trianglify
 Include it in your HTML via CDNJS:
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.2.1/trianglify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.4.0/trianglify.min.js"></script>
 ```
 
 Or clone the repo:
@@ -36,7 +34,7 @@ git clone https://github.com/qrohlf/trianglify.git
 # Quickstart
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.2.0/trianglify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.4.0/trianglify.min.js"></script>
 <script>
 	var pattern = Trianglify({
 		width: window.innerWidth,
