@@ -1,6 +1,17 @@
 language: node_js
-before_install: sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
+sudo: false
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - libcairo2-dev
+      - libjpeg8-dev
+      - libpango1.0-dev
+      - libgif-dev
+      - build-essential
+      - g++-4.8
+env:
+  - CXX=g++-4.8
 node_js:
-  - "0.12"
-  - "0.11"
-  - "0.10"
+  - "4.2"
