@@ -5,10 +5,6 @@ Trianglify is a library that I wrote to generate nice SVG background images like
 
 ![](https://cloud.githubusercontent.com/assets/347189/6771063/f8b0af46-d090-11e4-8d4c-6c7ef5bd9d37.png)
 
-It was inspired by [btmills/geopattern](https://github.com/btmills/geopattern) and the initial version was written in a single day because I got fed up with Adobe Illustrator.
-
-*v0.1.x users should note that the  API for Trianglify has changed significantly in later releases and is not backwards-compatible*
-
 # Getting Trianglify
 
 You can grab Trianglify with your preferred package manager:
@@ -74,9 +70,9 @@ The colors and vertices of the polygons that make up the pattern, in the followi
 ]
 ```
 
-### pattern.svg()
+### pattern.svg([opts])
 
-Rendering function for SVG. Returns an SVGElement DOM node.
+Rendering function for SVG. Returns an SVGElement DOM node. Takes an optional options object. Currently the only supported option is `{includeNamespace: true}`, which will cause the output to include an `xmlns='http://www.w3.org/2000/svg'` attribute. This is helpful if you intend to serialize the svg string to a file, as most browsers and vector graphics programs require it. See [#41](https://github.com/qrohlf/trianglify/issues/41) for more details about this option.
 
 ### pattern.canvas([HTMLCanvasElement])
 

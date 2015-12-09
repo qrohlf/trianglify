@@ -97,6 +97,10 @@ describe('Pattern', function() {
     it('should return an SVG DOM node', function() {
       Trianglify().svg().tagName.toLowerCase().should.eql('svg');
     });
+
+    it('should add an xmlns attribute when requested', function() {
+      Trianglify().svg({includeNamespace: true}).getAttribute('xmlns').should.eql('http://www.w3.org/2000/svg');
+    });
   });
 
   describe('#canvas', function() {
