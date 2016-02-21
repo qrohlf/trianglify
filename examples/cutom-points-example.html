@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trianglify custom points example</title>
+    <style>
+    html, body {
+      margin: 0 0;
+      padding: 0 0;
+      text-align: center;
+      font-size: 0;
+    }
+    </style>
+  </head>
+  <body>
+  <script src="../dist/trianglify.min.js"></script>
+  <script>
+
+  var h = window.innerHeight, w = window.innerWidth;
+  var center_y = h * 0.5, center_x = w * 0.5;
+  
+  var points = [];
+  var spacing = 20;
+  var t = 0;
+  // generate a sine wave of points
+  for(var x = spacing; x < w - (spacing*2); x += spacing) {
+	var y = center_y + Math.sin(t) * (center_y - spacing);
+	points.push([x, y]);
+	t += 0.5;
+  }
+
+  // set up the base pattern
+  var pattern = Trianglify({
+    height: h,
+    width: w,
+    points: points,
+    cell_size: 30 + Math.random() * 100})
+
+  // canvas
+  document.body.appendChild(pattern.canvas())
+
+  // svg
+  document.body.appendChild(pattern.svg())
+
+  // png
+  var png = document.createElement('img')
+  png.src = pattern.png()
+  document.body.appendChild(png)
+  </script>
+  </body>
+</html>
