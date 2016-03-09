@@ -15,4 +15,4 @@ If you're submitting a bug, please include the browser(s) and browser version(s)
 2. Install dependencies with `npm install`
 2. Create a topic branch and make your changes.
 3.  Run `gulp` to test your code and compile it to trianglify.min.js.
-4. Submit a pull request to merge your topic branch into `gh-pages`.
+4. Submit a pull request to merge your topic branch into `master`.
