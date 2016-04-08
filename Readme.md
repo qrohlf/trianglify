@@ -143,6 +143,10 @@ var pattern = Trianglify({color_function: colorFunc})
 
 Number, defaults to `1.51`. Specify the width of the stroke on triangle shapes in the pattern. The default value is the ideal value for eliminating antialiasing artifacts when rendering patterns to a canvas.
 
+### points
+
+Array of points ([x, y]) to trianglulate. When not specified an array randomised points is generated filling the space.
+
 # License
 
 Trianglify is GPLv3 licensed. Please [contact me](mailto:qr@qrohlf.com) if you are interested in purchasing Trianglify under an alternative license.

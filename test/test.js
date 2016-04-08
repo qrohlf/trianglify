@@ -115,3 +115,20 @@ describe('Pattern', function() {
     });
   });
 });
+
+describe('Points', function() {
+  var points = require('../lib/points');
+  describe('#_generate_points', function() {
+    it('generates points', function() {
+        var width = 400, height = 200, cell_size = 75, variance = 0.75, bleed_x = 1, bleed_y = 1;
+        var rand_fn = function(val){ return 4; };
+
+        var generatedPoints = points(width, height, bleed_x, bleed_y, cell_size, variance, rand_fn);
+        var examplePoint = generatedPoints[0];
+
+        generatedPoints.should.be.instanceof(Array);
+        examplePoint.should.be.instanceof(Array);
+        examplePoint.should.have.length(2);
+    });
+  });
+});
