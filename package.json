@@ -7,6 +7,7 @@
     "chroma-js": "^0.6.3",
     "colors": "^1.1.2",
     "delaunay-fast": "^1.0.1",
+    "gulp": "^3.9.1",
     "jsdom": "^7.0.2",
     "seedrandom": "^2.3.11"
   },
@@ -33,7 +34,7 @@
   "homepage": "https://github.com/qrohlf/trianglify",
   "scripts": {
     "test": "mocha test/test.js",
-    "start": "node gulpfile.js",
+    "start": "gulp",
     "postinstall": "node scripts/postinstall.js"
   },
   "browser": {

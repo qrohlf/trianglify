@@ -7,11 +7,10 @@ Trianglify is a library that I wrote to generate nice SVG background images like
 
 # Getting Trianglify
 
-You can grab Trianglify with your preferred package manager:
+You can grab Trianglify with npm (recommended):
 
 ```
 npm install trianglify
-bower install trianglify
 ```
 
 Include it in your HTML via CDNJS:
