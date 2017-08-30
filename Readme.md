@@ -138,6 +138,10 @@ var colorFunc = function(x, y) {
 var pattern = Trianglify({color_function: colorFunc})
 ```
 
+### stroke_color
+
+Optional string, defaults to using the same color as the polygon when not specified, when it is specified the lines are drawn using the color provided.
+
 ### stroke_width
 
 Number, defaults to `1.51`. Specify the width of the stroke on triangle shapes in the pattern. The default value is the ideal value for eliminating antialiasing artifacts when rendering patterns to a canvas.
