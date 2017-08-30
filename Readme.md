@@ -16,7 +16,7 @@ npm install trianglify
 Include it in your HTML via CDNJS:
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.4.0/trianglify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/1.1.0/trianglify.min.js"></script>
 ```
 
 Or clone the repo:
