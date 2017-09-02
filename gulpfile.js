@@ -8,7 +8,7 @@ var notifier = require('node-notifier');
 var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var stylish = require('jshint-stylish');
-var uglify = require('gulp-uglify');
+var minify = require('gulp-babel-minify');
 var buffer = require('vinyl-buffer');
 
 var production = process.env.NODE_ENV == 'production';
@@ -35,7 +35,7 @@ gulp.task('browserify', ['jshint'], function() {
     })
     .pipe(source('./trianglify.min.js'))
     .pipe(buffer())
-    .pipe(uglify())
+    .pipe(minify())
     .pipe(gulp.dest('dist'));
 });
 
