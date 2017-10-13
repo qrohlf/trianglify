@@ -6,7 +6,7 @@
   "dependencies": {
     "chroma-js": "^0.6.3",
     "colors": "^1.1.2",
-    "delaunay-fast": "^1.0.1",
+    "delaunator": "^1.0.4",
     "gulp": "^3.9.1",
     "jsdom": "^7.0.2",
     "seedrandom": "^2.3.11"
@@ -46,6 +46,7 @@
     "chai": "^2.1.0",
     "del": "^0.1.1",
     "gulp": "^3.8.6",
+    "gulp-babel-minify": "^0.2.0",
     "gulp-bump": "^0.1.11",
     "gulp-filter": "^1.0.2",
     "gulp-git": "^0.5.2",
@@ -54,7 +55,6 @@
     "gulp-rename": "^1.2.0",
     "gulp-sourcemaps": "^1.5.0",
     "gulp-tag-version": "^1.1.0",
-    "gulp-uglify": "^0.3.1",
     "jshint-stylish": "^0.4.0",
     "mocha": "^2.1.0",
     "node-notifier": "^4.1.2",
