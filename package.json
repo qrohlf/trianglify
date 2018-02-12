@@ -7,7 +7,6 @@
     "chroma-js": "^0.6.3",
     "colors": "^1.1.2",
     "delaunator": "^1.0.4",
-    "gulp": "^3.9.1",
     "jsdom": "^7.0.2",
     "seedrandom": "^2.3.11"
   },
