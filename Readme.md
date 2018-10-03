@@ -116,7 +116,9 @@ Number or string, defaults to `null`. Seeds the random number generator to creat
 
 ### x_colors
 
-String or array of CSS-formatted colors, default is `'random'`. Specify the color gradient used on the x axis.
+False, string, or array of CSS-formatted colors, default is `'random'`. Specify the color gradient used on the x axis.
+
+If false, the colors will not vary over the x axis; this requires the y_color to have a specified value.
 
 Valid string values are 'random' or the name of a [colorbrewer palette](http://bl.ocks.org/mbostock/5577023) (i.e. 'YlGnBu' or 'RdBu'). When set to 'random', a gradient will be randomly selected from the colorbrewer library.
 
@@ -124,7 +126,9 @@ Valid array values should specify the color stops in any CSS format (i.e. `['#00
 
 ### y_colors
 
-String or array of CSS-formatted colors, default is `'match_x'`. When set to 'match_x' the same gradient will be used on both axes. Otherwise, accepts the same options as x_colors.
+False, string or array of CSS-formatted colors, default is `'match_x'`. When set to 'match_x' the same gradient will be used on both axes. 
+If false, the colors will not vary over the y axis; this requires the x_color to have a specified value.
+Otherwise, accepts the same options as x_colors.
 
 ### color_space
 
