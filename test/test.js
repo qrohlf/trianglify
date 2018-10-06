@@ -17,6 +17,10 @@ describe('Trianglify', function(){
     (function() {Trianglify({width: 100, height: 100, bad_option: true});}).should.throw(Error);
   });
 
+  it('should throw an error on unspecified colors', function() {
+    (function() {Trianglify({width: 100, height: 100, x_colors: false, y_colors: false});}).should.throw(Error);
+  });
+
   it('should throw an error on invalid dimensions', function() {
     (function() {Trianglify({width: -1, height: 100});}).should.throw(Error);
     (function() {Trianglify({width: 100, height: -1});}).should.throw(Error);
