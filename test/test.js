@@ -1,7 +1,7 @@
 var chai = require('chai');
 var should = chai.should();
 var expect = chai.expect;
-var doc = (typeof document !== "undefined") ? document : require('jsdom').jsdom('<html/>');
+var doc = (typeof document !== "undefined") ? document : new (require('jsdom').JSDOM)('<html/>').window.document;
 
 var Trianglify = require('../lib/trianglify');
 module.exports = Trianglify;
