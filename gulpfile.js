@@ -17,8 +17,7 @@ var production = process.env.NODE_ENV == 'production';
 var bundler = browserify('./lib/trianglify.js', {
   standalone: 'Trianglify',
   cache: {},
-  packageCache: {},
-  fullPaths: true
+  packageCache: {}
 });
 bundler.exclude('crypto');
 
@@ -43,8 +42,7 @@ gulp.task('browser-test', ['jshint'], function() {
   var testBundler = browserify('./test/test.js', {
     standalone: 'Trianglify',
     cache: {},
-    packageCache: {},
-    fullPaths: true
+    packageCache: {}
   });
 
   return testBundler.bundle()
