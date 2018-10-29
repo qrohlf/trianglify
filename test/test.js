@@ -27,7 +27,9 @@ describe('Trianglify', function(){
   });
 
   it('return a Pattern given valid options', function() {
-    Trianglify().should.include.keys(['opts', 'polys', 'svg', 'canvas']);
+    var trianglify = Trianglify();
+    trianglify.should.include.keys(['opts', 'polys']);
+    Object.getPrototypeOf(trianglify).should.include.keys(['svg', 'canvas', 'png']);
   });
 
   it('should populate opts with defaults', function() {
