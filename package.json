@@ -12,7 +12,7 @@
     "seedrandom": "^2.3.11"
   },
   "optionalDependencies": {
-    "canvas": "^2.6.1"
+    "canvas": "^2.5.0"
   },
   "directories": {
     "example": "examples"

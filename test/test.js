@@ -97,19 +97,23 @@ describe('Trianglify', function(){
 
 describe('Pattern', function() {
   describe('#svg', function() {
-    //Not 100% sure how to test this
     it('should return an SVG DOM node', function() {
       Trianglify().svg().tagName.toLowerCase().should.eql('svg');
     });
 
-    it('should add an xmlns attribute when requested', function() {
-      Trianglify().svg({includeNamespace: true}).getAttribute('xmlns').should.eql('http://www.w3.org/2000/svg');
+    it('should add an xmlns attribute by default', function () {
+      Trianglify().svg().getAttribute('xmlns').should.eql('http://www.w3.org/2000/svg');
+    });
+
+    it('should exclude the xmlns attribute when requested', function() {
+      expect(Trianglify().svg({includeNamespace: false}).getAttribute('xmlns')).to.eql(null);
     });
   });
 
   describe('#canvas', function() {
-    it('should return a canvas object', function() {
-      Trianglify().canvas().should.respondTo('toDataURL');
+    it('should return a node-canvas canvas', function() {
+      // duck-type the canvas
+      Trianglify().canvas().should.have.property('getContext')
     });
   });
 
