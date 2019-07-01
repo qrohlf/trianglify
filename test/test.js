@@ -113,7 +113,7 @@ describe('Pattern', function() {
   describe('#canvas', function() {
     it('should return a node-canvas canvas', function() {
       // duck-type the canvas
-      Trianglify().canvas().should.have.property('getContext')
+      Trianglify().canvas().should.have.property('getContext');
     });
   });
 
