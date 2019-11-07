@@ -11,9 +11,6 @@
     "natives": "^1.1.3",
     "seedrandom": "^2.3.11"
   },
-  "optionalDependencies": {
-    "canvas": "^2.5.0"
-  },
   "directories": {
     "example": "examples"
   },
