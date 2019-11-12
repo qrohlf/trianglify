@@ -19,7 +19,7 @@
     "postinstall": "node scripts/postinstall.js"
   },
   "dependencies": {
-    "chroma-js": "^0.6.3",
+    "chroma-js": "^2.1.0",
     "colors": "^1.1.2",
     "delaunator": "^1.0.4",
     "jsdom": "^7.0.2",
