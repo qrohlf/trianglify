@@ -17,7 +17,7 @@ const defaultOptions = {
   // value that simply defines the coordinate system and default viewBox.
   // Note that output values are rounded to a single decimal place by default,
   // so SVG coordinate systems that rely on high precision fractions
-  // (i.e height: 1, width: 1) will not work well. To workaround this, you may
+  // (i.e height: 1, width: 1) will not work well. To work around this, you may
   // set {coordinateRounding: false} in the SVG pattern generator options
   height: 400,
   width: 600,
@@ -81,7 +81,7 @@ export default function trianglify (_opts) {
   // Our next step is to generate a pseudo-random grid of {x, y , z} points,
   // (or to simply utilize the points that were passed to us)
   const points = opts.points || getPoints(opts, rand)
-  window.document.body.appendChild(debugRender(opts, points))
+  // window.document.body.appendChild(debugRender(opts, points))
 
   // Once we have the points array, run the triangulation:
   var geomIndices = Delaunator.from(points).triangles

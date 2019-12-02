@@ -12,15 +12,15 @@
       text-align: center;
       font-size: 0;
     }
-    svg {
-      border: 1px solid red;
-    }
     </style>
   </head>
   <body>
   <script src="../dist/trianglify.bundle.umd.js"></script>
   <script>
-    const pattern = trianglify()
+    const pattern = trianglify({
+      width: window.innerWidth,
+      height: window.innerHeight
+    })
     document.body.appendChild(pattern.toSVG())
   </script>
   </body>
