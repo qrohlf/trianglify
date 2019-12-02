@@ -26,6 +26,7 @@ export default class Pattern {
     }
 
     this.polys.forEach(poly => {
+      // TODO - round to 1 decimal place
       const xy = poly.vertices.map(v => v.slice(0, 2).join(','))
       const d = "M" + xy.join("L") + "Z"
       const fill = poly.color.css()
