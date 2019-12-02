@@ -9,6 +9,7 @@ import Delaunator from 'delaunator'
 import seedrandom from 'seedrandom'
 import chroma from 'chroma-js'
 import colorbrewer from '../lib/colorbrewer'
+import Pattern from './pattern'
 
 const defaultOptions = {
   // Pattern height/width. When rendering via Canvas, this determines the native
@@ -21,7 +22,7 @@ const defaultOptions = {
   height: 400,
   width: 600,
   cellSize: 75,
-  cellVariance: 0.75,
+  variance: 0.75,
   seed: null,
   xColors: 'random',
   yColors: 'match',
@@ -29,6 +30,14 @@ const defaultOptions = {
   colorSpace: 'lab',
   stroke_width: 0,
   points: null
+}
+
+//triangles only!
+const getCentroid = d => {
+  return {
+    x: (d[0][0] + d[1][0] + d[2][0])/3,
+    y: (d[0][1] + d[1][1] + d[2][1])/3
+  }
 }
 
 export default function trianglify (_opts) {
@@ -56,20 +65,22 @@ export default function trianglify (_opts) {
         return opts.palette[colorOpt]
       case colorOpt === 'random':
         return randomFromPalette()
-      case colorOpt === 'match':
-        return opts.xColors || opts.yColors
     }
   }
 
   const xColors = processColorOpts(opts.xColors)
-  const yColors = processColorOpts(opts.yColors)
+  const yColors = opts.yColors === 'match'
+    ? xColors
+    : processColorOpts(opts.yColors)
+
+  console.log(xColors, yColors)
 
   const xScale = chroma.scale(xColors).mode(opts.colorSpace)
   const yScale = chroma.scale(yColors).mode(opts.colorSpace)
 
   // Our next step is to generate a pseudo-random grid of {x, y , z} points,
   // (or to simply utilize the points that were passed to us)
-  const points = opts.points || getPoints(opts)
+  const points = opts.points || getPoints(opts, rand)
   window.document.body.appendChild(debugRender(opts, points))
 
   // Once we have the points array, run the triangulation:
@@ -78,7 +89,7 @@ export default function trianglify (_opts) {
   // And generate geometry and color data:
 
   // use a different randomizer for the color function so that swapping
-  // out color functions, etc, doesn't change the pattern itself
+  // out color functions, etc, doesn't change the pattern geometry itself
   const colorRand = seedrandom(opts.seed ? opts.seed + 'salt' : undefined)
   const polys = []
   for (let i = 0; i < geomIndices.length; i += 3) {
@@ -88,18 +99,33 @@ export default function trianglify (_opts) {
       points[geomIndices[i + 2]]
     ]
 
+    const {width, height} = opts
+    const norm = num => Math.max(0, Math.min(1, num))
+    const centroid = getCentroid(vertices)
+    const xPercent = norm(centroid.x / width)
+    const yPercent = norm(centroid.y / height)
+    console.log(xPercent, yPercent)
+
+    const color = chroma.mix(
+      xScale(xPercent),
+      yScale(yPercent),
+      0.5,
+      opts.colorSpace
+    )
+
     polys.push({
       vertices,
-      color: 'foo', // chroma color object
+      color, // chroma color object
       normal: [0, 0, 0] // xyz normal vector
     })
   }
 
-  return Pattern(polys, opts)
+  return new Pattern(polys, opts)
 }
 
-const getPoints = (opts) => {
+const getPoints = (opts, random) => {
   const {width, height, cellSize, variance} = opts
+  console.log('variance', variance)
 
   // pad by 1 cell outside the visible area on each side to ensure we fully
   // cover the 'artboard'
@@ -112,7 +138,12 @@ const getPoints = (opts) => {
   const bleedY = ((rowCount * cellSize) - height) / 2
 
   // apply variance to cellSize to get cellJitter in pixels
-  const cellJitter = cellSize * variance / 2
+  const cellJitter = cellSize * variance
+  console.log('cellJitter', cellJitter)
+  const getJitter = () => (random() - 0.5) * cellJitter
+  console.log('getJitter', getJitter())
+  console.log('getJitter', getJitter())
+  console.log('getJitter', getJitter())
 
   const pointCount = colCount * rowCount
 
@@ -124,8 +155,8 @@ const getPoints = (opts) => {
 
     // [x, y, z]
     return [
-      -bleedX + col * cellSize + halfCell,
-      -bleedY + row * cellSize + halfCell,
+      -bleedX + col * cellSize + halfCell + getJitter(),
+      -bleedY + row * cellSize + halfCell + getJitter(),
       0
     ]
   })
