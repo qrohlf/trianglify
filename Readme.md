@@ -155,3 +155,15 @@ Number, defaults to `1.51`. Specify the width of the stroke on triangle shapes i
 ### points
 
 Array of points ([x, y]) to trianglulate. When not specified an array randomised points is generated filling the space.
+
+
+# Hack
+
+You can use docker:
+
+```
+$ docker build -t qrohlf/trianglify:latest .
+$ docker run -p 5000:5000 -ti qrohlf/trianglify:latest
+```
+
+then go to `http://localhost:5000/index.html` and you'll get a brand new image at every refresh.
