@@ -115,6 +115,7 @@ export default function trianglify (_opts) {
 
     polys.push({
       vertices,
+      centroid,
       color, // chroma color object
       normal: [0, 0, 0] // xyz normal vector
     })
@@ -139,15 +140,13 @@ const getPoints = (opts, random) => {
 
   // apply variance to cellSize to get cellJitter in pixels
   const cellJitter = cellSize * variance
-  console.log('cellJitter', cellJitter)
   const getJitter = () => (random() - 0.5) * cellJitter
-  console.log('getJitter', getJitter())
-  console.log('getJitter', getJitter())
-  console.log('getJitter', getJitter())
 
   const pointCount = colCount * rowCount
 
   const halfCell = cellSize / 2
+
+  const Z_DEPTH = halfCell
 
   const points = Array(pointCount).fill(null).map((_, i) => {
     const col = i % colCount
@@ -157,7 +156,7 @@ const getPoints = (opts, random) => {
     return [
       -bleedX + col * cellSize + halfCell + getJitter(),
       -bleedY + row * cellSize + halfCell + getJitter(),
-      0
+      random() * Z_DEPTH
     ]
   })
 
