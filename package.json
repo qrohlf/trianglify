@@ -23,6 +23,7 @@
     "colors": "^1.1.2",
     "delaunator": "^4.0.1",
     "jsdom": "^7.0.2",
+    "mathjs": "^6.3.0",
     "seedrandom": "^2.3.11"
   },
   "directories": {
