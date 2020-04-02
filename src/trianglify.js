@@ -10,6 +10,7 @@ import seedrandom from 'seedrandom'
 import chroma from 'chroma-js'
 import colorbrewer from '../lib/colorbrewer'
 import Pattern from './pattern'
+import * as geom from './utils/geom'
 
 const defaultOptions = {
   // Pattern height/width. When rendering via Canvas, this determines the native
@@ -32,14 +33,14 @@ const defaultOptions = {
   points: null
 }
 
-//triangles only!
-const getCentroid = d => {
-  return {
-    x: (d[0][0] + d[1][0] + d[2][0])/3,
-    y: (d[0][1] + d[1][1] + d[2][1])/3
-  }
-}
 
+// This function does the "core" render-independent work:
+//
+// 1. Parse and munge options
+// 2. Setup cell geometry
+// 3. Generate random points within cell geometry
+// 4. Use the Delaunator library to run the triangulation
+// 5. Do color interpolation to establish the fundamental coloring of the shapes
 export default function trianglify (_opts) {
   const opts = {...defaultOptions, ..._opts}
 
@@ -101,7 +102,7 @@ export default function trianglify (_opts) {
 
     const {width, height} = opts
     const norm = num => Math.max(0, Math.min(1, num))
-    const centroid = getCentroid(vertices)
+    const centroid = geom.getCentroid(vertices)
     const xPercent = norm(centroid.x / width)
     const yPercent = norm(centroid.y / height)
     console.log(xPercent, yPercent)
