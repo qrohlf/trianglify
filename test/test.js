@@ -108,8 +108,8 @@ describe('Pattern', function() {
   });
 
   describe('#canvas', function() {
-    it('should return a canvas DOM node', function() {
-      Trianglify().canvas().tagName.toLowerCase().should.eql('canvas');
+    it('should return a canvas object', function() {
+      Trianglify().canvas().should.respondTo('toDataURL');
     });
   });
 

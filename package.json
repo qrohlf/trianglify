@@ -8,10 +8,11 @@
     "colors": "^1.1.2",
     "delaunator": "^1.0.4",
     "jsdom": "^7.0.2",
+    "natives": "^1.1.3",
     "seedrandom": "^2.3.11"
   },
   "optionalDependencies": {
-    "canvas": "^1.3.0"
+    "canvas": "^2.6.1"
   },
   "directories": {
     "example": "examples"
