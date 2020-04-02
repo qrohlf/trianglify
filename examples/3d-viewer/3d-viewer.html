@@ -20,37 +20,70 @@
   modern web projects you will probably want to use the NPM module instead -->
   <script src="../../dist/trianglify.bundle.umd.js"></script>
   <script src="./three.js"></script>
+  <script src="./OrbitControls.js"></script>
+  <script src="./dat.gui.min.js"></script>
   <script>
     const pattern = trianglify({
       width: window.innerWidth,
       height: window.innerHeight
     })
+
+    const gui = new dat.GUI()
+
+    const PATTERN_CENTER = new THREE.Vector3(window.innerWidth / 2, window.innerHeight / 2, 0)
     var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 999999 );
+    camera.position.set(window.innerWidth / 2, window.innerHeight / 2, 800)
 
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
+    var controls = new THREE.OrbitControls( camera, renderer.domElement )
+    controls.target = PATTERN_CENTER
+    controls.update()
     document.body.appendChild( renderer.domElement );
 
     var geometry = new THREE.BoxGeometry();
-    var material = new THREE.MeshLambertMaterial( { color: '00ff00' } );
+    var material = new THREE.MeshLambertMaterial( { color: '00ff00', side: THREE.DoubleSide} );
     var cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
 
     var light1 = new THREE.PointLight(0xff0040, 2, 0);
-    light1.position.set(1, 1, 1);
+    light1.position.set(0, 0, 100);
     scene.add(light1)
+
+    gui.add( light1.position, 'x' );
+    gui.add( light1.position, 'y' );
+    gui.add( light1.position, 'z' );
 
     var sphereSize = 1;
     var pointLightHelper = new THREE.PointLightHelper( light1, sphereSize );
     scene.add( pointLightHelper )
 
-    camera.position.z = 5;
+    var axesHelper = new THREE.AxesHelper( 1 );
+    scene.add( axesHelper )
+
+    var triangleMesh = new THREE.Geometry();
+    for (let i = 0; i < pattern.rawData.points.length; i += 1) {
+      let p = pattern.rawData.points[i]
+      triangleMesh.vertices.push(new THREE.Vector3( p[0], p[1], p[2] ))
+    }
+
+    for (let i = 0; i < pattern.rawData.triangleIndices.length; i += 1) {
+      const ind = pattern.rawData.triangleIndices[i]
+      let face = new THREE.Face3(ind[0], ind[1], ind[2])
+      triangleMesh.faces.push( face )
+    }
+
+    triangleMesh.computeFaceNormals();
+    geometry.computeVertexNormals();
+
+    scene.add( new THREE.Mesh( triangleMesh, material ) );
 
     function animate() {
+      requestAnimationFrame( animate );
       cube.rotation.x += 0.01;
       cube.rotation.y += 0.01;
-      requestAnimationFrame( animate );
+      // controls.update();
       renderer.render( scene, camera );
     }
     animate();

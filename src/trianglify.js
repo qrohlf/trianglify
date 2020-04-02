@@ -93,12 +93,17 @@ export default function trianglify (_opts) {
   // out color functions, etc, doesn't change the pattern geometry itself
   const colorRand = seedrandom(opts.seed ? opts.seed + 'salt' : undefined)
   const polys = []
+  const triangleIndices = []
   for (let i = 0; i < geomIndices.length; i += 3) {
     const vertices = [
       points[geomIndices[i]],
       points[geomIndices[i + 1]],
       points[geomIndices[i + 2]]
     ]
+
+    triangleIndices.push(
+      [geomIndices[i], geomIndices[i + 1], geomIndices[i + 2]]
+    )
 
     const {width, height} = opts
     const norm = num => Math.max(0, Math.min(1, num))
@@ -122,7 +127,15 @@ export default function trianglify (_opts) {
     })
   }
 
-  return new Pattern(polys, opts)
+  // return new Pattern(polys, opts)
+
+  const p = new Pattern(polys, opts)
+  // hackety hack
+  p.rawData = {
+    points,
+    triangleIndices
+  }
+  return p
 }
 
 const getPoints = (opts, random) => {
