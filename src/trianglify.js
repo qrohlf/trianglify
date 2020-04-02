@@ -159,7 +159,7 @@ const getPoints = (opts, random) => {
 
   const halfCell = cellSize / 2
 
-  const Z_DEPTH = halfCell
+  const Z_DEPTH = halfCell * 3
 
   const points = Array(pointCount).fill(null).map((_, i) => {
     const col = i % colCount
