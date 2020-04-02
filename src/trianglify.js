@@ -126,12 +126,11 @@ export default function trianglify (_opts) {
 
 const getPoints = (opts, random) => {
   const {width, height, cellSize, variance} = opts
-  console.log('variance', variance)
 
-  // pad by 1 cell outside the visible area on each side to ensure we fully
+  // pad by 2 cells outside the visible area on each side to ensure we fully
   // cover the 'artboard'
-  const colCount = Math.floor(width / cellSize) + 2
-  const rowCount = Math.floor(height / cellSize) + 2
+  const colCount = Math.floor(width / cellSize) + 4
+  const rowCount = Math.floor(height / cellSize) + 4
 
   // determine bleed values to ensure that the grid is centered within the
   // artboard

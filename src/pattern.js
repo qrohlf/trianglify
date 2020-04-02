@@ -1,5 +1,9 @@
 import * as math from 'mathjs'
 // conditionally load jsdom if we don't have a browser environment available.
+// note that this is done via require(), which is less than ideal.
+//
+// Since all we're doing here is really just constructing an SVG tree, seems
+// like we could maybe eliminate JSDOM?
 var doc = (typeof document !== "undefined") ? document : require('jsdom').jsdom('<html/>');
 
 // utility for building up SVG node trees
