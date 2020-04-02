@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trianglify transparency example</title>
+    <style>
+    html, body {
+      margin: 0 0;
+      padding: 0 0;
+      text-align: center;
+      font-size: 0;
+      height: 100%;
+      width: 100%;
+    }
+    #gradient-rotate {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+    #trianglify-overlay {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+    #color-stop-1 {
+      -webkit-animation: change-color-1 12s ease-in-out infinite alternate;
+      animation: change-color-1 12s ease-in-out infinite alternate
+    }
+
+    #color-stop-2 {
+      -webkit-animation: change-color-2 12s ease-in-out infinite alternate;
+      animation: change-color-2 12s ease-in-out infinite alternate
+    }
+
+    #color-stop-3 {
+      -webkit-animation: change-color-3 12s ease-in-out infinite alternate;
+      animation: change-color-3 12s ease-in-out infinite alternate
+    }
+    @keyframes change-color-1 {
+      0% {
+        stop-color: #22C8F6
+      }
+
+      25% {
+        stop-color: #ff0
+      }
+
+      50% {
+        stop-color: #00ffcb
+      }
+
+      75% {
+        stop-color: #70ff00
+      }
+    }
+    @keyframes change-color-2 {
+      0% {
+        stop-color: #20C498
+      }
+
+      25% {
+        stop-color: #ff00ad
+      }
+
+      350% {
+        stop-color: #d480ff
+      }
+
+      75% {
+        stop-color: #ff9200
+      }
+    }
+    @keyframes change-color-3 {
+      0% {
+        stop-color: #189932
+      }
+
+      25% {
+        stop-color: #c300cb
+      }
+
+      50% {
+        stop-color: #5600d4
+      }
+
+      75% {
+        stop-color: #ff46dc
+      }
+    }
+    </style>
+  </head>
+  <body>
+  <svg id="gradient-rotate" preserveAspectRatio="none" viewBox="0 0 500 500">
+    <defs>
+      <linearGradient x1="0%" y1="0%" y2="100%" id="a">
+        <stop id="color-stop-1" stop-color="#22C8F6" offset="0%"></stop>
+        <stop id="color-stop-2" stop-color="#20C498" offset="65%"></stop>
+        <stop id="color-stop-3" stop-color="#189932" offset="100%"></stop>
+      </linearGradient>
+    </defs>
+    <path fill="url(#a)" d="M0 0h500v500H0z"></path>
+  </svg>
+  <script src="../dist/trianglify.min.js"></script>
+  <script>
+  // set up the base pattern
+  var pattern = Trianglify({
+    height: window.innerHeight,
+    width: window.innerWidth,
+    x_colors: ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 1)'],
+    stroke_width: 0,
+    cell_size: Math.ceil(window.innerWidth / 8)})
+  var svg = pattern.svg()
+  svg.id = 'trianglify-overlay'
+  document.body.appendChild(svg)
+  </script>
+  </body>
+</html>

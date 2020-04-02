@@ -46,7 +46,7 @@ describe('Trianglify', function(){
     data.should.be.instanceof(Array);
       var datum = data[0];
       datum.should.be.instanceof(Array);
-      datum[0].should.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/);
+      datum[0].should.be.a('string');
       datum[1].should.be.instanceof(Array);
       datum[1].should.have.length(3);
       datum[1][0].should.have.length(2);
@@ -68,7 +68,7 @@ describe('Trianglify', function(){
     };
 
     Trianglify({color_function: rothko}).polys.forEach(function(p) {
-      p[0].should.equal('#000000');
+      p[0].should.equal('rgb(0,0,0)');
     });
 
   });
@@ -88,7 +88,7 @@ describe('Trianglify', function(){
     var opts = {palette: [['#000', '#000'], ['#FFF', '#FFF']]};
 
     for (var i = 0; i < 5; i++) {
-      ['#000000', '#ffffff'].should.include(Trianglify(opts).polys[0][0]);
+      ['rgb(0,0,0)', 'rgb(255,255,255)'].should.include(Trianglify(opts).polys[0][0]);
     }
   });
 

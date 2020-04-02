@@ -22,7 +22,7 @@ var pngURI = Trianglify({
 var data = pngURI.substr(pngURI.indexOf('base64') + 7);
 
 // Decode the base64 encoded blob into a buffer
-var buffer = new Buffer(data, 'base64');
+var buffer = new Buffer.from(data, 'base64');
 
 // Save the buffer to a file
 fs.writeFileSync(process.argv[2], buffer);

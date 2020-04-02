@@ -7,7 +7,7 @@ Trianglify is a library that I wrote to generate nice SVG background images like
 
 # Getting Trianglify
 
-You can grab Trianglify with npm (recommended):
+You can grab Trianglify with npm/yarn (recommended):
 
 ```
 npm install trianglify
@@ -16,7 +16,7 @@ npm install trianglify
 Include it in your HTML via CDNJS:
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/1.1.0/trianglify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/2.0.0/trianglify.min.js"></script>
 ```
 
 Or clone the repo:
@@ -29,7 +29,7 @@ git clone https://github.com/qrohlf/trianglify.git
 # Quickstart
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/0.4.0/trianglify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/2.0.0/trianglify.min.js"></script>
 <script>
 	var pattern = Trianglify({
 		width: window.innerWidth,
@@ -126,7 +126,7 @@ Valid array values should specify the color stops in any CSS format (i.e. `['#00
 
 ### y_colors
 
-False, string or array of CSS-formatted colors, default is `'match_x'`. When set to 'match_x' the same gradient will be used on both axes. 
+False, string or array of CSS-formatted colors, default is `'match_x'`. When set to 'match_x' the same gradient will be used on both axes.
 If false, the colors will not vary over the y axis; this requires the x_color to have a specified value.
 Otherwise, accepts the same options as x_colors.
 
