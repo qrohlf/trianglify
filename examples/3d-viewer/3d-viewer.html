@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trianglify 3D viewer</title>
+    <style>
+    html, body {
+      margin: 0 0;
+      padding: 0 0;
+      text-align: center;
+      font-size: 0;
+    }
+    </style>
+  </head>
+  <body>
+  <!-- This is the standalone build of Trianglify. It's easy to drop in to a
+  project without any need for bundlers or dependency management, but in most
+  modern web projects you will probably want to use the NPM module instead -->
+  <script src="../../dist/trianglify.bundle.umd.js"></script>
+  <script src="./three.js"></script>
+  <script>
+    const pattern = trianglify({
+      width: window.innerWidth,
+      height: window.innerHeight
+    })
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+
+    var geometry = new THREE.BoxGeometry();
+    var material = new THREE.MeshLambertMaterial( { color: '00ff00' } );
+    var cube = new THREE.Mesh( geometry, material );
+    scene.add( cube );
+
+    var light1 = new THREE.PointLight(0xff0040, 2, 0);
+    light1.position.set(1, 1, 1);
+    scene.add(light1)
+
+    var sphereSize = 1;
+    var pointLightHelper = new THREE.PointLightHelper( light1, sphereSize );
+    scene.add( pointLightHelper )
+
+    camera.position.z = 5;
+
+    function animate() {
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+      requestAnimationFrame( animate );
+      renderer.render( scene, camera );
+    }
+    animate();
+  </script>
+  </body>
+</html>
