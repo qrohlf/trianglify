@@ -31,9 +31,14 @@
     const gui = new dat.GUI()
 
     const PATTERN_CENTER = new THREE.Vector3(window.innerWidth / 2, window.innerHeight / 2, 0)
+
+    var animationOptions = {
+      orbitKeylight: true
+    }
+
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 999999 );
-    camera.position.set(window.innerWidth / 2, window.innerHeight / 2, 800)
+    camera.position.set(window.innerWidth / 2, window.innerHeight / 2, 1000)
 
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize( window.innerWidth, window.innerHeight );
@@ -43,19 +48,29 @@
     document.body.appendChild( renderer.domElement );
 
     var geometry = new THREE.BoxGeometry();
-    var material = new THREE.MeshLambertMaterial( { color: '00ff00', side: THREE.DoubleSide} );
-    var cube = new THREE.Mesh( geometry, material );
-    scene.add( cube );
+    var material = new THREE.MeshLambertMaterial({
+      vertexColors: THREE.FaceColors,
+      side: THREE.DoubleSide
+    });
+    // var cube = new THREE.Mesh( geometry, material );
+    // scene.add( cube );
 
-    var light1 = new THREE.PointLight(0xff0040, 2, 0);
-    light1.position.set(0, 0, 100);
+    // PointLight( color, intensity, distance, decay )
+    var light1 = new THREE.PointLight(0xFFFFFF, 1, 0);
+    light1.position.set(window.innerHeight / 4, window.innerWidth / 4, window.innerHeight / 2);
     scene.add(light1)
 
-    gui.add( light1.position, 'x' );
-    gui.add( light1.position, 'y' );
-    gui.add( light1.position, 'z' );
+    var keyLightControl = gui.addFolder('Key Light')
 
-    var sphereSize = 1;
+    keyLightControl.add( light1, 'intensity' );
+    keyLightControl.add( light1.position, 'x' );
+    keyLightControl.add( light1.position, 'y' );
+    keyLightControl.add( light1.position, 'z' );
+    keyLightControl.add( animationOptions, 'orbitKeylight' )
+
+    keyLightControl.open()
+
+    var sphereSize = window.innerHeight / 30;
     var pointLightHelper = new THREE.PointLightHelper( light1, sphereSize );
     scene.add( pointLightHelper )
 
@@ -70,7 +85,16 @@
 
     for (let i = 0; i < pattern.rawData.triangleIndices.length; i += 1) {
       const ind = pattern.rawData.triangleIndices[i]
-      let face = new THREE.Face3(ind[0], ind[1], ind[2])
+      // Face3( a : Integer, b : Integer, c : Integer, normal : Vector3, color : Color, materialIndex : Integer )
+      let color = pattern.polys[i].color
+      let face = new THREE.Face3(
+        ind[0],
+        ind[1],
+        ind[2],
+        undefined,
+        new THREE.Color(color.hex())
+      )
+      // debugger
       triangleMesh.faces.push( face )
     }
 
@@ -79,11 +103,24 @@
 
     scene.add( new THREE.Mesh( triangleMesh, material ) );
 
+    const SLOWNESS = 1200
+
     function animate() {
       requestAnimationFrame( animate );
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
-      // controls.update();
+      if (animationOptions.orbitKeylight) {
+        // comput light distance from center of pattern
+        const cx = window.innerWidth / 2
+        const cy = window.innerHeight / 2
+        const a2 = (light1.position.x - cx) * (light1.position.x - cx)
+        const b2 = (light1.position.y - cy) * (light1.position.y - cy)
+        const lightDistance = Math.sqrt(a2 + b2)
+        // compute clock-face xy unit vector:
+        const x = Math.sin(Date.now() / SLOWNESS)
+        const y = Math.cos(Date.now() / SLOWNESS)
+        // scale and offset
+        light1.position.x = x * lightDistance + cx
+        light1.position.y = y * lightDistance + cy
+      }
       renderer.render( scene, camera );
     }
     animate();
