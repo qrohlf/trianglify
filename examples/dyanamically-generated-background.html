@@ -16,14 +16,12 @@
     </style>
   </head>
   <body>
-    <div id="background">
-      Let's fill this div with text adn see if that changes anything
-    </div>
+    <div id="background"></div>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/3.0.0/trianglify.min.js"></script>
 
   <script>
-    // Create Trianglify pattern feel free to use whatever settings here
+    // Create Trianglify pattern - feel free to use whatever settings here
     // **NOTE: Must export as svg with namespace included ".svg({ includeNamespace: true })"
     var pattern = Trianglify({
       height: 100,
@@ -35,7 +33,7 @@
     var patternString = new XMLSerializer().serializeToString(pattern);
 
     // URL encode the pattern and set into the proper format for SVG background
-    var patternMin = 'url("data:image/svg+xml,' + patternString.replace(/"/g, "'").replace(/#/g, "%23").replace(/</g, "%3C").replace(/>/g, "%3E") + '")';
+    var patternMin = 'url("data:image/svg+xml,' + encodeURIComponent(patternString) + '")';
 
     document.getElementById("background").style.backgroundImage = patternMin;
   </script>
