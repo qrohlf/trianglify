@@ -154,4 +154,4 @@ Number, defaults to `1.51`. Specify the width of the stroke on triangle shapes i
 
 ### points
 
-Array of points ([x, y]) to trianglulate. When not specified an array randomised points is generated filling the space.
+Array of points ([x, y]) to triangulate. When not specified an array randomised points is generated filling the space.
