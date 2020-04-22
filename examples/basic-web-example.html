@@ -16,6 +16,7 @@
 
     svg, canvas {
       padding-bottom: 30px;
+      text-align: center;
     }
     </style>
   </head>
@@ -26,10 +27,10 @@
   <script src="../dist/trianglify.bundle.umd.js"></script>
   <script>
     const pattern = trianglify({
-      width: window.innerWidth,
+      width: window.innerWidth * .8,
       height: (window.innerHeight - 4 * 30) / 4
     })
-    document.body.appendChild(pattern.toSVG())
+    document.body.appendChild(pattern.toSVG(null, {coordinateDecimals: -1}))
     document.body.appendChild(pattern.toCanvas())
 
     // stroke-only

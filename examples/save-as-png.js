@@ -1,28 +1,22 @@
 // Basic command-line example
-// Usage: node save-as-png.js filename.png
-var fs = require('fs');
-var Trianglify = require('../lib/trianglify.js');
-
-if (process.argv.length < 3) {
-  console.log('Please specify a filename');
-  console.log('Usage: node save-as-png.js filename.png');
-  return;
-}
+// Usage: node save-as-png.js
+var fs = require('fs')
+var trianglify = require('../dist/trianglify.js')
 
 // Generate a pattern and then grab the PNG data uri
-var pngURI = Trianglify({
+const canvas = trianglify({
   width: 1920,
   height: 1080,
-  cell_size: Math.random()*200 + 40,
-  x_colors: 'random',
+  cellSize: Math.random()*200 + 40,
+  xColors: 'random',
   variance: Math.random(),
-}).png();
+}).toCanvas()
 
 // Strip off the uri part of the data uri, leaving the data
-var data = pngURI.substr(pngURI.indexOf('base64') + 7);
+const data = pngURI.substr(pngURI.indexOf('base64') + 7)
 
 // Decode the base64 encoded blob into a buffer
-var buffer = new Buffer.from(data, 'base64');
+const buffer = new Buffer.from(data, 'base64')
 
 // Save the buffer to a file
-fs.writeFileSync(process.argv[2], buffer);
+fs.writeFileSync(process.argv[2], buffer)

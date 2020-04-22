@@ -18,16 +18,16 @@ export default class Pattern {
     this.opts = opts
   }
 
-  toSVG = (destSSVG, _svgOpts) => {
+  toSVG = (destSVG, _svgOpts = {}) => {
     const defaultSVGOptions = {includeNamespace: true, coordinateDecimals: 1}
-    const svgOpts = {...defaultSVGOptions, _svgOpts}
+    const svgOpts = {...defaultSVGOptions, ..._svgOpts}
     const {points, opts, polys} = this
     const {width, height} = opts
 
     // only round points if the coordinateDecimals option is non-negative
     // set coordinateDecimals to -1 to disable point rounding
     const roundedPoints = (svgOpts.coordinateDecimals < 0) ? points : points.map(
-      p => p.map(x => x.toLocaleString('en-US', {maximumFractionDigits: svgOpts.coordinateDecimals}))
+      p => p.map(x => +x.toFixed(svgOpts.coordinateDecimals))
     )
 
     const svg = s('svg', {
@@ -45,7 +45,7 @@ export default class Pattern {
         fill: opts.fill ? poly.color.css() : undefined,
         stroke: opts.strokeWidth > 0 ? poly.color.css() : undefined,
         'stroke-width': opts.strokeWidth > 0 ? opts.strokeWidth : undefined,
-        'shape-rendering': 'crispEdges'
+        'shape-rendering': opts.fill ? 'crispEdges' : undefined
       }, svg)
     })
 
