@@ -105,11 +105,18 @@ export default class Pattern {
       }
     }
 
-    // draw strokes at edge bounds to solve for white gaps while compositing
-    polys.forEach(poly => drawPoly(poly, null, {color: poly.color, width: 2}))
+    if (opts.fill && opts.strokeWidth < 1) {
+      // draw background strokes at edge bounds to solve for white gaps due to
+      // canvas antialiasing. See https://stackoverflow.com/q/19319963/381299
+      polys.forEach(poly => drawPoly(poly, null, {color: poly.color, width: 2}))
+    }
 
-    // draw fills
-    polys.forEach(poly => drawPoly(poly, {color: poly.color}, null))
+    // draw visible fills and strokes
+    polys.forEach(poly => drawPoly(
+      poly,
+      opts.fill && {color: poly.color},
+      (opts.strokeWidth > 0) && {color: poly.color, width: opts.strokeWidth}
+    ))
 
     return canvas
   }

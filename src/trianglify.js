@@ -27,6 +27,7 @@ const defaultOptions = {
   seed: null,
   xColors: 'random',
   yColors: 'match',
+  fill: true,
   palette: colorbrewer,
   colorSpace: 'lab',
   strokeWidth: 0,

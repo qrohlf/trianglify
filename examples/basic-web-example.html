@@ -14,7 +14,7 @@
       background: #000;
     }
 
-    svg {
+    svg, canvas {
       padding-bottom: 30px;
     }
     </style>
@@ -31,6 +31,11 @@
     })
     document.body.appendChild(pattern.toSVG())
 
+    document.body.appendChild(pattern.toCanvas())
+
+    // stroke-only
+    pattern.opts.fill = false
+    pattern.opts.strokeWidth = 1
     document.body.appendChild(pattern.toCanvas(null, {retina: true}))
   </script>
   </body>
