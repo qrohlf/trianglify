@@ -23,9 +23,31 @@
   <script src="./OrbitControls.js"></script>
   <script src="./dat.gui.min.js"></script>
   <script>
+
+    /*
+    Some preliminary notes - phong shading is a nice touch to get that gradient
+    effect, however it's going to be a huge pain to implement.
+
+    The biggest issue, however, is the fact that most of the D3 color scales
+    trend towards white - and even those that don't are fairly desaturated.
+
+    A more saturated, darker gradient will likely give better results.
+    It's also going to read better since less of a luminance gradient will give
+    the luminance a better chance to read depth data.
+
+    The final issue is that, with truly randomized point depth, we essentially
+    end up simulating a crumpled piece of paper, seen directly from above. It's
+    hard to parse this visually, because it's not really regular at all.
+
+    Let's try some https://uigradients.com/ colors?
+
+    */
+
     const pattern = trianglify({
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
+      cellSize: window.innerWidth / 5
+      // xColors: ['#DA4453', '#89216B']
     })
 
     const gui = new dat.GUI()
@@ -48,8 +70,14 @@
     document.body.appendChild( renderer.domElement );
 
     var geometry = new THREE.BoxGeometry();
-    var material = new THREE.MeshLambertMaterial({
+    // var material = new THREE.MeshLambertMaterial({
+    //   vertexColors: THREE.FaceColors,
+    //   side: THREE.DoubleSide
+    // });
+    var material = new THREE.MeshPhongMaterial({
       vertexColors: THREE.FaceColors,
+      // comment out to remove debug,
+      color: 0xFFFFFF,
       side: THREE.DoubleSide
     });
     // var cube = new THREE.Mesh( geometry, material );
