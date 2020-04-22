@@ -8,18 +8,13 @@
 import Delaunator from 'delaunator'
 import seedrandom from 'seedrandom'
 import chroma from 'chroma-js'
+// TODO: which of the above 3 imports is bloating the bundle by 100K?
+
 import colorbrewer from '../lib/colorbrewer'
 import Pattern from './pattern'
 import * as geom from './utils/geom'
 
 const defaultOptions = {
-  // Pattern height/width. When rendering via Canvas, this determines the native
-  // pixel dimensions of the canvas. When rendering via SVG, this is a unitless
-  // value that simply defines the coordinate system and default viewBox.
-  // Note that output values are rounded to a single decimal place by default,
-  // so SVG coordinate systems that rely on high precision fractions
-  // (i.e height: 1, width: 1) will not work well. To work around this, you may
-  // set {coordinateRounding: false} in the SVG pattern generator options
   height: 400,
   width: 600,
   cellSize: 75,

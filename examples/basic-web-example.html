@@ -27,16 +27,16 @@
   <script>
     const pattern = trianglify({
       width: window.innerWidth,
-      height: window.innerHeight / 3
+      height: (window.innerHeight - 4 * 30) / 4
     })
     document.body.appendChild(pattern.toSVG())
-
     document.body.appendChild(pattern.toCanvas())
 
     // stroke-only
     pattern.opts.fill = false
     pattern.opts.strokeWidth = 1
-    document.body.appendChild(pattern.toCanvas(null, {retina: true}))
+    document.body.appendChild(pattern.toSVG())
+    document.body.appendChild(pattern.toCanvas())
   </script>
   </body>
 </html>

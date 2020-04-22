@@ -1,0 +1,9 @@
+release notes for v4
+
+- canvas rendering is now retina-ready by default
+- line gap issues are solved for both SVG and Canvas rendering
+
+TODO
+
+- render SVG to string on the server
+- render Canvas to PNG on the server

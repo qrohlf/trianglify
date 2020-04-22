@@ -1,14 +1,12 @@
-// conditionally load jsdom if we don't have a browser environment available.
-// note that this is done via require(), which is less than ideal.
-//
-// Since all we're doing here is really just constructing an SVG tree, seems
-// like we could maybe eliminate JSDOM?
-var doc = (typeof document !== "undefined") ? document : require('jsdom').jsdom('<html/>');
+// TODO - make this work in node
+var doc = window.document
 
 // utility for building up SVG node trees
 const s = (tagName, attrs = {}, parent) => {
   const elem = doc.createElementNS("http://www.w3.org/2000/svg", tagName)
-  Object.keys(attrs).forEach(k => elem.setAttribute(k, attrs[k]))
+  Object.keys(attrs).forEach(
+    k => attrs[k] !== undefined && elem.setAttribute(k, attrs[k])
+  )
   parent && parent.appendChild(elem)
   return elem
 }
@@ -20,25 +18,33 @@ export default class Pattern {
     this.opts = opts
   }
 
-  toSVG = (svgOpts) => {
-    const points = this.points
-    const {width, height} = this.opts
-    const svg = s('svg', {width, height})
-    const suppressNamespace = svgOpts && svgOpts.includeNamespace === false
-    if (!suppressNamespace) {
-      // needed for many graphics editing programs to support the file properly,
-      // can be stripped out in most cases on the web.
-      svg.setAttribute('xmlns','http://www.w3.org/2000/svg');
-    }
+  toSVG = (destSSVG, _svgOpts) => {
+    const defaultSVGOptions = {includeNamespace: true, coordinateDecimals: 1}
+    const svgOpts = {...defaultSVGOptions, _svgOpts}
+    const {points, opts, polys} = this
+    const {width, height} = opts
+
+    // only round points if the coordinateDecimals option is non-negative
+    // set coordinateDecimals to -1 to disable point rounding
+    const roundedPoints = (svgOpts.coordinateDecimals < 0) ? points : points.map(
+      p => p.map(x => x.toLocaleString('en-US', {maximumFractionDigits: svgOpts.coordinateDecimals}))
+    )
+
+    const svg = s('svg', {
+      width,
+      height,
+      xmlns: svgOpts.includeNamespace ? 'http://www.w3.org/2000/svg' : undefined
+    })
 
     this.polys.forEach((poly, index) => {
-      const xys = poly.vertexIndices.map(i => `${points[i][0]},${points[i][1]}`)
+      const xys = poly.vertexIndices.map(i => `${roundedPoints[i][0]},${roundedPoints[i][1]}`)
       const d = "M" + xys.join("L") + "Z"
-      const fill = poly.color.css()
       // shape-rendering crispEdges resolves the antialiasing issues
       s('path', {
         d,
-        fill,
+        fill: opts.fill ? poly.color.css() : undefined,
+        stroke: opts.strokeWidth > 0 ? poly.color.css() : undefined,
+        'stroke-width': opts.strokeWidth > 0 ? opts.strokeWidth : undefined,
         'shape-rendering': 'crispEdges'
       }, svg)
     })
@@ -50,8 +56,8 @@ export default class Pattern {
     const defaultCanvasOptions = {retina: true}
     const canvasOpts = {...defaultCanvasOptions, _canvasOpts}
     const {points, polys, opts} = this
-    const canvas = destCanvas || doc.createElement('canvas')
 
+    const canvas = destCanvas || doc.createElement('canvas')
     const ctx = canvas.getContext('2d')
 
     if (canvasOpts.retina) {
@@ -81,10 +87,6 @@ export default class Pattern {
       }
       ctx.scale(drawRatio, drawRatio)
     }
-
-    // this works to fix antialiasing with two adjacent edges, but it fails
-    // horribly at corners...
-    // ctx.globalCompositeOperation = canvasOpts.compositing || 'lighter' // https://stackoverflow.com/a/53292886/381299
 
     const drawPoly = (poly, fill, stroke) => {
       const vertexIndices = poly.vertexIndices
