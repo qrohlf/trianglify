@@ -1,4 +1,3 @@
-import * as math from 'mathjs'
 // conditionally load jsdom if we don't have a browser environment available.
 // note that this is done via require(), which is less than ideal.
 //
@@ -15,12 +14,14 @@ const s = (tagName, attrs = {}, parent) => {
 }
 
 export default class Pattern {
-  constructor (polys, opts) {
+  constructor (points, polys, opts) {
+    this.points = points
     this.polys = polys
     this.opts = opts
   }
 
   toSVG = (svgOpts) => {
+    const points = this.points
     const {width, height} = this.opts
     const svg = s('svg', {width, height})
     const suppressNamespace = svgOpts && svgOpts.includeNamespace === false
@@ -31,46 +32,85 @@ export default class Pattern {
     }
 
     this.polys.forEach((poly, index) => {
-      // TODO - round to 1 decimal place
-      const normal = getNormal(poly)
-      poly.normal = normal
-      const xy = poly.vertices.map(v => v.slice(0, 2).join(','))
-      const d = "M" + xy.join("L") + "Z"
+      const xys = poly.vertexIndices.map(i => `${points[i][0]},${points[i][1]}`)
+      const d = "M" + xys.join("L") + "Z"
       const fill = poly.color.css()
       // shape-rendering crispEdges resolves the antialiasing issues
       s('path', {
         d,
         fill,
-        'data-index': index,
         'shape-rendering': 'crispEdges'
       }, svg)
     })
 
-    svg.addEventListener('mousemove', e => {
-      const LIGHT_LOCATION = [e.clientX, e.clientY, width / 3]
-      Array.from(svg.children).forEach(path => {
-        const poly = this.polys[parseInt(path.dataset.index, 10)]
-        const polyCenter = math.mean(poly.vertices, 0)
-        const lightVector = math.subtract(LIGHT_LOCATION, polyCenter)
-        const lightAngle = Math.max(0, math.dot(poly.normal, lightVector))
-        path.setAttribute('fill', poly.color.darken(0.5).brighten(lightAngle / 400).css())
-      })
-    })
-
     return svg
   }
-}
 
-const getNormal = (poly) => {
-  const a = poly.vertices[0]
-  const b = poly.vertices[1]
-  const c = poly.vertices[2]
-  const ab = math.subtract(b, a)
-  const ac = math.subtract(c, a)
-  // get cross product
-  const cross = math.cross(ac, ab)
-  // normalize
-  const length = Math.sqrt(cross[0] * cross[0] + cross[1] * cross[1] + cross[2] * cross[2])
-  const norm = [cross[0] / length, cross[1] / length, cross[2] / length]
-  return norm
+  toCanvas = (destCanvas, _canvasOpts = {}) => {
+    const defaultCanvasOptions = {retina: true}
+    const canvasOpts = {...defaultCanvasOptions, _canvasOpts}
+    const {points, polys, opts} = this
+    const canvas = destCanvas || doc.createElement('canvas')
+
+    const ctx = canvas.getContext('2d')
+
+    if (canvasOpts.retina) {
+      // adapted from https://gist.github.com/callumlocke/cc258a193839691f60dd
+      const backingStoreRatio = (
+        ctx.webkitBackingStorePixelRatio ||
+        ctx.mozBackingStorePixelRatio ||
+        ctx.msBackingStorePixelRatio ||
+        ctx.oBackingStorePixelRatio ||
+        ctx.backingStorePixelRatio || 1
+      )
+      const drawRatio = devicePixelRatio / backingStoreRatio
+      if (devicePixelRatio !== backingStoreRatio) {
+        // set the 'real' canvas size to the higher width/height
+        canvas.width = opts.width * drawRatio
+        canvas.height = opts.height * drawRatio
+
+        // ...then scale it back down with CSS
+        canvas.style.width = opts.width + 'px'
+        canvas.style.height = opts.height + 'px'
+      } else {
+        // this is a normal 1:1 device: don't apply scaling
+        canvas.width = opts.width
+        canvas.height = opts.height
+        canvas.style.width = ''
+        canvas.style.height = ''
+      }
+      ctx.scale(drawRatio, drawRatio)
+    }
+
+    // this works to fix antialiasing with two adjacent edges, but it fails
+    // horribly at corners...
+    // ctx.globalCompositeOperation = canvasOpts.compositing || 'lighter' // https://stackoverflow.com/a/53292886/381299
+
+    const drawPoly = (poly, fill, stroke) => {
+      const vertexIndices = poly.vertexIndices
+      ctx.lineJoin = 'round'
+      ctx.beginPath()
+      ctx.moveTo(points[vertexIndices[0]][0], points[vertexIndices[0]][1])
+      ctx.lineTo(points[vertexIndices[1]][0], points[vertexIndices[1]][1])
+      ctx.lineTo(points[vertexIndices[2]][0], points[vertexIndices[2]][1])
+      ctx.closePath()
+      if (fill) {
+        ctx.fillStyle = fill.color.css()
+        ctx.fill()
+      }
+      if (stroke) {
+        ctx.strokeStyle = stroke.color.css()
+        ctx.lineWidth = stroke.width
+        ctx.stroke()
+      }
+    }
+
+    // draw strokes at edge bounds to solve for white gaps while compositing
+    polys.forEach(poly => drawPoly(poly, null, {color: poly.color, width: 2}))
+
+    // draw fills
+    polys.forEach(poly => drawPoly(poly, {color: poly.color}, null))
+
+    return canvas
+  }
 }

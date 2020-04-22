@@ -29,7 +29,7 @@ const defaultOptions = {
   yColors: 'match',
   palette: colorbrewer,
   colorSpace: 'lab',
-  stroke_width: 0,
+  strokeWidth: 0,
   points: null
 }
 
@@ -66,6 +66,8 @@ export default function trianglify (_opts) {
         return opts.palette[colorOpt]
       case colorOpt === 'random':
         return randomFromPalette()
+      default:
+        throw TypeError(`Unrecognized color option: ${colorOpt}`)
     }
   }
 
@@ -74,43 +76,38 @@ export default function trianglify (_opts) {
     ? xColors
     : processColorOpts(opts.yColors)
 
-  console.log(xColors, yColors)
-
   const xScale = chroma.scale(xColors).mode(opts.colorSpace)
   const yScale = chroma.scale(yColors).mode(opts.colorSpace)
 
-  // Our next step is to generate a pseudo-random grid of {x, y , z} points,
+  // Our next step is to generate a pseudo-random grid of {x, y} points,
   // (or to simply utilize the points that were passed to us)
   const points = opts.points || getPoints(opts, rand)
-  // window.document.body.appendChild(debugRender(opts, points))
 
-  // Once we have the points array, run the triangulation:
+  // Once we have the points array, run the triangulation
   var geomIndices = Delaunator.from(points).triangles
-
-  // And generate geometry and color data:
+  // ...and then generate geometry and color data:
 
   // use a different randomizer for the color function so that swapping
   // out color functions, etc, doesn't change the pattern geometry itself
   const colorRand = seedrandom(opts.seed ? opts.seed + 'salt' : undefined)
   const polys = []
-  const triangleIndices = []
+
   for (let i = 0; i < geomIndices.length; i += 3) {
-    const vertices = [
-      points[geomIndices[i]],
-      points[geomIndices[i + 1]],
-      points[geomIndices[i + 2]]
+    // convert shallow array-packed vertex indices into 3-tuples
+    const vertexIndices = [
+      geomIndices[i],
+      geomIndices[i + 1],
+      geomIndices[i + 2]
     ]
 
-    triangleIndices.push(
-      [geomIndices[i], geomIndices[i + 1], geomIndices[i + 2]]
-    )
+    // grab a copy of the actual vertices to use for calculations
+    const vertices = vertexIndices.map(i => points[i])
 
     const {width, height} = opts
     const norm = num => Math.max(0, Math.min(1, num))
     const centroid = geom.getCentroid(vertices)
     const xPercent = norm(centroid.x / width)
     const yPercent = norm(centroid.y / height)
-    console.log(xPercent, yPercent)
 
     const color = chroma.mix(
       xScale(xPercent),
@@ -120,22 +117,13 @@ export default function trianglify (_opts) {
     )
 
     polys.push({
-      vertices,
+      vertexIndices,
       centroid,
-      color, // chroma color object
-      normal: [0, 0, 0] // xyz normal vector
+      color // chroma color object
     })
   }
 
-  // return new Pattern(polys, opts)
-
-  const p = new Pattern(polys, opts)
-  // hackety hack
-  p.rawData = {
-    points,
-    triangleIndices
-  }
-  return p
+  return new Pattern(points, polys, opts)
 }
 
 const getPoints = (opts, random) => {

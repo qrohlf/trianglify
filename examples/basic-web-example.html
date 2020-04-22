@@ -11,6 +11,11 @@
       padding: 0 0;
       text-align: center;
       font-size: 0;
+      background: #000;
+    }
+
+    svg {
+      padding-bottom: 30px;
     }
     </style>
   </head>
@@ -22,9 +27,11 @@
   <script>
     const pattern = trianglify({
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight / 3
     })
     document.body.appendChild(pattern.toSVG())
+
+    document.body.appendChild(pattern.toCanvas(null, {retina: true}))
   </script>
   </body>
 </html>

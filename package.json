@@ -16,6 +16,7 @@
     "build:module:node": "microbundle --format cjs,es --target node --no-compress",
     "build:module:browser": "microbundle --format umd --target web --no-compress --output dist/trianglify.browser.js",
     "build:standalone": "microbundle --external none --format umd --output dist/trianglify.bundle.js",
+    "dev": "microbundle watch --external none --format umd --output dist/trianglify.bundle.js",
     "postinstall": "node scripts/postinstall.js"
   },
   "dependencies": {
