@@ -7,3 +7,5 @@ TODO
 
 - render SVG to string on the server
 - render Canvas to PNG on the server
+- add some color functions: Trianglify.colorFunction.sparkle
+- testing
