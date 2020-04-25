@@ -6,10 +6,11 @@
  */
 
 import Delaunator from 'delaunator'
+// TODO - evaluate smaller alternatives
+// (chroma bloats bundle by 40k, minified)
 import chroma from 'chroma-js'
-// TODO: which of the above 3 imports is bloating the bundle by 100K?
 
-import colorbrewer from '../lib/colorbrewer'
+import colorbrewer from './utils/colorbrewer'
 import Pattern from './pattern'
 import mulberry32 from './utils/mulberry32'
 import * as geom from './utils/geom'

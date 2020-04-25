@@ -11,6 +11,7 @@
     "postinstall": "node scripts/postinstall.js"
   },
   "dependencies": {
+    "canvas": "^2.6.1",
     "chroma-js": "^2.1.0",
     "delaunator": "^4.0.1"
   },

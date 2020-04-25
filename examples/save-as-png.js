@@ -12,11 +12,9 @@ const canvas = trianglify({
   variance: Math.random(),
 }).toCanvas()
 
-// Strip off the uri part of the data uri, leaving the data
-const data = pngURI.substr(pngURI.indexOf('base64') + 7)
+// Save the buffer to a file. See the node-canvas docs for a full
+// list of all the things you can do with this Canvas object:
+// https://github.com/Automattic/node-canvas
+const file = fs.createWriteStream('trianglify.png')
+canvas.createPNGStream().pipe(file)
 
-// Decode the base64 encoded blob into a buffer
-const buffer = new Buffer.from(data, 'base64')
-
-// Save the buffer to a file
-fs.writeFileSync(process.argv[2], buffer)

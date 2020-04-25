@@ -1,3 +1,5 @@
+import {createCanvas} from 'canvas' // this is a simple shim in browsers
+
 const isBrowser = (typeof window !== 'undefined' && typeof document !== 'undefined')
 const doc = isBrowser && document
 
@@ -64,21 +66,25 @@ export default class Pattern {
       })
     })
 
-    const svg = s('svg', {
-      xmlns: svgOpts.includeNamespace ? 'http://www.w3.org/2000/svg' : undefined,
-      width,
-      height
-    }, paths)
+    const svg = s(
+      'svg',
+      {
+        xmlns: svgOpts.includeNamespace ? 'http://www.w3.org/2000/svg' : undefined,
+        width,
+        height
+      },
+      paths
+    )
 
     return svg
   }
 
   toCanvas = (destCanvas, _canvasOpts = {}) => {
-    const defaultCanvasOptions = {retina: true}
+    const defaultCanvasOptions = {retina: !!isBrowser}
     const canvasOpts = {...defaultCanvasOptions, _canvasOpts}
     const {points, polys, opts} = this
 
-    const canvas = destCanvas || doc.createElement('canvas')
+    const canvas = destCanvas || createCanvas(opts.width, opts.height) // doc.createElement('canvas')
     const ctx = canvas.getContext('2d')
 
     if (canvasOpts.retina) {
@@ -90,6 +96,8 @@ export default class Pattern {
         ctx.oBackingStorePixelRatio ||
         ctx.backingStorePixelRatio || 1
       )
+
+      const devicePixelRatio = (typeof window !== undefined && window.devicePixelRatio) || 1
       const drawRatio = devicePixelRatio / backingStoreRatio
       if (devicePixelRatio !== backingStoreRatio) {
         // set the 'real' canvas size to the higher width/height
