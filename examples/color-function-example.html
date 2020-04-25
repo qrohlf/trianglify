@@ -30,7 +30,7 @@
   <!-- This is the standalone build of Trianglify. It's easy to drop in to a
   project without any need for bundlers or dependency management, but in most
   modern web projects you will probably want to use the NPM module instead -->
-  <script src="../dist/trianglify.bundle.umd.js"></script>
+  <script src="../dist/trianglify.bundle.debug.js"></script>
   <script>
 
     const JITTER_FACTOR = 0.2
@@ -54,7 +54,8 @@
       ))
     }
 
-    const seed = Math.random()
+    // use the same seed for everything, to allow for easier comparisons
+    const seed = 'pears'
 
     // Example 1: you can use the built-in color functions to customize the
     // color rendering of Trianglify. Here, we use the 'sparkle' color
@@ -81,6 +82,31 @@
       colorFunction: trianglify.colorFunctions.interpolateLinear(0.1)
     })
     addToPage(interpolate, 'trianglify.colorFunctions.interpolateLinear(0.1)')
+
+    // Example 3: you can write your own custom color function to have
+    // total control over how the polygons are given color values.
+    //
+    // Here, we apply the xScale colors as a radial gradient:
+
+    // define a custom color function that applies a radial gradient:
+    const radialGradient = (radius) => (centroid, normalizedX, normalizedY, vertices, xGradient, yGradient, opts, random) => {
+      const distanceFromCenter = Math.sqrt(
+        Math.pow(200 - centroid.x, 2) + Math.pow(150 - centroid.y, 2)
+      )
+      return(xGradient(distanceFromCenter / radius))
+    }
+    // figure out the gradient radius required to cover the image dimensions:
+    const gradientRadius = Math.sqrt(
+      Math.pow(400 / 2, 2) + Math.pow(300 / 2, 2)
+    )
+    const radial = trianglify({
+      seed,
+      width: 400,
+      height: 300,
+      cellSize: 15,
+      colorFunction: radialGradient(gradientRadius)
+    })
+    addToPage(radial, 'custom radial gradient')
   </script>
   </body>
 </html>

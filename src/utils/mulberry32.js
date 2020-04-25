@@ -1,4 +1,9 @@
-// Fast seeded rng. Seed must be numeric!
+// Fast seeded RNG adapted from the public-domain implementation
+// from @byrc: https://github.com/bryc/code/blob/master/jshash/PRNGs.md
+//
+// Usage:
+// const randFn = mulberry32('string seed')
+// const randomNumber = randFn() // [0, 1] random float
 export default function mulberry32 (seed) {
   if (!seed) { seed = Math.random().toString(36) } // support no-seed usage
   var a = xmur3(seed)()

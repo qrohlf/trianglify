@@ -109,6 +109,7 @@ export default function trianglify (_opts) {
     const yPercent = norm(centroid.y / height)
 
     const color = opts.colorFunction(
+      centroid,
       xPercent,
       yPercent,
       vertices,
