@@ -24,20 +24,29 @@
   <!-- This is the standalone build of Trianglify. It's easy to drop in to a
   project without any need for bundlers or dependency management, but in most
   modern web projects you will probably want to use the NPM module instead -->
-  <script src="../dist/trianglify.bundle.umd.js"></script>
+  <script src="../dist/trianglify.bundle.debug.js"></script>
   <script>
     const pattern = trianglify({
+      cellSize: 50,
       width: window.innerWidth * .8,
       height: (window.innerHeight - 4 * 30) / 4
     })
-    document.body.appendChild(pattern.toSVG(null, {coordinateDecimals: -1}))
+
+    // Render to SVG
+    document.body.appendChild(pattern.toSVG())
+    // Render to Canvas
     document.body.appendChild(pattern.toCanvas())
 
     // stroke-only
-    pattern.opts.fill = false
-    pattern.opts.strokeWidth = 1
-    document.body.appendChild(pattern.toSVG())
-    document.body.appendChild(pattern.toCanvas())
+    const strokeOnly = trianglify({
+      cellSize: 75,
+      width: window.innerWidth * .8,
+      height: (window.innerHeight - 4 * 30) / 4,
+      fill: false,
+      strokeWidth: 1
+    })
+    document.body.appendChild(strokeOnly.toSVG())
+    document.body.appendChild(strokeOnly.toCanvas())
   </script>
   </body>
 </html>

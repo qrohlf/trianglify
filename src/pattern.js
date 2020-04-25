@@ -1,15 +1,36 @@
-// TODO - make this work in node
-var doc = window.document
+const isBrowser = (typeof window !== 'undefined' && typeof document !== 'undefined')
+const doc = isBrowser && document
 
-// utility for building up SVG node trees
-const s = (tagName, attrs = {}, parent) => {
+// utility for building up SVG node trees with the DOM API
+const sDOM = (tagName, attrs = {}, children) => {
   const elem = doc.createElementNS("http://www.w3.org/2000/svg", tagName)
   Object.keys(attrs).forEach(
     k => attrs[k] !== undefined && elem.setAttribute(k, attrs[k])
   )
-  parent && parent.appendChild(elem)
+  children && children.forEach(c => elem.appendChild(c))
   return elem
 }
+
+// serialize attrs object to XML attributes. Assumes everything is already
+// escaped.
+const serializeAttrs = attrs => (
+  Object.entries(attrs)
+    .filter(([_, v]) => v != undefined)
+    .map(([k, v]) => `${k}='${v}'`)
+    .join(' ')
+)
+
+// minimal XML-tree builder for use in Node
+const sNode = (tagName, attrs = {}, children) => ({
+  tagName,
+  attrs,
+  children,
+  toString: () => `<${tagName} ${serializeAttrs(attrs)}>${children ? children.join('') : ''}</${tagName}>`
+})
+
+const s = isBrowser
+  ? sDOM
+  : sNode
 
 export default class Pattern {
   constructor (points, polys, opts) {
@@ -30,24 +51,24 @@ export default class Pattern {
       p => p.map(x => +x.toFixed(svgOpts.coordinateDecimals))
     )
 
-    const svg = s('svg', {
-      width,
-      height,
-      xmlns: svgOpts.includeNamespace ? 'http://www.w3.org/2000/svg' : undefined
-    })
-
-    this.polys.forEach((poly, index) => {
+    const paths = this.polys.map((poly) => {
       const xys = poly.vertexIndices.map(i => `${roundedPoints[i][0]},${roundedPoints[i][1]}`)
       const d = "M" + xys.join("L") + "Z"
       // shape-rendering crispEdges resolves the antialiasing issues
-      s('path', {
+      return s('path', {
         d,
         fill: opts.fill ? poly.color.css() : undefined,
         stroke: opts.strokeWidth > 0 ? poly.color.css() : undefined,
         'stroke-width': opts.strokeWidth > 0 ? opts.strokeWidth : undefined,
         'shape-rendering': opts.fill ? 'crispEdges' : undefined
-      }, svg)
+      })
     })
+
+    const svg = s('svg', {
+      xmlns: svgOpts.includeNamespace ? 'http://www.w3.org/2000/svg' : undefined,
+      width,
+      height
+    }, paths)
 
     return svg
   }

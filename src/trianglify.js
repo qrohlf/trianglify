@@ -6,13 +6,14 @@
  */
 
 import Delaunator from 'delaunator'
-import seedrandom from 'seedrandom'
 import chroma from 'chroma-js'
 // TODO: which of the above 3 imports is bloating the bundle by 100K?
 
 import colorbrewer from '../lib/colorbrewer'
 import Pattern from './pattern'
+import mulberry32 from './utils/mulberry32'
 import * as geom from './utils/geom'
+import * as colorFunctions from './utils/colorFunctions'
 
 const defaultOptions = {
   height: 400,
@@ -25,6 +26,7 @@ const defaultOptions = {
   fill: true,
   palette: colorbrewer,
   colorSpace: 'lab',
+  colorFunction: colorFunctions.interpolateLinear(0.5),
   strokeWidth: 0,
   points: null
 }
@@ -41,7 +43,7 @@ export default function trianglify (_opts) {
   const opts = {...defaultOptions, ..._opts}
 
   // standard randomizer, used for point gen and layout
-  const rand = seedrandom(opts.seed)
+  const rand = mulberry32(opts.seed)
 
   const randomFromPalette = () => {
     if (opts.palette instanceof Array) {
@@ -83,9 +85,10 @@ export default function trianglify (_opts) {
   var geomIndices = Delaunator.from(points).triangles
   // ...and then generate geometry and color data:
 
-  // use a different randomizer for the color function so that swapping
-  // out color functions, etc, doesn't change the pattern geometry itself
-  const colorRand = seedrandom(opts.seed ? opts.seed + 'salt' : undefined)
+  // use a different (salted) randomizer for the color function so that
+  // swapping out color functions doesn't change the pattern geometry itself
+  const salt = 42
+  const colorRand = mulberry32(opts.seed ? opts.seed + salt : null)
   const polys = []
 
   for (let i = 0; i < geomIndices.length; i += 3) {
@@ -105,11 +108,14 @@ export default function trianglify (_opts) {
     const xPercent = norm(centroid.x / width)
     const yPercent = norm(centroid.y / height)
 
-    const color = chroma.mix(
-      xScale(xPercent),
-      yScale(yPercent),
-      0.5,
-      opts.colorSpace
+    const color = opts.colorFunction(
+      xPercent,
+      yPercent,
+      vertices,
+      xScale,
+      yScale,
+      opts,
+      colorRand // randomization function for use by color functions
     )
 
     polys.push({
@@ -159,6 +165,13 @@ const getPoints = (opts, random) => {
 
   return points
 }
+
+// tweak some of the exports here
+trianglify.utils = {
+  mix: chroma.mix
+}
+
+trianglify.colorFunctions = colorFunctions
 
 const debugRender = (opts, points) => {
   const doc = window.document

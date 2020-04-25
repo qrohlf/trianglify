@@ -1,5 +1,3 @@
-import * as math from 'mathjs'
-
 // Given an array of coordinates representing a triangle, find the centroid
 // of the triangle and return it as an {x, y} object
 // Accepts a single [[x, y], [x, y], [x, y]] argument
