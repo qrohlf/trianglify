@@ -1,4 +1,5 @@
 import chroma from 'chroma-js'
+import * as geom from './geom'
 // Built in color functions provided for your convenience.
 //
 // Usage example:
@@ -13,13 +14,24 @@ import chroma from 'chroma-js'
 // jitter applied to the x and y gradient scales
 
 export const interpolateLinear = (bias = 0.5) => (
-  (centroid, xPercent, yPercent, vertices, xScale, yScale, opts) =>
+  ({xPercent, yPercent, xScale, yScale, opts}) =>
     chroma.mix(xScale(xPercent), yScale(yPercent), bias, opts.colorSpace)
 )
 
-export const sparkle = (jitterFactor = 0.15) => (centroid, normalizedX, normalizedY, vertices, xGradient, yGradient, opts, random) => {
-  const jitter = () => (random() - 0.5) * jitterFactor
-  const a = xGradient(normalizedX + jitter())
-  const b = yGradient(normalizedY + jitter())
-  return chroma.mix(a, b, 0.5, opts.colorSpace)
+export const sparkle = (jitterFactor = 0.15) => (
+  ({xPercent, yPercent, xScale, yScale, opts, random}) => {
+    const jitter = () => (random() - 0.5) * jitterFactor
+    const a = xScale(xPercent + jitter())
+    const b = yScale(yPercent + jitter())
+    return chroma.mix(a, b, 0.5, opts.colorSpace)
+  }
+)
+
+export const shadows = (shadowIntensity = 0.8) => {
+  return ({vertexIndices, xPercent, yPercent, xScale, yScale, opts, points, random}) => {
+    const a = xScale(xPercent)
+    const b = yScale(yPercent)
+    const color = chroma.mix(a, b, 0.5, opts.colorSpace)
+    return color.darken(shadowIntensity * random())
+  }
 }

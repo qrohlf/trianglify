@@ -89,7 +89,7 @@ export default function trianglify (_opts) {
   // use a different (salted) randomizer for the color function so that
   // swapping out color functions doesn't change the pattern geometry itself
   const salt = 42
-  const colorRand = mulberry32(opts.seed ? opts.seed + salt : null)
+  const cRand = mulberry32(opts.seed ? opts.seed + salt : null)
   const polys = []
 
   for (let i = 0; i < geomIndices.length; i += 3) {
@@ -109,16 +109,18 @@ export default function trianglify (_opts) {
     const xPercent = norm(centroid.x / width)
     const yPercent = norm(centroid.y / height)
 
-    const color = opts.colorFunction(
-      centroid,
-      xPercent,
-      yPercent,
-      vertices,
-      xScale,
-      yScale,
-      opts,
-      colorRand // randomization function for use by color functions
-    )
+    const color = opts.colorFunction({
+      centroid,       // centroid of polygon, non-normalized
+      xPercent,       // x-coordinate of centroid, normalized to [0, 1]
+      yPercent,       // y-coordinate of centroid, normalized to [0, 1]
+      vertexIndices,  // vertex indices of the polygon
+      vertices,       // [x, y] vertices of the polygon
+      xScale,         // x-colors scale for the pattern
+      yScale,         // y-colors scale for the pattern
+      points,         // array of generated points for the pattern
+      opts,           // options used to initialize the pattern
+      random: cRand   // seeded randomization function for use by color functions
+    })
 
     polys.push({
       vertexIndices,
@@ -151,8 +153,6 @@ const getPoints = (opts, random) => {
 
   const halfCell = cellSize / 2
 
-  const Z_DEPTH = halfCell * 6
-
   const points = Array(pointCount).fill(null).map((_, i) => {
     const col = i % colCount
     const row = Math.floor(i / colCount)
@@ -160,8 +160,7 @@ const getPoints = (opts, random) => {
     // [x, y, z]
     return [
       -bleedX + col * cellSize + halfCell + getJitter(),
-      -bleedY + row * cellSize + halfCell + getJitter(),
-      random() * Z_DEPTH
+      -bleedY + row * cellSize + halfCell + getJitter()
     ]
   })
 

@@ -1,12 +1,10 @@
 release notes for v4
 
+- line gap issues are solved for both SVG and Canvas rendering engines
 - canvas rendering is now retina-ready by default
-- line gap issues are solved for both SVG and Canvas rendering
-
-TODO
-
-- render SVG to string on the server
-- render Canvas to PNG on the server
-- add some color functions: Trianglify.colorFunction.sparkle
-- testing
-- fuck microbundle
+- arguments are now camel case
+- the node-canvas dependency is no longer optional
+- removed dependency on seedrandom
+- removed dependency on jsdom
+- colorFunction has a new method signature
+- new built-in colorFunction: 'sparkle'
