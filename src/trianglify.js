@@ -169,10 +169,13 @@ const getPoints = (opts, random) => {
 
 // tweak some of the exports here
 trianglify.utils = {
-  mix: chroma.mix
+  mix: chroma.mix,
+  colorbrewer
 }
 
 trianglify.colorFunctions = colorFunctions
+trianglify.Pattern = Pattern
+trianglify.defaultOptions = defaultOptions
 
 const debugRender = (opts, points) => {
   const doc = window.document
