@@ -1,3 +1,4 @@
+/* eslint-env jest */
 // Because Trianglify is authored using ES modules syntax (which Rollup likes)
 // it can't be unit-tested on a per-file basis using Jest without maintaining
 // a separate compiler configuration for test files.
@@ -62,7 +63,7 @@ describe('Public API', () => {
 
 describe('Pattern Generation', () => {
   test('return a Pattern given valid options', () => {
-    expect(trianglify({height: 100, width: 100})).toBeInstanceOf(Pattern)
+    expect(trianglify({ height: 100, width: 100 })).toBeInstanceOf(Pattern)
   })
 
   test('should use default options when invoked', () => {
@@ -71,12 +72,12 @@ describe('Pattern Generation', () => {
   })
 
   test('should override opts with user-provided options', () => {
-    const pattern = trianglify({height: 100, width: 100, cellSize: 1234})
+    const pattern = trianglify({ height: 100, width: 100, cellSize: 1234 })
     expect(pattern.opts.cellSize).toEqual(1234)
   })
 
   test('should generate well-formed geometry', () => {
-    const pattern = trianglify({height: 100, width: 100, cellSize: 20})
+    const pattern = trianglify({ height: 100, width: 100, cellSize: 20 })
     // we care about pattern.points and pattern.polys here
     expect(pattern.points).toBeInstanceOf(Array)
     // assert that points is an array of [x, y] tuples
@@ -100,12 +101,16 @@ describe('Pattern Generation', () => {
   })
 
   test('should be deterministic when seeded', () => {
-    const pattern1 = trianglify({seed: 'deadbeef'})
-    const pattern2 = trianglify({seed: 'deadbeef'})
+    const pattern1 = trianglify({ seed: 'deadbeef' })
+    const pattern2 = trianglify({ seed: 'deadbeef' })
     expect(pattern1.toSVG()).toEqual(pattern2.toSVG())
   })
 
   test('should match snapshot for non-breaking version bumps', () => {
-    expect(trianglify({seed: 'snapshotText'}).toSVG()).toMatchSnapshot()
+    expect(trianglify({ seed: 'snapshotText' }).toSVG()).toMatchSnapshot()
   })
+})
+
+describe('Pattern outputs', () => {
+
 })

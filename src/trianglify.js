@@ -32,7 +32,6 @@ const defaultOptions = {
   points: null
 }
 
-
 // This function does the "core" render-independent work:
 //
 // 1. Parse and munge options
@@ -41,17 +40,17 @@ const defaultOptions = {
 // 4. Use the Delaunator library to run the triangulation
 // 5. Do color interpolation to establish the fundamental coloring of the shapes
 export default function trianglify (_opts) {
-  const opts = {...defaultOptions, ..._opts}
+  const opts = { ...defaultOptions, ..._opts }
 
   // standard randomizer, used for point gen and layout
   const rand = mulberry32(opts.seed)
 
   const randomFromPalette = () => {
     if (opts.palette instanceof Array) {
-      return opts.palette[Math.floor(rand()*opts.palette.length)]
+      return opts.palette[Math.floor(rand() * opts.palette.length)]
     }
-    const keys = Object.keys(opts.palette);
-    return opts.palette[keys[Math.floor(rand()*keys.length)]]
+    const keys = Object.keys(opts.palette)
+    return opts.palette[keys[Math.floor(rand() * keys.length)]]
   }
 
   // The first step here is to set up our color scales for the X and Y axis.
@@ -103,23 +102,23 @@ export default function trianglify (_opts) {
     // grab a copy of the actual vertices to use for calculations
     const vertices = vertexIndices.map(i => points[i])
 
-    const {width, height} = opts
+    const { width, height } = opts
     const norm = num => Math.max(0, Math.min(1, num))
     const centroid = geom.getCentroid(vertices)
     const xPercent = norm(centroid.x / width)
     const yPercent = norm(centroid.y / height)
 
     const color = opts.colorFunction({
-      centroid,       // centroid of polygon, non-normalized
-      xPercent,       // x-coordinate of centroid, normalized to [0, 1]
-      yPercent,       // y-coordinate of centroid, normalized to [0, 1]
-      vertexIndices,  // vertex indices of the polygon
-      vertices,       // [x, y] vertices of the polygon
-      xScale,         // x-colors scale for the pattern
-      yScale,         // y-colors scale for the pattern
-      points,         // array of generated points for the pattern
-      opts,           // options used to initialize the pattern
-      random: cRand   // seeded randomization function for use by color functions
+      centroid, // centroid of polygon, non-normalized
+      xPercent, // x-coordinate of centroid, normalized to [0, 1]
+      yPercent, // y-coordinate of centroid, normalized to [0, 1]
+      vertexIndices, // vertex indices of the polygon
+      vertices, // [x, y] vertices of the polygon
+      xScale, // x-colors scale for the pattern
+      yScale, // y-colors scale for the pattern
+      points, // array of generated points for the pattern
+      opts, // options used to initialize the pattern
+      random: cRand // seeded randomization function for use by color functions
     })
 
     polys.push({
@@ -133,7 +132,7 @@ export default function trianglify (_opts) {
 }
 
 const getPoints = (opts, random) => {
-  const {width, height, cellSize, variance} = opts
+  const { width, height, cellSize, variance } = opts
 
   // pad by 2 cells outside the visible area on each side to ensure we fully
   // cover the 'artboard'
@@ -176,31 +175,3 @@ trianglify.utils = {
 trianglify.colorFunctions = colorFunctions
 trianglify.Pattern = Pattern
 trianglify.defaultOptions = defaultOptions
-
-const debugRender = (opts, points) => {
-  const doc = window.document
-  const svg = window.document.createElementNS("http://www.w3.org/2000/svg", 'svg')
-  svg.setAttribute('width', opts.width + 400)
-  svg.setAttribute('height', opts.height + 400)
-
-  points.forEach(p => {
-    const circle = doc.createElementNS("http://www.w3.org/2000/svg", 'circle')
-    circle.setAttribute('cx', p[0])
-    circle.setAttribute('cy', p[1])
-    circle.setAttribute('r', 2)
-    svg.appendChild(circle)
-  })
-
-  const bounds = doc.createElementNS("http://www.w3.org/2000/svg", 'rect')
-  bounds.setAttribute('x', 0)
-  bounds.setAttribute('y', 0)
-  bounds.setAttribute('width', opts.width)
-  bounds.setAttribute('height', opts.height)
-  bounds.setAttribute('stroke-width', 1)
-  bounds.setAttribute('stroke', 'blue')
-  bounds.setAttribute('fill', 'none')
-  svg.appendChild(bounds)
-
-  svg.setAttribute('viewBox', `-100 -100 ${opts.width + 200} ${opts.height + 200}`)
-  return svg
-}

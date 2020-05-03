@@ -7,9 +7,9 @@ var trianglify = require('../dist/trianglify.js')
 const svg = trianglify({
   width: 1920,
   height: 1080,
-  cellSize: Math.random()*200 + 40,
+  cellSize: Math.random() * 200 + 40,
   xColors: 'random',
-  variance: Math.random(),
+  variance: Math.random()
 }).toSVG()
 
 // Save the string to a file

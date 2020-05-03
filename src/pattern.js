@@ -1,11 +1,11 @@
-import {createCanvas} from 'canvas' // this is a simple shim in browsers
+import { createCanvas } from 'canvas' // this is a simple shim in browsers
 
 const isBrowser = (typeof window !== 'undefined' && typeof document !== 'undefined')
 const doc = isBrowser && document
 
 // utility for building up SVG node trees with the DOM API
 const sDOM = (tagName, attrs = {}, children) => {
-  const elem = doc.createElementNS("http://www.w3.org/2000/svg", tagName)
+  const elem = doc.createElementNS('http://www.w3.org/2000/svg', tagName)
   Object.keys(attrs).forEach(
     k => attrs[k] !== undefined && elem.setAttribute(k, attrs[k])
   )
@@ -17,7 +17,7 @@ const sDOM = (tagName, attrs = {}, children) => {
 // escaped.
 const serializeAttrs = attrs => (
   Object.entries(attrs)
-    .filter(([_, v]) => v != undefined)
+    .filter(([_, v]) => v !== undefined)
     .map(([k, v]) => `${k}='${v}'`)
     .join(' ')
 )
@@ -42,10 +42,10 @@ export default class Pattern {
   }
 
   toSVG = (destSVG, _svgOpts = {}) => {
-    const defaultSVGOptions = {includeNamespace: true, coordinateDecimals: 1}
-    const svgOpts = {...defaultSVGOptions, ..._svgOpts}
-    const {points, opts, polys} = this
-    const {width, height} = opts
+    const defaultSVGOptions = { includeNamespace: true, coordinateDecimals: 1 }
+    const svgOpts = { ...defaultSVGOptions, ..._svgOpts }
+    const { points, opts, polys } = this
+    const { width, height } = opts
 
     // only round points if the coordinateDecimals option is non-negative
     // set coordinateDecimals to -1 to disable point rounding
@@ -53,9 +53,9 @@ export default class Pattern {
       p => p.map(x => +x.toFixed(svgOpts.coordinateDecimals))
     )
 
-    const paths = this.polys.map((poly) => {
+    const paths = polys.map((poly) => {
       const xys = poly.vertexIndices.map(i => `${roundedPoints[i][0]},${roundedPoints[i][1]}`)
-      const d = "M" + xys.join("L") + "Z"
+      const d = 'M' + xys.join('L') + 'Z'
       // shape-rendering crispEdges resolves the antialiasing issues
       return s('path', {
         d,
@@ -80,9 +80,9 @@ export default class Pattern {
   }
 
   toCanvas = (destCanvas, _canvasOpts = {}) => {
-    const defaultCanvasOptions = {retina: !!isBrowser}
-    const canvasOpts = {...defaultCanvasOptions, _canvasOpts}
-    const {points, polys, opts} = this
+    const defaultCanvasOptions = { retina: !!isBrowser }
+    const canvasOpts = { ...defaultCanvasOptions, _canvasOpts }
+    const { points, polys, opts } = this
 
     const canvas = destCanvas || createCanvas(opts.width, opts.height) // doc.createElement('canvas')
     const ctx = canvas.getContext('2d')
@@ -97,7 +97,7 @@ export default class Pattern {
         ctx.backingStorePixelRatio || 1
       )
 
-      const devicePixelRatio = (typeof window !== undefined && window.devicePixelRatio) || 1
+      const devicePixelRatio = (typeof window !== 'undefined' && window.devicePixelRatio) || 1
       const drawRatio = devicePixelRatio / backingStoreRatio
       if (devicePixelRatio !== backingStoreRatio) {
         // set the 'real' canvas size to the higher width/height
@@ -139,14 +139,14 @@ export default class Pattern {
     if (opts.fill && opts.strokeWidth < 1) {
       // draw background strokes at edge bounds to solve for white gaps due to
       // canvas antialiasing. See https://stackoverflow.com/q/19319963/381299
-      polys.forEach(poly => drawPoly(poly, null, {color: poly.color, width: 2}))
+      polys.forEach(poly => drawPoly(poly, null, { color: poly.color, width: 2 }))
     }
 
     // draw visible fills and strokes
     polys.forEach(poly => drawPoly(
       poly,
-      opts.fill && {color: poly.color},
-      (opts.strokeWidth > 0) && {color: poly.color, width: opts.strokeWidth}
+      opts.fill && { color: poly.color },
+      (opts.strokeWidth > 0) && { color: poly.color, width: opts.strokeWidth }
     ))
 
     return canvas

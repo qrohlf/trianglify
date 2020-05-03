@@ -1,5 +1,5 @@
 try {
-  var canvas = require('canvas')
+  require('canvas')
 } catch (e) {
   console.log('\n\n\nTrianglify has been installed successfully with SVG support.\n' +
     'For canvas support, you will need to install Cairo & node-canvas\n' +
