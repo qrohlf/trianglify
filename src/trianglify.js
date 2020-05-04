@@ -17,17 +17,17 @@ import * as geom from './utils/geom'
 import * as colorFunctions from './utils/colorFunctions'
 
 const defaultOptions = {
-  height: 400,
   width: 600,
+  height: 400,
   cellSize: 75,
   variance: 0.75,
   seed: null,
   xColors: 'random',
   yColors: 'match',
-  fill: true,
   palette: colorbrewer,
   colorSpace: 'lab',
   colorFunction: colorFunctions.interpolateLinear(0.5),
+  fill: true,
   strokeWidth: 0,
   points: null
 }
