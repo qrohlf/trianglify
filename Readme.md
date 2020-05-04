@@ -13,12 +13,6 @@ You can grab Trianglify with npm/yarn (recommended):
 npm install trianglify
 ```
 
-Include it in your HTML via CDNJS:
-
-```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trianglify/2.0.0/trianglify.min.js"></script>
-```
-
 Or clone the repo:
 
 ```
