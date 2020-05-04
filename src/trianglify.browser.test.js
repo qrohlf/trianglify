@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 /* eslint-env jest */
 // Because Trianglify is authored using ES modules syntax (which Rollup likes)
 // it can't be unit-tested on a per-file basis using Jest without maintaining
@@ -10,8 +13,10 @@
 // I hope to start unit-testing in the future, when native support for ES modules
 // lands in Node and Jest (See https://github.com/facebook/jest/issues/9430)
 
-// pull in the transpiled, CJS verion of trianglify
-const trianglify = require('../dist/trianglify.js')
+// pull in the transpiled, browser-bundle version of trianglify.
+// this is needed so that we get the browser-targeted Canvas shim, and
+// NOT the node library
+const trianglify = require('../dist/trianglify.bundle.debug.js')
 const Pattern = trianglify.Pattern
 
 describe('Public API', () => {
@@ -61,7 +66,7 @@ describe('Public API', () => {
 //   })
 // })
 
-describe('Pattern Generation', () => {
+describe('Pattern generation', () => {
   test('return a Pattern given valid options', () => {
     expect(trianglify({ height: 100, width: 100 })).toBeInstanceOf(Pattern)
   })
@@ -111,6 +116,40 @@ describe('Pattern Generation', () => {
   })
 })
 
-describe('Pattern outputs', () => {
+describe('Pattern outputs in browser environment', () => {
+  describe('#toSVG', () => {
+    test('returns a well-formed SVG node', () => {
+      const pattern = trianglify()
+      const svgDOM = pattern.toSVG()
+      expect(svgDOM.tagName).toEqual('svg')
+      expect(svgDOM.children).toBeInstanceOf(global.HTMLCollection)
+      Array.from(svgDOM.children).forEach(node => {
+        expect(node.tagName).toEqual('path')
+      })
+      expect(svgDOM.children).toHaveLength(pattern.polys.length)
+    })
+  })
 
+  describe('#toSVGTree', () => {
+    const pattern = trianglify({ seed: 'foobar' })
+    const svgTree = pattern.toSVGTree()
+
+    test('returns a synthetic tree of object literals', () => {
+      expect(Object.keys(svgTree)).toEqual(['tagName', 'attrs', 'children', 'toString'])
+    })
+
+    test('serializes to an SVG string', () => {
+      expect(svgTree.toString()).toMatchSnapshot()
+    })
+  })
+
+  describe('#toCanvas', () => {
+    test('returns a Canvas node', () => {
+      const pattern = trianglify()
+      const canvas = pattern.toCanvas()
+      expect(canvas).toBeInstanceOf(global.HTMLElement)
+      expect(canvas.tagName).toEqual('CANVAS')
+      // there's not really any way to test the canvas contents here
+    })
+  })
 })

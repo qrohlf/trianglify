@@ -1,5 +1,5 @@
 // Fast seeded RNG adapted from the public-domain implementation
-// from @byrc: https://github.com/bryc/code/blob/master/jshash/PRNGs.md
+// by @byrc: https://github.com/bryc/code/blob/master/jshash/PRNGs.md
 //
 // Usage:
 // const randFn = mulberry32('string seed')

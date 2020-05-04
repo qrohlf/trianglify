@@ -14,7 +14,7 @@ const sDOM = (tagName, attrs = {}, children) => {
 }
 
 // serialize attrs object to XML attributes. Assumes everything is already
-// escaped.
+// escaped (safe input).
 const serializeAttrs = attrs => (
   Object.entries(attrs)
     .filter(([_, v]) => v !== undefined)
@@ -30,10 +30,6 @@ const sNode = (tagName, attrs = {}, children) => ({
   toString: () => `<${tagName} ${serializeAttrs(attrs)}>${children ? children.join('') : ''}</${tagName}>`
 })
 
-const s = isBrowser
-  ? sDOM
-  : sNode
-
 export default class Pattern {
   constructor (points, polys, opts) {
     this.points = points
@@ -41,7 +37,8 @@ export default class Pattern {
     this.opts = opts
   }
 
-  toSVG = (destSVG, _svgOpts = {}) => {
+  _toSVG = (serializer, destSVG, _svgOpts = {}) => {
+    const s = serializer
     const defaultSVGOptions = { includeNamespace: true, coordinateDecimals: 1 }
     const svgOpts = { ...defaultSVGOptions, ..._svgOpts }
     const { points, opts, polys } = this
@@ -78,6 +75,12 @@ export default class Pattern {
 
     return svg
   }
+
+  toSVGTree = (svgOpts) => this._toSVG(sNode, null, svgOpts)
+
+  toSVG = isBrowser
+    ? (destSVG, svgOpts) => this._toSVG(sDOM, destSVG, svgOpts)
+    : (destSVG, svgOpts) => this.toSVGTree(svgOpts)
 
   toCanvas = (destCanvas, _canvasOpts = {}) => {
     const defaultCanvasOptions = { retina: !!isBrowser }
