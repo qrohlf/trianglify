@@ -122,7 +122,7 @@ If false, the colors will not vary over the x axis; this requires the y_color to
 
 Valid string values are 'random' or the name of a [colorbrewer palette](http://bl.ocks.org/mbostock/5577023) (i.e. 'YlGnBu' or 'RdBu'). When set to 'random', a gradient will be randomly selected from the colorbrewer library.
 
-Valid array values should specify the color stops in any CSS format (i.e. `['#000000', '#4CAFE8', '#FFFFFF']`).
+Valid array values should specify the color stops in any CSS format (i.e. `['#000000', 'hsl(201.9,77.2%,60.4%)', 'rgb(255,255,255)']`).
 
 ### y_colors
 
