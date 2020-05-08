@@ -10,7 +10,7 @@
     "test": "jest",
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "publish-beta": "npm build && npm publish --tag next",
+    "publish-beta": "npm run build && npm publish --tag next",
     "ci": "npm run lint && npm run build && npm run test"
   },
   "dependencies": {
