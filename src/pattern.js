@@ -53,12 +53,16 @@ export default class Pattern {
     const paths = polys.map((poly) => {
       const xys = poly.vertexIndices.map(i => `${roundedPoints[i][0]},${roundedPoints[i][1]}`)
       const d = 'M' + xys.join('L') + 'Z'
-      // shape-rendering crispEdges resolves the antialiasing issues
+      const hasStroke = opts.strokeWidth > 0
+      // shape-rendering crispEdges resolves the antialiasing issues, at the
+      // potential cost of some visual degradation. For the best performance
+      // *and* best visual rendering, use Canvas.
       return s('path', {
         d,
         fill: opts.fill ? poly.color.css() : undefined,
-        stroke: opts.strokeWidth > 0 ? poly.color.css() : undefined,
-        'stroke-width': opts.strokeWidth > 0 ? opts.strokeWidth : undefined,
+        stroke: hasStroke ? poly.color.css() : undefined,
+        'stroke-width': hasStroke ? opts.strokeWidth : undefined,
+        'stroke-linejoin': hasStroke ? 'round' : undefined,
         'shape-rendering': opts.fill ? 'crispEdges' : undefined
       })
     })

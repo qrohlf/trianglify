@@ -216,17 +216,13 @@ String, defaults to `null`. Seeds the random number generator to create repeatab
 
 False, string, or array of CSS-formatted colors, default is `'random'`. Specify the color gradient used on the x axis.
 
-If false, the colors will not vary over the x axis; this requires the y_color to have a specified value.
-
 Valid string values are 'random', or the name of a [colorbrewer palette](http://bl.ocks.org/mbostock/5577023) (i.e. 'YlGnBu' or 'RdBu'). When set to 'random', a gradient will be randomly selected from the colorbrewer library.
 
 Valid array values should specify the color stops in any CSS format (i.e. `['#000000', '#4CAFE8', '#FFFFFF']`).
 
 **`yColors`**
 
-False, string or array of CSS-formatted colors, default is `'match'`. When set to 'match' the x-axis color gradient will be used on both axes.
-If false, the colors will not vary over the y axis; this requires the xColors to have a specified value.
-Otherwise, accepts the same options as xColors.
+False, string or array of CSS-formatted colors, default is `'match'`. When set to 'match' the x-axis color gradient will be used on both axes. Otherwise, accepts the same options as xColors.
 
 **`palette`**
 

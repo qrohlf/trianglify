@@ -39,8 +39,20 @@ const defaultOptions = {
 // 3. Generate random points within cell geometry
 // 4. Use the Delaunator library to run the triangulation
 // 5. Do color interpolation to establish the fundamental coloring of the shapes
-export default function trianglify (_opts) {
+export default function trianglify (_opts = {}) {
+  Object.keys(_opts).forEach(k => {
+    if (defaultOptions[k] === undefined) {
+      throw TypeError(`Unrecognized option: ${k}`)
+    }
+  })
   const opts = { ...defaultOptions, ..._opts }
+
+  if (!(opts.height > 0)) {
+    throw TypeError(`invalid height: ${opts.height}`)
+  }
+  if (!(opts.width > 0)) {
+    throw TypeError(`invalid width: ${opts.width}`)
+  }
 
   // standard randomizer, used for point gen and layout
   const rand = mulberry32(opts.seed)

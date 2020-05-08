@@ -42,29 +42,23 @@ describe('Public API', () => {
   })
 })
 
-// describe('Options Parsing', () => {
-//   test('should throw an error on unrecognized options', () => {
-//     expect(
-//       () => trianglify({height: 100, width: 100, bad_option: true})
-//     ).toThrow()
-//   })
+describe('Options Parsing', () => {
+  test('should throw an error on unrecognized options', () => {
+    expect(
+      () => trianglify({ height: 100, width: 100, bad_option: true })
+    ).toThrow()
+  })
 
-//   test('should throw an error on unspecified colors', () => {
-//     expect(
-//       () => trianglify({height: 100, width: 100, xColors: false, yColors: false})
-//     ).toThrow()
-//   })
+  test('should throw an error on invalid dimensions', () => {
+    expect(
+      () => trianglify({ height: 100, width: -1 })
+    ).toThrow()
 
-//   test('should throw an error on invalid dimensions', () => {
-//     expect(
-//       () => trianglify({height: 100, width: -1})
-//     ).toThrow()
-
-//     expect(
-//       () => trianglify({height: -1, width: 100})
-//     ).toThrow()
-//   })
-// })
+    expect(
+      () => trianglify({ height: -1, width: 100 })
+    ).toThrow()
+  })
+})
 
 describe('Pattern generation', () => {
   test('return a Pattern given valid options', () => {
@@ -79,6 +73,15 @@ describe('Pattern generation', () => {
   test('should override opts with user-provided options', () => {
     const pattern = trianglify({ height: 100, width: 100, cellSize: 1234 })
     expect(pattern.opts.cellSize).toEqual(1234)
+  })
+
+  test('should accept the random color option without erroring', () => {
+    trianglify({ xColors: 'random' })
+    trianglify({ yColors: 'random' })
+  })
+
+  test('should accept the match color option without erroring', () => {
+    trianglify({ xColors: 'random', yColors: 'match' })
   })
 
   test('should generate well-formed geometry', () => {
