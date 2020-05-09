@@ -72,7 +72,7 @@ export default function trianglify (_opts = {}) {
     switch (true) {
       case Array.isArray(colorOpt):
         return colorOpt
-      case opts.palette[colorOpt]:
+      case !!opts.palette[colorOpt]:
         return opts.palette[colorOpt]
       case colorOpt === 'random':
         return randomFromPalette()

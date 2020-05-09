@@ -84,6 +84,10 @@ describe('Pattern generation', () => {
     trianglify({ xColors: 'random', yColors: 'match' })
   })
 
+  test('should accept a named colorbrewer palette without erroring', () => {
+    trianglify({ xColors: 'RdBu' })
+  })
+
   test('should generate well-formed geometry', () => {
     const pattern = trianglify({ height: 100, width: 100, cellSize: 20 })
     // we care about pattern.points and pattern.polys here
