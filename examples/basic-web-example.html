@@ -27,9 +27,8 @@
   <script src="../dist/trianglify.bundle.debug.js"></script>
   <script>
     const pattern = trianglify({
-      xColors: 'RdBu',
       cellSize: 50,
-      width: window.innerWidth * .8,
+      width: window.innerWidth * 0.8,
       height: (window.innerHeight - 4 * 30) / 4
     })
 
@@ -41,7 +40,7 @@
     // stroke-only
     const strokeOnly = trianglify({
       cellSize: 75,
-      width: window.innerWidth * .8,
+      width: window.innerWidth * 0.8,
       height: (window.innerHeight - 4 * 30) / 4,
       fill: false,
       strokeWidth: 1
