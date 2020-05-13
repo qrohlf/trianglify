@@ -86,6 +86,7 @@ describe('Pattern generation', () => {
 
   test('should accept a named colorbrewer palette without erroring', () => {
     trianglify({ xColors: 'RdBu' })
+    trianglify({ yColors: 'OrRd' })
   })
 
   test('should generate well-formed geometry', () => {
