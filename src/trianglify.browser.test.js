@@ -76,17 +76,30 @@ describe('Pattern generation', () => {
   })
 
   test('should accept the random color option without erroring', () => {
-    trianglify({ xColors: 'random' })
-    trianglify({ yColors: 'random' })
+    expect(() => {
+      trianglify({ xColors: 'random' })
+      trianglify({ yColors: 'random' })
+    }).not.toThrow()
   })
 
   test('should accept the match color option without erroring', () => {
-    trianglify({ xColors: 'random', yColors: 'match' })
+    expect(() => {
+      trianglify({ xColors: 'random', yColors: 'match' })
+    }).not.toThrow()
   })
 
   test('should accept a named colorbrewer palette without erroring', () => {
-    trianglify({ xColors: 'RdBu' })
-    trianglify({ yColors: 'OrRd' })
+    expect(() => {
+      trianglify({ xColors: 'RdBu' })
+      trianglify({ yColors: 'OrRd' })
+    }).not.toThrow()
+  })
+
+  test('should error on a names palette that does not exist', () => {
+    expect(() => {
+      trianglify({ xColors: 'Foo' })
+      trianglify({ yColors: 'Bar' })
+    }).toThrow()
   })
 
   test('should generate well-formed geometry', () => {
