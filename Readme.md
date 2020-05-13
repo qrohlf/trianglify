@@ -162,11 +162,20 @@ The `canvasOpts` option allows for some canvas-specific customizations to the ou
 
 ```js
 const canvasOpts = {
-  // render the canvas at native pixel densities for high-dpi ("retina")
-  // devices. This is a browser-only feature, as node environments do
-  // not typically expose information about the pixel ratio of the device
-  // they are running on
-  retina: true
+  // determines how the canvas is rendered on high-DPI (aka "retina") devices.
+  // - 'auto' will automatically render the canvas at the appropriate scale ratio
+  //   for pixel-perfect display.
+  // - a numeric value will render the canvas at that specific scale factor
+  //   for example, 2.0 will render it at 2x resolution, wheras 0.5 will render
+  //   at half resolution
+  // - 'false' will disable scaling, and the canvas will be rendered at the 
+  //   exact resolution specified by `width, height`
+  scaling: 'auto',
+  // if the canvas is rendered at a different resolution than the {width, height}
+  // trianglify will apply some inline style attributes to scale it back to
+  // the requested {width, height} options. Set applyCssScaling to false to 
+  // disable this behavior.
+  applyCssScaling: true
 }
 ```
 

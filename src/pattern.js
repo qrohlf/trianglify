@@ -1,5 +1,5 @@
 import { createCanvas } from 'canvas' // this is a simple shim in browsers
-
+import getScalingRatio from './utils/getScalingRatio'
 const isBrowser = (typeof window !== 'undefined' && typeof document !== 'undefined')
 const doc = isBrowser && document
 
@@ -87,39 +87,39 @@ export default class Pattern {
     : (destSVG, svgOpts) => this.toSVGTree(svgOpts)
 
   toCanvas = (destCanvas, _canvasOpts = {}) => {
-    const defaultCanvasOptions = { retina: !!isBrowser }
+    const defaultCanvasOptions = {
+      scaling: isBrowser ? 'auto' : false,
+      applyCssScaling: !!isBrowser
+    }
     const canvasOpts = { ...defaultCanvasOptions, _canvasOpts }
     const { points, polys, opts } = this
 
     const canvas = destCanvas || createCanvas(opts.width, opts.height) // doc.createElement('canvas')
     const ctx = canvas.getContext('2d')
 
-    if (canvasOpts.retina) {
-      // adapted from https://gist.github.com/callumlocke/cc258a193839691f60dd
-      const backingStoreRatio = (
-        ctx.webkitBackingStorePixelRatio ||
-        ctx.mozBackingStorePixelRatio ||
-        ctx.msBackingStorePixelRatio ||
-        ctx.oBackingStorePixelRatio ||
-        ctx.backingStorePixelRatio || 1
-      )
+    if (canvasOpts.scaling) {
+      const drawRatio = canvasOpts.scaling === 'auto'
+        ? getScalingRatio(ctx)
+        : canvasOpts.scaling
 
-      const devicePixelRatio = (typeof window !== 'undefined' && window.devicePixelRatio) || 1
-      const drawRatio = devicePixelRatio / backingStoreRatio
-      if (devicePixelRatio !== backingStoreRatio) {
+      if (drawRatio !== 1) {
         // set the 'real' canvas size to the higher width/height
         canvas.width = opts.width * drawRatio
         canvas.height = opts.height * drawRatio
 
-        // ...then scale it back down with CSS
-        canvas.style.width = opts.width + 'px'
-        canvas.style.height = opts.height + 'px'
+        if (canvasOpts.applyCssScaling) {
+          // ...then scale it back down with CSS
+          canvas.style.width = opts.width + 'px'
+          canvas.style.height = opts.height + 'px'
+        }
       } else {
         // this is a normal 1:1 device: don't apply scaling
         canvas.width = opts.width
         canvas.height = opts.height
-        canvas.style.width = ''
-        canvas.style.height = ''
+        if (canvasOpts.applyCssScaling) {
+          canvas.style.width = ''
+          canvas.style.height = ''
+        }
       }
       ctx.scale(drawRatio, drawRatio)
     }
