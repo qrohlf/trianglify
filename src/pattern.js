@@ -91,7 +91,7 @@ export default class Pattern {
       scaling: isBrowser ? 'auto' : false,
       applyCssScaling: !!isBrowser
     }
-    const canvasOpts = { ...defaultCanvasOptions, _canvasOpts }
+    const canvasOpts = { ...defaultCanvasOptions, ..._canvasOpts }
     const { points, polys, opts } = this
 
     const canvas = destCanvas || createCanvas(opts.width, opts.height) // doc.createElement('canvas')
