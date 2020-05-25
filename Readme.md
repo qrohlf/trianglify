@@ -235,7 +235,7 @@ False, string or array of CSS-formatted colors, default is `'match'`. When set t
 
 **`palette`**
 
-The array of color combinations to pick from when using `random` for the xColors or yColors. See [`utils/colorbrewer.js`](./utils/colorbrewer.js) for the format of this data.
+The array of color combinations to pick from when using `random` for the xColors or yColors. See [`src/utils/colorbrewer.js`](./src/utils/colorbrewer.js) for the format of this data.
 
 **`colorSpace`**
 
