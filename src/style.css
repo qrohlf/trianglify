@@ -16,6 +16,10 @@ p {
   line-height: 1.5;
 }
 
+p + p {
+  margin-top: 3em;
+}
+
 p a,
 p a:visited,
 p a:active {
