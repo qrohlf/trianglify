@@ -15,39 +15,36 @@
     </style>
   </head>
   <body>
-  <script src="../dist/trianglify.min.js"></script>
+  <script src="../dist/trianglify.bundle.debug.js"></script>
   <script>
+  const width = 700
+  const height = 700
 
-  var h = window.innerHeight, w = window.innerWidth;
-  var center_y = h * 0.5, center_x = w * 0.5;
-  
-  var points = [];
-  var spacing = 20;
-  var t = 0;
-  // generate a sine wave of points
-  for(var x = spacing; x < w - (spacing*2); x += spacing) {
-	var y = center_y + Math.sin(t) * (center_y - spacing);
-	points.push([x, y]);
-	t += 0.5;
+
+  // generate a spiral using polar coordinates
+  const points = []
+  const NUM_POINTS = 150
+  let r = 0
+  const rStep = width / 2 / NUM_POINTS
+  let theta = 0
+  const thetaStep = Math.PI / NUM_POINTS * 18
+  for (let i = 0; i < NUM_POINTS; i++) {
+    const x = width / 2 + r * Math.cos(theta)
+    const y = height / 2 + r * Math.sin(theta)
+    const point = [x, y]
+    points.push(point)
+    r += rStep
+    theta = (theta + thetaStep) % (2 * Math.PI)
   }
 
-  // set up the base pattern
-  var pattern = Trianglify({
-    height: h,
-    width: w,
-    points: points,
-    cell_size: 30 + Math.random() * 100})
 
-  // canvas
-  document.body.appendChild(pattern.canvas())
+  // apply trianglify to convert the points to polygons and apply the color
+  // gradient
+  var pattern = trianglify({height, width, points})
 
-  // svg
-  document.body.appendChild(pattern.svg())
-
-  // png
-  var png = document.createElement('img')
-  png.src = pattern.png()
-  document.body.appendChild(png)
+  // use the toCanvas function to render the generated geometry to an HTML5
+  // canvas element
+  document.body.appendChild(pattern.toCanvas())
   </script>
   </body>
 </html>
