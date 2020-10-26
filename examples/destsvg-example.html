@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trianglify Basic Example</title>
+    <style>
+    html, body {
+      margin: 0 0;
+      padding: 0 0;
+      text-align: center;
+      font-size: 0;
+      background: #000;
+    }
+
+    svg, canvas {
+      padding-bottom: 30px;
+      text-align: center;
+    }
+    </style>
+  </head>
+  <body>
+  <svg id="svg-element" />
+  <!-- This is the standalone build of Trianglify. It's easy to drop in to a
+  project without any need for bundlers or dependency management, but in most
+  modern web projects you will probably want to use the NPM module instead -->
+  <script src="../dist/trianglify.bundle.debug.js"></script>
+  <script>
+    const pattern = trianglify({
+      cellSize: 50,
+      width: window.innerWidth * 0.8,
+      height: (window.innerHeight - 4 * 30) / 4
+    })
+
+    const existingSVGElement = document.getElementById('svg-element')
+
+    // Render to SVG
+    pattern.toSVG(existingSVGElement)
+  </script>
+  </body>
+</html>
