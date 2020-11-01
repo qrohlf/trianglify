@@ -4,8 +4,8 @@ const isBrowser = (typeof window !== 'undefined' && typeof document !== 'undefin
 const doc = isBrowser && document
 
 // utility for building up SVG node trees with the DOM API
-const sDOM = (tagName, attrs = {}, children) => {
-  const elem = doc.createElementNS('http://www.w3.org/2000/svg', tagName)
+const sDOM = (tagName, attrs = {}, children, existingRoot) => {
+  const elem = existingRoot || doc.createElementNS('http://www.w3.org/2000/svg', tagName)
   Object.keys(attrs).forEach(
     k => attrs[k] !== undefined && elem.setAttribute(k, attrs[k])
   )
@@ -74,7 +74,8 @@ export default class Pattern {
         width,
         height
       },
-      paths
+      paths,
+      destSVG
     )
 
     return svg

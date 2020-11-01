@@ -149,6 +149,16 @@ describe('Pattern outputs in browser environment', () => {
       })
       expect(svgDOM.children).toHaveLength(pattern.polys.length)
     })
+
+    test('supports rendering to the destSVG target', () => {
+      const destSVG = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+      expect(destSVG.children).toHaveLength(0)
+      const pattern = trianglify({ seed: 'destSVG works' })
+      // side-effect-ful render to destSVG
+      pattern.toSVG(destSVG)
+      expect(destSVG.children).toHaveLength(pattern.polys.length)
+      expect(destSVG).toMatchSnapshot()
+    })
   })
 
   describe('#toSVGTree', () => {
