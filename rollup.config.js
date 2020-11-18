@@ -8,7 +8,7 @@ import pkg from './package.json'
 export default [
   { // build for node & module bundlers
     input: 'src/trianglify.js',
-    external: ['chroma-js', 'delaunator', 'canvas'],
+    external: ['chroma-js', 'delaunator', 'pureimage'],
     plugins: [babel({ babelHelpers: 'bundled' }), bundleSize()],
     output: { file: pkg.main, format: 'cjs' }
   },

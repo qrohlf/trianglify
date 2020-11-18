@@ -1,4 +1,4 @@
-import { createCanvas } from 'canvas' // this is a simple shim in browsers
+import PImage from 'pureimage' // this is a simple shim in browsers
 import getScalingRatio from './utils/getScalingRatio'
 const isBrowser = (typeof window !== 'undefined' && typeof document !== 'undefined')
 const doc = isBrowser && document
@@ -95,7 +95,10 @@ export default class Pattern {
     const canvasOpts = { ...defaultCanvasOptions, ..._canvasOpts }
     const { points, polys, opts } = this
 
-    const canvas = destCanvas || createCanvas(opts.width, opts.height) // doc.createElement('canvas')
+    const canvas = destCanvas || isBrowser
+    ? Object.assign(doc.createElement('canvas'), {  width: opts.width, height: opts.height })
+    : PImage.make(opts.width, opts.height)
+
     const ctx = canvas.getContext('2d')
 
     if (canvasOpts.scaling) {
