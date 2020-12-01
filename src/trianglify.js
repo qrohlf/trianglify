@@ -29,7 +29,8 @@ const defaultOptions = {
   colorFunction: colorFunctions.interpolateLinear(0.5),
   fill: true,
   strokeWidth: 0,
-  points: null
+  points: null,
+  shapeRendering: 'crispEdges'
 }
 
 // This function does the "core" render-independent work:
