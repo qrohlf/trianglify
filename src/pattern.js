@@ -63,7 +63,7 @@ export default class Pattern {
         stroke: hasStroke ? poly.color.css() : undefined,
         'stroke-width': hasStroke ? opts.strokeWidth : undefined,
         'stroke-linejoin': hasStroke ? 'round' : undefined,
-        'shape-rendering': opts.fill ? 'crispEdges' : undefined
+        'shape-rendering': opts.fill ? opts.shapeRendering || undefined : undefined
       })
     })
 

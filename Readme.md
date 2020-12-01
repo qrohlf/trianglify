@@ -197,7 +197,8 @@ const defaultOptions = {
   colorSpace: 'lab',
   colorFunction: trianglify.colorFunctions.interpolateLinear(0.5),
   strokeWidth: 0,
-  points: null
+  points: null,
+  shapeRendering: 'crispEdges'
 }
 ```
 
@@ -258,3 +259,9 @@ Number, defaults to 0. Specify the width of the strokes used to outline the poly
 **`points`**
 
 Array of points ([x, y]) to triangulate, defaults to null. When not specified an array randomised points is generated filling the space. Points must be within the coordinate space defined by `width` and `height`. See [`examples/custom-points-example.html`](./examples/custom-points-example.html) for a demonstration of how this option can be used to generate circular trianglify patterns.
+
+
+**`shapeRendering`**
+
+String or False, defaults to `'crispEdges'`. Provides a hint to the SVG user agent about how to optimize its shape rendering. False won't render this attribute into result SVG.
+
