@@ -6,11 +6,11 @@ Trianglify is a library that I wrote to generate nice SVG background images like
 ![](https://cloud.githubusercontent.com/assets/347189/6771063/f8b0af46-d090-11e4-8d4c-6c7ef5bd9d37.png)
 
 # Contents
-[📦 Getting Trianglify](#getting-trianglify)  
-[🏎 Quickstart](#quickstart)  
-[⚖️ Licensing](#licensing)  
-[📖 API](#api)  
-[🎨 Configuration](#configuration)
+[📦 Getting Trianglify](#📦-getting-trianglify)  
+[🏎 Quickstart](#-quickstart)  
+[⚖️ Licensing](#-licensing)  
+[📖 API](#-api)  
+[🎨 Configuration](#-configuration)
 
 # 📦 Getting Trianglify
 
