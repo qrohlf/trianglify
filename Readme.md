@@ -8,7 +8,7 @@ Trianglify is a library that I wrote to generate nice SVG background images like
 # Contents
 [📦 Getting Trianglify](#-getting-trianglify)  
 [🏎 Quickstart](#-quickstart)  
-[⚖️ Licensing](#-licensing)  
+[⚖️ Licensing](#%EF%B8%8F-licensing)  
 [📖 API](#-api)  
 [🎨 Configuration](#-configuration)
 
