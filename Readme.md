@@ -245,7 +245,7 @@ String, defaults to `'lab'`. Set the color space used for generating gradients. 
 
 Specify a custom function for coloring triangles, defaults to `null`. Accepts a function to override the standard gradient coloring, which is passed a variety of data about the pattern and each polygon and must return a Chroma.js color object.
 
-See [`examples/color-function-example.html`](./examples/color-function-example.html) and [`utils/colorFunctions.js`](./utils/colorFunctions.js) for more information about the built-in color functions, and how to write custom color functions.
+See [`examples/color-function-example.html`](./examples/color-function-example.html) and [`src/utils/colorFunctions.js`](./src/utils/colorFunctions.js) for more information about the built-in color functions, and how to write custom color functions.
 
 **`fill`**
 
