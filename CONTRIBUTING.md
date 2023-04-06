@@ -7,7 +7,7 @@ Pull requests and issues are welcome! For all contributions, please:
 
 ## Issues
 
-If you're submitting a bug, please include the enivronment (browser/node) and relevant environment version(s) that you have encountered the bug in.
+If you're submitting a bug, please include the environment (browser/node) and relevant environment version(s) that you have encountered the bug in.
 
 ## Pull Requests
 
