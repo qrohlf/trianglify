@@ -146,7 +146,7 @@ const svgOpts = {
 
 **`pattern.toSVGTree(svgOpts?)`**
 
-Alternate rendering function for SVG. Returns a lightweight node tree structure that can be seralized to a valid SVG string using the `toString()` function. In node environments, this is an alias for
+Alternate rendering function for SVG. Returns a lightweight node tree structure that can be serialized to a valid SVG string using the `toString()` function. In node environments, this is an alias for
 `pattern.toSVG()`.
 
 
@@ -219,7 +219,7 @@ Decimal value between 0 and 1 (inclusive), defaults to `0.75`. Specify the amoun
 
 **`seed`**
 
-String, defaults to `null`. Seeds the random number generator to create repeatable patterns. When set to null, the RNG will be seeded with random values from the environment. An example usage would be passing in blog post titles as the seed to generate unique but consistient trianglify patterns for every post on a blog site.
+String, defaults to `null`. Seeds the random number generator to create repeatable patterns. When set to null, the RNG will be seeded with random values from the environment. An example usage would be passing in blog post titles as the seed to generate unique but consistent trianglify patterns for every post on a blog site.
 
 **`xColors`**
 
