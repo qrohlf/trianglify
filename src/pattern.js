@@ -60,7 +60,7 @@ export default class Pattern {
       return s('path', {
         d,
         fill: opts.fill ? poly.color.css() : undefined,
-        stroke: hasStroke ? poly.color.css() : undefined,
+        stroke: hasStroke ? opts.strokeColor || optspoly.color.css() : undefined,
         'stroke-width': hasStroke ? opts.strokeWidth : undefined,
         'stroke-linejoin': hasStroke ? 'round' : undefined,
         'shape-rendering': opts.fill ? 'crispEdges' : undefined
@@ -154,7 +154,7 @@ export default class Pattern {
     polys.forEach(poly => drawPoly(
       poly,
       opts.fill && { color: poly.color },
-      (opts.strokeWidth > 0) && { color: poly.color, width: opts.strokeWidth }
+      (opts.strokeWidth > 0) && { color: opts.strokeColor || poly.color, width: opts.strokeWidth }
     ))
 
     return canvas
