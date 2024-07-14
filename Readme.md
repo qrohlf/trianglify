@@ -197,7 +197,7 @@ const defaultOptions = {
   colorSpace: 'lab',
   colorFunction: trianglify.colorFunctions.interpolateLinear(0.5),
   strokeWidth: 0,
-  strokeColor: false,
+  strokeColor: null,
   points: null
 }
 ```
@@ -258,7 +258,7 @@ Number, defaults to 0. Specify the width of the strokes used to outline the poly
 
 **`strokeColor`**
 
-False, or string of CSS-formatted colors, default is `false`.
+Null, or string of CSS-formatted colors, default is `false`.
 
 **`points`**
 

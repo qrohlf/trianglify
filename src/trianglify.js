@@ -29,7 +29,7 @@ const defaultOptions = {
   colorFunction: colorFunctions.interpolateLinear(0.5),
   fill: true,
   strokeWidth: 0,
-  strokeColor: false,
+  strokeColor: null,
   points: null
 }
 
