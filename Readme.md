@@ -258,7 +258,7 @@ Number, defaults to 0. Specify the width of the strokes used to outline the poly
 
 **`strokeColor`**
 
-Null, or string of CSS-formatted colors, default is `false`.
+Null, or string of CSS-formatted colors, default is `null`.
 
 **`points`**
 
