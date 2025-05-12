@@ -1,4 +1,4 @@
-# Trianglify ![Build Status](https://github.com/qrohlf/trianglify/workflows/build/badge.svg)
+# Trianglify
 
 
 Trianglify is a library that I wrote to generate nice SVG background images like this one:
